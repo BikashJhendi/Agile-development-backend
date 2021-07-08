@@ -24,12 +24,12 @@ const User = mongoose.model('User',{
     },
     district:{
         type : String,
-        required : true
-       
+        
+      
     },
     tole:{
         type : String,
-        required : true
+        
        
     }
 
