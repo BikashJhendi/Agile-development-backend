@@ -1,39 +1,39 @@
-const mongoose= require('mongoose')
-const User = mongoose.model('User',{
-    firstname:{
-        type : String,
-        required : true
-    },
-    lastname:{
-        type : String,
-        required : true
-    },
-    email:{
+const mongoose = require('mongoose')
+const User = mongoose.model('User', {
+    firstname: {
         type: String,
-        required : true,
-        unique : true
+        required: true
     },
-    phone:{
-        type : String,
-        required : true
+    lastname: {
+        type: String,
+        required: true
     },
-    password:{
-        type : String,
-        required : true
-       
+    email: {
+        type: String,
+        required: true,
+        unique: true
     },
-    district:{
-        type : String,
-        
-      
+    phone: {
+        type: String,
+        // required : true
     },
-    tole:{
-        type : String,
-        
-       
+    password: {
+        type: String,
+        required: true
+
+    },
+    district: {
+        type: String,
+
+
+    },
+    tole: {
+        type: String,
+
+
     }
 
-     
+
 })
 
 module.exports = User;
