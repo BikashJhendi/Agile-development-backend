@@ -1,19 +1,23 @@
 const express = require('express');
 const router = express.Router();
-const Cosmetic = require('../models/cosmetic');
+const cosmetic = require('../models/cosmetic');
+const cosmeticUploads = require('../middleware/cosmetic');
 const { check, validationResult } = require('express-validator');
 // const auth = require('../middleware/auth');
 // const fileupload = require('../middleware/fileupload.js');
 
-router.post('/cosmetic/insert', 
-    function (req, res) {
+router.post('/cosmetic/insert',
+    cosmeticUploads.single('cosmeticimage'), function (req, res) {
+        const errors = validationResult(req);
+        console.log(errors.array())
+
         const cosmeticname = req.body.cosmeticname;
         const cosmeticprice = req.body.cosmeticprice;
         const cosmetictype = req.body.cosmetictype;
         const cosmeticdescription = req.body.cosmeticdescription;
-        const cosmeticimage = req.body.cosmeticimage;
 
-        const cosmetic_data = new Cosmetic({cosmeticname: cosmeticname, cosmeticprice: cosmeticprice, cosmetictype: cosmetictype,cosmeticdescription: cosmeticdescription, cosmeticimage: cosmeticimage });
+
+        const cosmetic_data = new cosmetic({ cosmeticname: cosmeticname, cosmeticprice: cosmeticprice, cosmetictype: cosmetictype, cosmeticdescription: cosmeticdescription, cosmeticimage: req.file.filename });
         cosmetic_data.save()
             .then(function (result) {
                 res.status(201).json({ message: "cosmetic Added" })
@@ -23,27 +27,29 @@ router.post('/cosmetic/insert',
             });
     })
 
-router.get('/cosmetic/showall', function(req, res){
-    
+router.get('/cosmetic/showall', function (req, res) {
+
     Cosmetic.find()
-    .then(function(cosmetic_data){
-        res.status(200).json({success: true,
-            data : cosmetic_data});
-    })
-    .catch(function(e){
-    res.status(500).json({message : e})
-})
+        .then(function (cosmetic_data) {
+            res.status(200).json({
+                success: true,
+                data: cosmetic_data
+            });
+        })
+        .catch(function (e) {
+            res.status(500).json({ message: e })
+        })
 })
 
-router.get('/cosmetic/one/:id',function(req,res){
-    const id=req.params.id;
-    Cosmetic.find({_id:id})
-    .then(function(data){
-        res.status(200).json({data:data});
-    })
-    .catch(function(e){
-        res.status(500).json({message:e})
-    })
+router.get('/cosmetic/one/:id', function (req, res) {
+    const id = req.params.id;
+    Cosmetic.find({ _id: id })
+        .then(function (data) {
+            res.status(200).json({ data: data });
+        })
+        .catch(function (e) {
+            res.status(500).json({ message: e })
+        })
 })
 
 
