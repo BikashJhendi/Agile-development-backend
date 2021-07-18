@@ -1,5 +1,5 @@
 const mongoose = require('mongoose')
-const Cosmetic = mongoose.model('Cosmetic', {
+const Cosmetic = mongoose.model('cosmetic', {
     cosmeticname: {
         type: String,
         required: true

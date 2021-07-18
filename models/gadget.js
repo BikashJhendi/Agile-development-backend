@@ -1,5 +1,5 @@
 const mongoose = require('mongoose')
-const Gadget = mongoose.model('Gadget', {
+const Gadget = mongoose.model('gadget', {
     gadgetname: {
         type: String,
         required: true
@@ -14,6 +14,7 @@ const Gadget = mongoose.model('Gadget', {
         required: true
     },
     gadgetdescription: [String],
+    
     gadgetimage:{
         type: String,
         // required: true
