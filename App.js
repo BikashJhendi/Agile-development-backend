@@ -19,6 +19,6 @@ app.use(gadgetRoute);
 app.use(cosmeticRoute);
 
 
-
+module.exports = app;
 //listen
 app.listen(90);
