@@ -8,10 +8,17 @@ app.use(express.json());
 const db = require('./Database/database.js');
 
 //routes
-const userRoute = require('./Routes/userRoute');
+const userRoute = require('./routes/userRoute');
+const gadgetRoute = require('./routes/gadgetRoute');
+const cosmeticRoute = require('./routes/cosmeticRoute');
+
+
 //app.use
 app.use(userRoute);
+app.use(gadgetRoute);
+app.use(cosmeticRoute);
+
 
 module.exports = app;
 //listen
-app.listen(3000);
+app.listen(90);
