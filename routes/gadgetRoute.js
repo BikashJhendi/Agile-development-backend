@@ -29,7 +29,7 @@ router.post('/gadget/insert',
 
 router.get('/gadget/showall', function (req, res) {
 
-    Gadget.find()
+    gadget.find()
         .then(function (gadget_data) {
             res.status(200).json({
                 success: true,
@@ -43,7 +43,7 @@ router.get('/gadget/showall', function (req, res) {
 
 router.get('/gadget/one/:id', function (req, res) {
     const id = req.params.id;
-    Gadget.find({ _id: id })
+    gadget.find({ _id: id })
         .then(function (data) {
             res.status(200).json({ data: data });
         })
