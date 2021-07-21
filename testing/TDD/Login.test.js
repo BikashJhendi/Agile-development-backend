@@ -18,7 +18,7 @@ afterAll(async () => {
 describe('User login testing', () => {
 
     it('find user with id', () => {
-        return users.findOne({ _id: Object('60ed73f0ec08c60210d1e95a') })
+        return users.findOne({ _id: Object('60f7e98547ed341dac29ec60') })
     });
 
     //  it('user logins using valid email address',()=>{
@@ -33,7 +33,7 @@ describe('User login testing', () => {
         it('responds with json', function (done) {
             request(app)
                 .post('/user/login')
-                .send({ email: 'Bikash@123.com' })
+                .send({ email: 'Rk@123.com' })
                 .set('Accept', 'application/json')
                 .expect('Content-Type', /json/)
                 .expect(200)

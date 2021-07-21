@@ -16,13 +16,13 @@ afterAll(async () => {
 });
 
 describe('Gadget product testing', () => {
-    it('inserts new product', function (done) {
+    it('insert new product', function (done) {
         request(app)
-            .post('/cosmetic/insert')
-            .send({ cosmeticname: 'watch', cosmeticprice: '1200', cosmetictype: 'Men', cosmeticdescription: 'watch', cosmeticimage: 'watch' })
+            .post('/gadget/insert')
+            .send({ gadgetname: 'Rajesh', gadgetprice: 'Kasula', gadgettype: 'Laptop', gadgetdescription: '1234', gadgetimage: 'bkt' })
             .set('Accept', 'application/json')
-            .expect('Content-Type', /json/)
-            .expect(201)
+            .expect('Content-Type', /charset=utf-8/)
+            .expect(201, { message: "Gadget Added" })
             .end(function (err, res) {
                 if (err) return done(err);
                 return done();
@@ -32,9 +32,9 @@ describe('Gadget product testing', () => {
     test('fails to insert if required field is not filled in', (done) => {
         request(app)
             .post('/gadget/insert')
-            .send({ gadgetname: 'Dell inspiron', gadgetprice: '120000', gadgettype: 'Laptop', gadgetdescription: 'Dell dell dell', gadgetimage: 'dell.jpg' })
+            .send({ gadgetname: '', gadgetprice: '', gadgettype: 'Laptop', gadgetdescription: 'Dell dell dell', gadgetimage: 'dell.jpg' })
             .set('Accept', 'application/json')
-            .expect('Content-Type', /json/)
+            .expect('Content-Type', /charset=utf-8/)
             .expect(201)
             .end(function (err, res) {
                 if (err) return done(err);
@@ -46,7 +46,7 @@ describe('Gadget product testing', () => {
         request(app)
             .get('/gadget/showall')
             .set('Accept', 'application/json')
-            .expect('Content-Type', /json/)
+            .expect('Content-Type', /charset=utf-8/)
             .expect(200, done);
     });
 
@@ -54,7 +54,7 @@ describe('Gadget product testing', () => {
         request(app)
             .get('/gadget/one/60f42daccd075a4094c827de')
             .set('Accept', 'application/json')
-            .expect('Content-Type', /json/)
+            .expect('Content-Type', /charset=utf-8/)
             .expect(200, done);
     })
 
@@ -62,7 +62,7 @@ describe('Gadget product testing', () => {
         request(app)
             .get('/gadget/one/1234')
             .set('Accept', 'application/json')
-            .expect('Content-Type', /json/)
+            .expect('Content-Type', /charset=utf-8/)
             .expect(500, done);
     })
 });

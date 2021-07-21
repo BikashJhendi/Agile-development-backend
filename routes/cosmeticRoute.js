@@ -29,7 +29,7 @@ router.post('/cosmetic/insert',
 
 router.get('/cosmetic/showall', function (req, res) {
 
-    Cosmetic.find()
+    cosmetic.find()
         .then(function (cosmetic_data) {
             res.status(200).json({
                 success: true,
@@ -43,7 +43,7 @@ router.get('/cosmetic/showall', function (req, res) {
 
 router.get('/cosmetic/one/:id', function (req, res) {
     const id = req.params.id;
-    Cosmetic.find({ _id: id })
+    cosmetic.find({ _id: id })
         .then(function (data) {
             res.status(200).json({ data: data });
         })
