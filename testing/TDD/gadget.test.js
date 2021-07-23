@@ -16,10 +16,11 @@ afterAll(async () => {
 });
 
 describe('Gadget product testing', () => {
-    it('insert new product', function (done) {
+    it('insert new gadget product', function (done) {
         request(app)
             .post('/gadget/insert')
-            .send({ gadgetname: 'Rajesh', gadgetprice: 'Kasula', gadgettype: 'Laptop', gadgetdescription: '1234', gadgetimage: 'bkt' })
+            .field({ gadgetname: 'Dell inspiron 6', gadgetprice: '20,000', gadgettype: 'Laptop', gadgetdescription: 'Dell dell dell' })
+            .attach('gadgetimage', 'assets/image/gadget/1626618350751Venngage _ Editor-1.jpg')
             .set('Accept', 'application/json')
             .expect('Content-Type', /charset=utf-8/)
             .expect(201, { message: "Gadget Added" })
@@ -52,7 +53,7 @@ describe('Gadget product testing', () => {
 
     test('shows one product using its id', (done) => {
         request(app)
-            .get('/gadget/one/60f42daccd075a4094c827de')
+            .get('/gadget/one/60fad7d8e3d1a032a802fb85')
             .set('Accept', 'application/json')
             .expect('Content-Type', /charset=utf-8/)
             .expect(200, done);

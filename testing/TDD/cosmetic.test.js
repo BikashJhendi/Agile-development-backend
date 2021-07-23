@@ -16,11 +16,11 @@ afterAll(async () => {
 });
 
 describe('Cosmetic product testing', () => {
-
-    it('inserts new product', function (done) {
+    it('insert new cosmetic product', function (done) {
         request(app)
             .post('/cosmetic/insert')
-            .send({ cosmeticname: 'watch', cosmeticprice: '1200', cosmetictype: 'Men', cosmeticdescription: 'watch', cosmeticimage: 'watch' })
+            .field({ cosmeticname: 'Watch', cosmeticprice: '20,000', cosmetictype: 'Men', cosmeticdescription: 'Millinium' })
+            .attach('cosmeticimage', 'assets/image/cosmetic/1626617500015Screenshot (61).png')
             .set('Accept', 'application/json')
             .expect('Content-Type', /charset=utf-8/)
             .expect(201)
@@ -53,7 +53,7 @@ describe('Cosmetic product testing', () => {
 
     test('shows one product using its id', (done) => {
         request(app)
-            .get('/cosmetic/one/60f4294fa04ac23ab0310757')
+            .get('/cosmetic/one/60f82476e54e5c240cc04795')
             .set('Accept', 'application/json')
             .expect('Content-Type', /charset=utf-8/)
             .expect(200, done);
