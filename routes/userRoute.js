@@ -8,14 +8,6 @@ const User = require('../models/users.js');
 // User Signup
 router.post('/user/signup',
 	(req, res) => {
-		// const errors = validationResult(req);
-		//console.log(errors.array())
-
-		// if (!errors.isEmpty()) {
-		// 	res.send(errors.array());
-		// }
-		// else 
-		// {
 		const firstname = req.body.firstname;
 		const lastname = req.body.lastname;
 		const email = req.body.email;
@@ -39,8 +31,7 @@ router.post('/user/signup',
 				)
 		}
 		)
-		// }
-
+	
 	})
 
 // login

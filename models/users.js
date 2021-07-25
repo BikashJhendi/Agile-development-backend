@@ -25,7 +25,6 @@ const User = mongoose.model('User', {
     district: {
         type: String,
 
-
     },
     tole: {
         type: String,

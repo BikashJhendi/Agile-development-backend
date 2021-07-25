@@ -1,6 +1,8 @@
 const express = require('express');
 const cors = require('cors');
 const app = express();
+app.use(cors());
+app.use(express.json());
 
 const path = require('path');
 const bodyparser = require('body-parser')
@@ -17,8 +19,7 @@ const cosmeticRoute = require('./routes/cosmeticRoute');
 app.use(userRoute);
 app.use(gadgetRoute);
 app.use(cosmeticRoute);
-app.use(cors());
-app.use(express.json());
+
 
 //Images
 app.use(express.static(path.join(__dirname, "")));
