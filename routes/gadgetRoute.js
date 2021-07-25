@@ -4,7 +4,7 @@ const gadget = require('../models/gadget');
 const gadgetUploads = require('../middleware/gadget');
 const { check, validationResult } = require('express-validator');
 // const auth = require('../middleware/auth');
-// const fileupload = require('../middleware/fileupload.js');
+
 
 router.post('/gadget/insert',
     gadgetUploads.single('gadgetimage'), function (req, res) {
@@ -15,9 +15,39 @@ router.post('/gadget/insert',
         const gadgetprice = req.body.gadgetprice;
         const gadgettype = req.body.gadgettype;
         const gadgetdescription = req.body.gadgetdescription;
+        
+        const laptopBrand = req.body.laptopBrand;
+        const laptopModel = req.body.laptopModel;
+        const laptopDimension = req.body.laptopDimension;
+        const laptopWeight = req.body.laptopWeight;
+        const laptopSize = req.body.laptopSize;
+        const laptopResolution = req.body.laptopResolution;
+        const laptopProcessor = req.body.laptopProcessor;
+        const laptopBaseClock = req.body.laptopBaseClock;
+        const laptopSpeed = req.body.laptopSpeed;
+        const laptopRam = req.body.laptopRam;
+        const laptopGraphic = req.body.laptopGraphic;
+        const laptopDedicatedGraphicMemory = req.body.laptopDedicatedGraphicMemory;
+        const laptopDedicatedGraphic = req.body.laptopDedicatedGraphic;
+        const laptopHarddisk = req.body.laptopHarddisk;
+        const laptopSSD = req.body.laptopSSD;
+        const laptopNoOfUSBPorts = req.body.laptopNoOfUSBPorts;
+        const laptopUSBPorts = req.body.laptopUSBPorts;
+        const laptopHDMIPorts = req.body.laptopHDMIPorts;
+        const laptopMultiCardSlot = req.body.laptopMultiCardSlot;
+        const laptopHeadphone = req.body.laptopHeadphone;
+        const laptopJack = req.body.laptopJack;
+        
 
 
-        const gadget_data = new gadget({ gadgetname: gadgetname, gadgetprice: gadgetprice, gadgettype: gadgettype, gadgetdescription: gadgetdescription, gadgetimage: req.file.filename });
+        const gadget_data = new gadget({ 
+            gadgetname: gadgetname, gadgetprice: gadgetprice, gadgettype: gadgettype, gadgetdescription: gadgetdescription, gadgetimage: req.file.filename, 
+            laptopBrand: laptopBrand, laptopModel: laptopModel, laptopDimension: laptopDimension, laptopWeight: laptopWeight,
+            laptopSize: laptopSize, laptopResolution: laptopResolution, laptopProcessor: laptopProcessor, laptopBaseClock: laptopBaseClock,
+            laptopSpeed: laptopSpeed, laptopRam: laptopRam, laptopGraphic: laptopGraphic, laptopDedicatedGraphicMemory: laptopDedicatedGraphicMemory,
+            laptopDedicatedGraphic: laptopDedicatedGraphic, laptopHarddisk: laptopHarddisk, laptopSSD: laptopSSD, laptopNoOfUSBPorts: laptopNoOfUSBPorts,
+            laptopUSBPorts: laptopUSBPorts, laptopHDMIPorts: laptopHDMIPorts, laptopMultiCardSlot: laptopMultiCardSlot, laptopHeadphone: laptopHeadphone,
+            laptopJack: laptopJack});
         gadget_data.save()
             .then(function (result) {
                 res.status(201).json({ message: "Gadget Added" })
