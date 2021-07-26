@@ -40,19 +40,20 @@ router.get('/cosmetic/showall', function (req, res) {
             res.status(500).json({ message: e })
         })
 })
-router.get('/cosmetic/five', function (req, res) {
+router.get('/cosmetic/six', function (req, res) {
 
-    cosmetic.find().limit(5)
-        .then(function (cosmetic_five) {
+    cosmetic.find().limit(6)
+        .then(function (cosmetic_six) {
             res.status(200).json({
                 success: true,
-                data: cosmetic_five
+                data: cosmetic_six
             });
         })
         .catch(function (e) {
             res.status(500).json({ message: e })
         })
 })
+
 
 router.get('/cosmetic/one/:id', function (req, res) {
     const id = req.params.id;

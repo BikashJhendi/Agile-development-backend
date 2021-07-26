@@ -71,6 +71,20 @@ router.get('/gadget/showall', function (req, res) {
         })
 })
 
+router.get('/gadget/six', function (req, res) {
+
+    gadget.find().limit(6)
+        .then(function (cosmetic_six) {
+            res.status(200).json({
+                success: true,
+                data: cosmetic_six
+            });
+        })
+        .catch(function (e) {
+            res.status(500).json({ message: e })
+        })
+})
+
 router.get('/gadget/one/:id', function (req, res) {
     const id = req.params.id;
     gadget.find({ _id: id })
