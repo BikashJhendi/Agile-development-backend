@@ -15,7 +15,7 @@ router.post('/gadget/insert',
         const gadgetprice = req.body.gadgetprice;
         const gadgettype = req.body.gadgettype;
         const gadgetdescription = req.body.gadgetdescription;
-        
+
         const laptopBrand = req.body.laptopBrand;
         const laptopModel = req.body.laptopModel;
         const laptopDimension = req.body.laptopDimension;
@@ -37,17 +37,56 @@ router.post('/gadget/insert',
         const laptopMultiCardSlot = req.body.laptopMultiCardSlot;
         const laptopHeadphone = req.body.laptopHeadphone;
         const laptopJack = req.body.laptopJack;
-        
+
+        const cameraType = req.body.cameraType;
+        const cameraResolution = req.body.cameraResolution;
+        const cameraSalesPackage = req.body.cameraSalesPackage;
+        const cameraDimensions = req.body.cameraDimensions;
+        const cameraWeight = req.body.cameraWeight;
+        const cameraLensType = req.body.cameraLensType;
+        const cameraLensFocalLength = req.body.cameraLensFocalLength;
+        const cameraSensorType = req.body.cameraSensorType;
+        const cameraSensorFormat = req.body.cameraSensorFormat;
+        const cameraSensorSize = req.body.cameraSensorSize;
+        const cameraScreenSize = req.body.cameraScreenSize;
+        const cameraDisplayType = req.body.cameraDisplayType;
+        const cameraDisplayResolution = req.body.cameraDisplayResolution;
+        const cameraMemoryCardType = req.body.cameraMemoryCardType;
+        const cameraConnectivity = req.body.cameraConnectivity;
+        const cameraVideoFormats = req.body.cameraVideoFormats;
+        const cameraHDRSupport = req.body.cameraHDRSupport;
+        const cameraImageFormats = req.body.cameraImageFormats;
+        const cameraSupportedAudioFormats = req.body.cameraSupportedAudioFormats;
+        const cameraVideoResolution = req.body.cameraVideoResolution;
+        const cameraVideoResolutionDetails = req.body.cameraVideoResolutionDetails;
+        const cameraBatteryType = req.body.cameraBatteryType;
+        const cameraBatteryCapacity = req.body.cameraBatteryCapacity;
+        const cameraNoOfShots = req.body.cameraNoOfShots;
+        const cameraMicrophone = req.body.cameraMicrophone;
+        const cameraTripodSocket = req.body.cameraTripodSocket;
+        const cameraHeadphoneJack = req.body.cameraHeadphoneJack;
+        const cameraUSBConnectivity = req.body.cameraUSBConnectivity;
+        const cameraPictBridgeSupport = req.body.cameraPictBridgeSupport;
 
 
-        const gadget_data = new gadget({ 
-            gadgetname: gadgetname, gadgetprice: gadgetprice, gadgettype: gadgettype, gadgetdescription: gadgetdescription, gadgetimage: req.file.filename, 
+        const gadget_data = new gadget({
+            gadgetname: gadgetname, gadgetprice: gadgetprice, gadgettype: gadgettype, gadgetdescription: gadgetdescription, gadgetimage: req.file.filename,
             laptopBrand: laptopBrand, laptopModel: laptopModel, laptopDimension: laptopDimension, laptopWeight: laptopWeight,
             laptopSize: laptopSize, laptopResolution: laptopResolution, laptopProcessor: laptopProcessor, laptopBaseClock: laptopBaseClock,
             laptopSpeed: laptopSpeed, laptopRam: laptopRam, laptopGraphic: laptopGraphic, laptopDedicatedGraphicMemory: laptopDedicatedGraphicMemory,
             laptopDedicatedGraphic: laptopDedicatedGraphic, laptopHarddisk: laptopHarddisk, laptopSSD: laptopSSD, laptopNoOfUSBPorts: laptopNoOfUSBPorts,
             laptopUSBPorts: laptopUSBPorts, laptopHDMIPorts: laptopHDMIPorts, laptopMultiCardSlot: laptopMultiCardSlot, laptopHeadphone: laptopHeadphone,
-            laptopJack: laptopJack});
+            laptopJack: laptopJack,
+            cameraType: cameraType, cameraResolution: cameraResolution, cameraSalesPackage: cameraSalesPackage, cameraDimensions: cameraDimensions,
+            cameraWeight: cameraWeight, cameraLensType: cameraLensType, cameraLensFocalLength: cameraLensFocalLength, cameraSensorType: cameraSensorType,
+            cameraSensorFormat: cameraSensorFormat, cameraSensorSize: cameraSensorSize, cameraScreenSize: cameraScreenSize, cameraDisplayType: cameraDisplayType,
+            cameraDisplayResolution: cameraDisplayResolution, cameraMemoryCardType: cameraMemoryCardType, cameraConnectivity: cameraConnectivity, cameraVideoFormats: cameraVideoFormats,
+            cameraHDRSupport: cameraHDRSupport, cameraImageFormats: cameraImageFormats, cameraSupportedAudioFormats: cameraSupportedAudioFormats,
+            cameraVideoResolution: cameraVideoResolution, cameraVideoResolutionDetails: cameraVideoResolutionDetails, cameraBatteryType: cameraBatteryType,
+            cameraBatteryCapacity: cameraBatteryCapacity, cameraNoOfShots: cameraNoOfShots, cameraMicrophone: cameraMicrophone, cameraTripodSocket: cameraTripodSocket,
+            cameraHeadphoneJack: cameraHeadphoneJack, cameraUSBConnectivity: cameraUSBConnectivity, cameraPictBridgeSupport: cameraPictBridgeSupport
+
+        });
         gadget_data.save()
             .then(function (result) {
                 res.status(201).json({ message: "Gadget Added" })
