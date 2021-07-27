@@ -10,7 +10,7 @@ const Gadget = mongoose.model('gadget', {
     },
     gadgettype: {
         type: String,
-        enum: ['Laptop', 'camera'],
+        enum: ['Laptop', 'Camera'],
         required: true
     },
     gadgetdescription: [String],
@@ -19,6 +19,8 @@ const Gadget = mongoose.model('gadget', {
         type: String,
         // required: true
     },
+
+laptop:{
     laptopBrand: {
         type: String
     },
@@ -81,9 +83,101 @@ const Gadget = mongoose.model('gadget', {
     },
     laptopJack: {
         type: String
+    },
+
+},
+camera:{
+    // Camera Details
+
+    cameraType: {
+        type: String
+    },
+    cameraResolution: {
+        type: String
+    },
+    cameraSalesPackage: {
+        type: String
+    },
+    cameraDimensions: {
+        type: String
+    },
+    cameraWeight: {
+        type: String
+    },
+    cameraLensType: {
+        type: String
+    },
+    cameraLensFocalLength: {
+        type: String
+    },
+    cameraSensorType: {
+        type: String
+    },
+    cameraSensorFormat: {
+        type: String
+    },
+    cameraSensorSize: {
+        type: String
+    },
+    cameraScreenSize: {
+        type: String
+    },
+    cameraDisplayType: {
+        type: String
+    },
+    cameraDisplayResolution: {
+        type: String
+    },
+    cameraMemoryCardType: {
+        type: String
+    },
+    cameraConnectivity: {
+        type: String
+    },
+    cameraConnectivity: {
+        type: String
+    },
+    cameraHDRSupport: {
+        type: String
+    },
+    cameraImageFormats: {
+        type: String
+    },
+    cameraSupportedAudioFormats: {
+        type: String
+    },
+    cameraVideoResolution: {
+        type: String
+    },
+    cameraVideoResolutionDetails: {
+        type: String
+    },
+    cameraBatteryType: {
+        type: String
+    },
+    cameraBatteryCapacity: {
+        type: String
+    },
+    cameraNoOfShots: {
+        type: String
+    },
+    cameraMicrophone: {
+        type: String
+    },
+    cameraTripodSocket: {
+        type: String
+    },
+    cameraHeadphoneJack: {
+        type: String
+    },
+    cameraUSBConnectivity: {
+        type: String
+    },
+    cameraPictBridgeSupport: {
+        type: String
     }
 
-
+}
 
 
 })
