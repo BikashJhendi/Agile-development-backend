@@ -40,13 +40,13 @@ router.get('/cosmetic/showall', function (req, res) {
             res.status(500).json({ message: e })
         })
 })
-router.get('/cosmetic/six', function (req, res) {
+router.get('/cosmetic/five', function (req, res) {
 
-    cosmetic.find().limit(6)
-        .then(function (cosmetic_six) {
+    cosmetic.find().limit(5)
+        .then(function (cosmetic_five) {
             res.status(200).json({
                 success: true,
-                data: cosmetic_six
+                data: cosmetic_five
             });
         })
         .catch(function (e) {

@@ -71,13 +71,13 @@ router.get('/gadget/showall', function (req, res) {
         })
 })
 
-router.get('/gadget/six', function (req, res) {
+router.get('/gadget/five', function (req, res) {
 
-    gadget.find().limit(6)
-        .then(function (cosmetic_six) {
+    gadget.find().limit(5)
+        .then(function (gadget_five) {
             res.status(200).json({
                 success: true,
-                data: cosmetic_six
+                data: gadget_five
             });
         })
         .catch(function (e) {
