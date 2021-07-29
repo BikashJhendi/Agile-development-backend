@@ -22,7 +22,7 @@ app.use(cosmeticRoute);
 
 
 //Images
-app.use(express.static(path.join(__dirname, "")));
+app.use(express.static(path.join(__dirname, "assets")));
 app.use(bodyparser.urlencoded({ extended: false }));
 
 
