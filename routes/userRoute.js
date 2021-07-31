@@ -3,22 +3,16 @@ const router = express.Router();
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const User = require('../models/users.js');
+const userImg = require('../middleware/userImg.js');
 
 
 // User Signup
 router.post('/user/signup',
-	(req, res) => {
-		const firstname = req.body.firstname;
-		const lastname = req.body.lastname;
-		const email = req.body.email;
-		const phone = req.body.phone;
-		const password = req.body.password;
-		const district = req.body.district;
-		const tole = req.body.tole;
-
+	function (req, res) {
+		const { firstname, lastname, email, phone, password, district, tole } = req.body;
 
 		bcrypt.hash(password, 10, function (err, hash) {
-			const userdata = new User({ firstname: firstname, lastname: lastname, email: email, phone: phone, password: hash, district: district, tole: tole });
+			const userdata = new User({ firstname, lastname, email, phone, password: hash, district, tole });
 			userdata.save()
 				.then(function (result) {
 					// success insert
@@ -27,39 +21,92 @@ router.post('/user/signup',
 				})
 				.catch(function (e) {
 					res.status(500).json({ message: e, success: false })
-				}
-				)
-		}
-		)
-	
+				})
+		})
 	})
 
 // login
-
 router.post('/user/login', function (req, res) {
-	const email = req.body.email;
-	const password = req.body.password;
+	const { email, password } = req.body;
 
 	User.findOne({ email: email })
 		.then(function (userdata) {
 			if (userdata == null) {
-				return res.status(403).json({ message: "email or password is incorrect" })
+				return res.status(403).json({
+					message: "email or password is incorrect",
+					success: false
+				})
 			}
 			bcrypt.compare(password, userdata.password, function (err, result) {
 				if (result === false) {
-					return res.status(403).json({ message: "email or password is incorrect" })
+					return res.status(403).json({
+						message: "email or password is incorrect",
+						success: false
+					})
 				}
-				const token = jwt.sign({ UserID: userdata._id }, 'secretkey');
+
+				// token 
+				const token = jwt.sign({
+					userId: userdata._id, firstName: userdata.firstname, lastName: userdata.lastname,
+					email: userdata.email, img: userdata.img, userType: userdata.userType
+				}, 'secretKey');
+
 				res.status(200).json({
 					message: "login success",
 					success: true,
 					token: token,
-					data: userdata
-
+					userType: userdata.userType
 				})
 			})
 		})
-
-		.catch()
+		.catch(function (err) {
+			res.status(500).json({ // 500 internal server error
+				success: false,
+				message: "Server Error",
+				error: err
+			});
+		})
 })
+
+router.put('/update/:id',
+	userImg.single('img'),
+	function (req, res) {
+		const { id } = req.params;
+
+		User.findOne({ _id: id })
+			.then(function (userData) {
+
+				return User.updateOne({ _id: id }, { img: req.file.filename })
+					.then(function (result) {
+						res.status(200).json({ // 200 OK 
+							success: true,
+							message: "Account successfully updated."
+						})
+					})
+					.catch(function (err) {
+						res.status(500).json({ // 500 Internal Server Error
+							success: false,
+							message: "Unable to update account.",
+							error: err
+						});
+					})
+			})
+	})
+
+
+router.get('/user/token/decode', function (req, res) {
+	const token = req.headers.authorization.split(" ")[1];
+	const decode = jwt.verify(token, "secretKey");
+	const { userId, firstName, lastName, email, img, userType } = decode;
+
+	res.status(200).json({
+		userId,
+		firstName,
+		lastName,
+		email,
+		img,
+		userType
+	})
+})
+
 module.exports = router;
