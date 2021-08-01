@@ -3,73 +3,80 @@ const router = express.Router();
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const User = require('../models/users.js');
-const userImg = require('../middleware/userImg.js');
+const uploadImg = require('../middleware/userImg.js');
 
 
 // User Signup
 router.post('/user/signup',
 	function (req, res) {
-		const { firstname, lastname, email, phone, password, district, tole } = req.body;
+		const { firstname, lastname, email, password } = req.body;
 
 		bcrypt.hash(password, 10, function (err, hash) {
-			const userdata = new User({ firstname, lastname, email, phone, password: hash, district, tole });
+			const userdata = new User({ firstname, lastname, email, password: hash });
 			userdata.save()
 				.then(function (result) {
 					// success insert
-					res.status(201).json({ message: "Registered success !!", success: true });
+					res.status(201).json({
+						message: "Registered success !!",
+						success: true
+					});
 
 				})
-				.catch(function (e) {
-					res.status(500).json({ message: e, success: false })
+				.catch(function (err) {
+					res.status(500).json({
+						message: err,
+						success: false
+					})
 				})
 		})
 	})
 
 // login
-router.post('/user/login', function (req, res) {
-	const { email, password } = req.body;
+router.post('/user/login',
+	function (req, res) {
+		const { email, password } = req.body;
 
-	User.findOne({ email: email })
-		.then(function (userdata) {
-			if (userdata == null) {
-				return res.status(403).json({
-					message: "email or password is incorrect",
-					success: false
-				})
-			}
-			bcrypt.compare(password, userdata.password, function (err, result) {
-				if (result === false) {
+		User.findOne({ email: email })
+			.then(function (userdata) {
+				if (userdata == null) {
 					return res.status(403).json({
 						message: "email or password is incorrect",
 						success: false
 					})
 				}
+				bcrypt.compare(password, userdata.password, function (err, result) {
+					if (result === false) {
+						return res.status(403).json({
+							message: "email or password is incorrect",
+							success: false
+						})
+					}
 
-				// token 
-				const token = jwt.sign({
-					userId: userdata._id, firstName: userdata.firstname, lastName: userdata.lastname,
-					email: userdata.email, img: userdata.img, userType: userdata.userType
-				}, 'secretKey');
+					// creates token 
+					const token = jwt.sign({
+						userId: userdata._id, firstName: userdata.firstname, lastName: userdata.lastname,
+						email: userdata.email, img: userdata.img, userType: userdata.userType
+					}, 'secretKey');
 
-				res.status(200).json({
-					message: "login success",
-					success: true,
-					token: token,
-					userType: userdata.userType
+					res.status(200).json({
+						message: "login success",
+						success: true,
+						token: token,
+						userType: userdata.userType
+					})
 				})
 			})
-		})
-		.catch(function (err) {
-			res.status(500).json({ // 500 internal server error
-				success: false,
-				message: "Server Error",
-				error: err
-			});
-		})
-})
+			.catch(function (err) {
+				res.status(500).json({ // 500 internal server error
+					success: false,
+					message: "Server Error",
+					error: err
+				});
+			})
+	})
 
 router.put('/update/:id',
-	userImg.single('img'),
+	uploadImg.single('img'),
 	function (req, res) {
 		const { id } = req.params;
 
@@ -93,20 +100,29 @@ router.put('/update/:id',
 			})
 	})
 
+// decoding token
+router.get('/user/token/decode',
+	function (req, res) {
+		const token = req.headers.authorization.split(" ")[1];
 
-router.get('/user/token/decode', function (req, res) {
-	const token = req.headers.authorization.split(" ")[1];
-	const decode = jwt.verify(token, "secretKey");
-	const { userId, firstName, lastName, email, img, userType } = decode;
+		if (token === "null") {
+			return res.status(400).json({
+				message: "Didn't find token."
+			})
+		}
+		else {
+			const decode = jwt.verify(token, "secretKey");
+			const { userId, firstName, lastName, email, img, userType } = decode;
 
-	res.status(200).json({
-		userId,
-		firstName,
-		lastName,
-		email,
-		img,
-		userType
+			res.status(200).json({
+				userId,
+				firstName,
+				lastName,
+				email,
+				img,
+				userType
+			})
+		}
 	})
-})
 
 module.exports = router;
