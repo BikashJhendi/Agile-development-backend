@@ -4,6 +4,7 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const User = require('../models/users.js');
 const uploadImg = require('../middleware/userImg.js');
+const mail = require('../mail/mail.js')
 
 
 // User Signup
@@ -21,6 +22,7 @@ router.post('/user/signup',
 						success: true
 					});
 
+					mail.validation_mail(firstname, email)
 				})
 				.catch(function (err) {
 					res.status(500).json({
@@ -74,55 +76,56 @@ router.post('/user/login',
 						});
 					})
 			})
+	})
 
-		router.put('/update/:id',
-			uploadImg.single('img'),
-			function (req, res) {
-				const { id } = req.params;
+router.put('/update/:id',
+	uploadImg.single('img'),
+	function (req, res) {
+		const { id } = req.params;
 
-				User.findOne({ _id: id })
-					.then(function (userData) {
+		User.findOne({ _id: id })
+			.then(function (userData) {
 
-						return User.updateOne({ _id: id }, { img: req.file.filename })
-							.then(function (result) {
-								res.status(200).json({ // 200 OK 
-									success: true,
-									message: "Account successfully updated."
-								})
-							})
-							.catch(function (err) {
-								res.status(500).json({ // 500 Internal Server Error
-									success: false,
-									message: "Unable to update account.",
-									error: err
-								});
-							})
+				return User.updateOne({ _id: id }, { img: req.file.filename })
+					.then(function (result) {
+						res.status(200).json({ // 200 OK 
+							success: true,
+							message: "Account successfully updated."
+						})
+					})
+					.catch(function (err) {
+						res.status(500).json({ // 500 Internal Server Error
+							success: false,
+							message: "Unable to update account.",
+							error: err
+						});
 					})
 			})
+	})
 
-		// decoding token
-		router.get('/user/token/decode',
-			function (req, res) {
-				const token = req.headers.authorization.split(" ")[1];
+// decoding token
+router.get('/user/token/decode',
+	function (req, res) {
+		const token = req.headers.authorization.split(" ")[1];
 
-				if (token === "null") {
-					return res.status(400).json({
-						message: "Didn't find token."
-					})
-				}
-				else {
-					const decode = jwt.verify(token, "secretKey");
-					const { userId, firstName, lastName, email, img, userType } = decode;
-
-					res.status(200).json({
-						userId,
-						firstName,
-						lastName,
-						email,
-						img,
-						userType
-					})
-				}
+		if (token === "null") {
+			return res.status(400).json({
+				message: "Didn't find token."
 			})
+		}
+		else {
+			const decode = jwt.verify(token, "secretKey");
+			const { userId, firstName, lastName, email, img, userType } = decode;
 
-		module.exports = router;
+			res.status(200).json({
+				userId,
+				firstName,
+				lastName,
+				email,
+				img,
+				userType
+			})
+		}
+	})
+
+module.exports = router;

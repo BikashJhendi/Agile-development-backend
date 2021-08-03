@@ -16,11 +16,13 @@ const User = mongoose.model('User', {
     },
     phone: {
         type: String,
-        // required : true
     },
     password: {
         type: String,
         required: true
+    },
+    img: {
+        type: String,
     },
     district: {
         type: String,
@@ -28,13 +30,18 @@ const User = mongoose.model('User', {
     tole: {
         type: String,
     },
-    img: {
-        type: String,
+    verified: {
+        type: Boolean,
+        default: false
     },
     userType: {
         type: String,
         enum: ['User', 'Admin'],
         default: 'User'
+    },
+    registeredDate: {
+        type: Date,
+        default: Date.now
     }
 })
 
