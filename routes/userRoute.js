@@ -62,67 +62,67 @@ router.post('/user/login',
 						message: "login success",
 						success: true,
 						token: token,
-						userType: userdata.userType
+						userType: userdata.userType,
+						userid: userdata._id
 					})
 				})
-			})
-			.catch(function (err) {
-				res.status(500).json({ // 500 internal server error
-					success: false,
-					message: "Server Error",
-					error: err
-				});
-			})
-	})
-
-router.put('/update/:id',
-	uploadImg.single('img'),
-	function (req, res) {
-		const { id } = req.params;
-
-		User.findOne({ _id: id })
-			.then(function (userData) {
-
-				return User.updateOne({ _id: id }, { img: req.file.filename })
-					.then(function (result) {
-						res.status(200).json({ // 200 OK 
-							success: true,
-							message: "Account successfully updated."
-						})
-					})
 					.catch(function (err) {
-						res.status(500).json({ // 500 Internal Server Error
+						res.status(500).json({ // 500 internal server error
 							success: false,
-							message: "Unable to update account.",
+							message: "Server Error",
 							error: err
 						});
 					})
 			})
-	})
 
-// decoding token
-router.get('/user/token/decode',
-	function (req, res) {
-		const token = req.headers.authorization.split(" ")[1];
+		router.put('/update/:id',
+			uploadImg.single('img'),
+			function (req, res) {
+				const { id } = req.params;
 
-		if (token === "null") {
-			return res.status(400).json({
-				message: "Didn't find token."
+				User.findOne({ _id: id })
+					.then(function (userData) {
+
+						return User.updateOne({ _id: id }, { img: req.file.filename })
+							.then(function (result) {
+								res.status(200).json({ // 200 OK 
+									success: true,
+									message: "Account successfully updated."
+								})
+							})
+							.catch(function (err) {
+								res.status(500).json({ // 500 Internal Server Error
+									success: false,
+									message: "Unable to update account.",
+									error: err
+								});
+							})
+					})
 			})
-		}
-		else {
-			const decode = jwt.verify(token, "secretKey");
-			const { userId, firstName, lastName, email, img, userType } = decode;
 
-			res.status(200).json({
-				userId,
-				firstName,
-				lastName,
-				email,
-				img,
-				userType
+		// decoding token
+		router.get('/user/token/decode',
+			function (req, res) {
+				const token = req.headers.authorization.split(" ")[1];
+
+				if (token === "null") {
+					return res.status(400).json({
+						message: "Didn't find token."
+					})
+				}
+				else {
+					const decode = jwt.verify(token, "secretKey");
+					const { userId, firstName, lastName, email, img, userType } = decode;
+
+					res.status(200).json({
+						userId,
+						firstName,
+						lastName,
+						email,
+						img,
+						userType
+					})
+				}
 			})
-		}
-	})
 
-module.exports = router;
+		module.exports = router;
