@@ -14,11 +14,13 @@ const db = require('./Database/database.js');
 const userRoute = require('./routes/userRoute');
 const gadgetRoute = require('./routes/gadgetRoute');
 const cosmeticRoute = require('./routes/cosmeticRoute');
+const cartRoute = require('./routes/cartRoute');
 
 //app.use
 app.use(userRoute);
 app.use(gadgetRoute);
 app.use(cosmeticRoute);
+app.use(cartRoute);
 
 
 //Images
@@ -27,6 +29,6 @@ app.use(bodyparser.urlencoded({ extended: false }));
 
 
 //listen
-app.listen(90, () => console.log("Server running..."));
+app.listen(90);
 
 module.exports = app;
