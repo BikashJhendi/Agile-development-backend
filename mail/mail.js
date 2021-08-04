@@ -1,20 +1,18 @@
 const express = require('express');
 const nodemailer = require('nodemailer');
 const { google } = require('googleapis');
-const fs = require('fs');
-const hbs = require('hbs');
+const fs = require('fs'), path = require('path');
+const Handlebars = require('handlebars');
 
 const { CLIENT_ID, CLIENT_SECRET, REDIRECT_URI, REFRESH_TOKEN, USER_EMAIL } = require('./config');
-// var htmlstream = fs.createReadStream("./mail/test.html");
-// var compileTe = compile(htmlstream);
 
-var template = fs.readFileSync('./mail/test.hbs', 'utf-8');
-var compileTemplate = hbs.compile(template);
+var template = fs.readFileSync(path.join(__dirname, '../views/mailTemplate/confirmEmail.hbs'), 'utf-8');
+var compileTemplate = Handlebars.compile(template);
 
 const oAuth2Client = new google.auth.OAuth2(CLIENT_ID, CLIENT_SECRET, REDIRECT_URI)
 oAuth2Client.setCredentials({ refresh_token: REFRESH_TOKEN })
 
-function validation_mail(first, recipient_email) {
+function validation_mail(firstName, recipient_email, verifyToken) {
     const accessToken = oAuth2Client.getAccessToken()
 
     const transporter = nodemailer.createTransport({
@@ -32,13 +30,10 @@ function validation_mail(first, recipient_email) {
     // var test = compileTemplate.render({ first: 'name' })
 
     const mailOptions = {
-        from: `"Dhuwani Team" <${USER_EMAIL}>`,
+        from: `"Dhuwani" <${USER_EMAIL}>`,
         to: recipient_email,
-        subject: 'Testing',
-        html: template,
-        context: {
-            first: first
-        }
+        subject: 'Email Verification Mail',
+        html: compileTemplate({ firstName, verifyToken })
     };
 
     transporter.sendMail(mailOptions, function (err, data) {
@@ -46,7 +41,7 @@ function validation_mail(first, recipient_email) {
             console.log('Error Occurs', err);
         }
         else {
-            console.log('Email sent!!!!', data);
+            console.log('Email Sent!!!', data);
         }
         transporter.close()
     })

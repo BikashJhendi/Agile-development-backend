@@ -22,7 +22,12 @@ router.post('/user/signup',
 						success: true
 					});
 
-					mail.validation_mail(firstname, email)
+					// creates token 
+					const verifyToken = jwt.sign({
+						email: userdata.email, registeredDate: userdata.registeredDate
+					}, 'secretKey', { expiresIn: '1d' });
+
+					mail.validation_mail(firstname, email, verifyToken)
 				})
 				.catch(function (err) {
 					res.status(500).json({
@@ -31,6 +36,48 @@ router.post('/user/signup',
 					})
 				})
 		})
+	})
+
+
+router.put('/user/email/verify/:token',
+	function (req, res) {
+		const { token } = req.params;
+		const decode = jwt.verify(token, "secretKey", (err, decoded) => {
+			if (err) {
+				return res.status(404).json({
+					message: "Broken Link or Token Expried.",
+					success: false
+				})
+			}
+
+			return decoded;
+		});
+
+		const { email } = decode;
+
+		User.find({ email: email })
+			.then(function (data) {
+
+				User.updateOne({ email: email }, { verified: true })
+					.then(function (data) {
+						res.status(200).json({
+							message: "Email Verified",
+							success: true
+						})
+					})
+					.catch(function (err) {
+						res.status(401).json({
+							message: "Can't verified email.",
+							success: false
+						})
+					})
+			})
+			.catch(function (err) {
+				res.status(500).json({
+					message: err,
+					success: false
+				})
+			})
 	})
 
 // login
@@ -127,5 +174,20 @@ router.get('/user/token/decode',
 			})
 		}
 	})
+
+// delete
+router.delete('/delete/:email',
+	function (req, res) {
+		const { email } = req.params;
+
+		User.deleteOne({ email: email })
+			.then(function (result) {
+				res.status(200).json({ message: "User deleted", success: true })
+			})
+			.catch(function (err) {
+				res.status(500).json({ message: "unable to add" })
+			})
+	}
+)
 
 module.exports = router;

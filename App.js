@@ -16,6 +16,9 @@ const gadgetRoute = require('./routes/gadgetRoute');
 const cosmeticRoute = require('./routes/cosmeticRoute');
 const cartRoute = require('./routes/cartRoute');
 
+// view engine set
+app.set("view engine", "hbs");
+
 //app.use
 app.use(userRoute);
 app.use(gadgetRoute);
