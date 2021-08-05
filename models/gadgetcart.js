@@ -4,13 +4,21 @@ const GadgetCart = mongoose.model('gadgetcart', {
         type: String  
     },
     productid: {
-        type: String
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'users'
        
     },
     quantity:{
-        type: String
-    }
+        type: String,
+    },
 
+    gadgetname:{
+        type:String
+    },
+
+    gadgetprice:{
+        type :String
+    },
 })
 
 module.exports = GadgetCart;
