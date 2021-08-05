@@ -24,7 +24,7 @@ router.post('/user/signup',
 
 					// creates token 
 					const verifyToken = jwt.sign({
-						email: userdata.email, registeredDate: userdata.registeredDate
+						email: userdata.email
 					}, 'secretKey', { expiresIn: '1d' });
 
 					mail.validation_mail(firstname, email, verifyToken)
@@ -38,7 +38,7 @@ router.post('/user/signup',
 		})
 	})
 
-
+// Email validation
 router.put('/user/email/verify/:token',
 	function (req, res) {
 		const { token } = req.params;
@@ -115,13 +115,13 @@ router.post('/user/login',
 						userid: userdata._id
 					})
 				})
-					.catch(function (err) {
-						res.status(500).json({ // 500 internal server error
-							success: false,
-							message: "Server Error",
-							error: err
-						});
-					})
+			})
+			.catch(function (err) {
+				res.status(500).json({ // 500 internal server error
+					success: false,
+					message: "Server Error",
+					error: err
+				});
 			})
 	})
 
@@ -189,5 +189,30 @@ router.delete('/delete/:email',
 			})
 	}
 )
+
+
+// get all data
+router.get('/getall',
+	function (req, res) {
+		User.find()
+			.then(function (data) {
+				res.status(200).json({
+					message: "all data ",
+					data: data
+				})
+			})
+	})
+
+// delete all user
+router.delete('/deleteall',
+	function (req, res) {
+		User.deleteMany()
+			.then(function (data) {
+				res.status(200).json({
+					message: "all data delete",
+					data: data
+				})
+			})
+	})
 
 module.exports = router;
