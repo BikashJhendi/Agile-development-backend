@@ -190,4 +190,16 @@ router.delete('/delete/:email',
 	}
 )
 
+// user get
+router.get('/user/profile/:id', function (req, res) {
+    const uid = req.params.id
+    Users.findOne({ _id: uid })
+        .then(function (data) {
+            res.status(200).json(data);
+        })
+        .catch(function (e) {
+            res.status(500).json({ message: e })
+        })
+})
+
 module.exports = router;
