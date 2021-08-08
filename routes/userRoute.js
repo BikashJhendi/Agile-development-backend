@@ -193,7 +193,7 @@ router.delete('/delete/:email',
 // user get
 router.get('/user/profile/:id', function (req, res) {
 	const uid = req.params.id
-	Users.findOne({ _id: uid })
+	User.findOne({ _id: uid })
 		.then(function (data) {
 			res.status(200).json(data);
 		})
