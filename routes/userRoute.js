@@ -24,7 +24,7 @@ router.post('/user/signup',
 
 					// creates token 
 					const verifyToken = jwt.sign({
-						email: userdata.email, registeredDate: userdata.registeredDate
+						email: userdata.email
 					}, 'secretKey', { expiresIn: '1d' });
 
 					mail.validation_mail(firstname, email, verifyToken)
@@ -38,7 +38,7 @@ router.post('/user/signup',
 		})
 	})
 
-
+// Email validation
 router.put('/user/email/verify/:token',
 	function (req, res) {
 		const { token } = req.params;
@@ -49,35 +49,42 @@ router.put('/user/email/verify/:token',
 					success: false
 				})
 			}
+			else {
+				return decoded;
+			}
 
-			return decoded;
 		});
 
-		const { email } = decode;
+		if (decode.email) {
+			const { email } = decode;
 
-		User.find({ email: email })
-			.then(function (data) {
+			User.find({ email: email })
+				.then(function (data) {
 
-				User.updateOne({ email: email }, { verified: true })
-					.then(function (data) {
-						res.status(200).json({
-							message: "Email Verified",
-							success: true
+					User.updateOne({ email: email }, { verified: true })
+						.then(function (data) {
+							res.status(200).json({
+								message: "Email Verified",
+								success: true
+							})
 						})
-					})
-					.catch(function (err) {
-						res.status(401).json({
-							message: "Can't verified email.",
-							success: false
+						.catch(function (err) {
+							if (err) {
+								return res.status(401).json({
+									message: "Can't verified email.",
+									success: false,
+									error: err
+								})
+							}
 						})
-					})
-			})
-			.catch(function (err) {
-				res.status(500).json({
-					message: err,
-					success: false
 				})
-			})
+				.catch(function (err) {
+					res.status(500).json({
+						message: err,
+						success: false
+					})
+				})
+		}
 	})
 
 // login
@@ -112,17 +119,53 @@ router.post('/user/login',
 						success: true,
 						token: token,
 						userType: userdata.userType,
-						userid: userdata._id
+						userid: userdata._id,
+						verified: userdata.verified
 					})
 				})
-					.catch(function (err) {
-						res.status(500).json({ // 500 internal server error
-							success: false,
-							message: "Server Error",
-							error: err
-						});
-					})
 			})
+			.catch(function (err) {
+				res.status(500).json({ // 500 internal server error
+					success: false,
+					message: "Server Error",
+					error: err
+				});
+			})
+	})
+
+// send validation mail again 
+router.post('/login/send/validation-mail',
+	function (req, res) {
+		const token = req.headers.authorization.split(" ")[1];
+		const decode = jwt.verify(token, "secretKey");
+
+		console.log(token);
+		if (token === "null") {
+			return res.status(400).json({
+				message: "Didn't find token."
+			})
+		}
+		else {
+			const { firstName, email } = decode;
+
+			// creates token 
+			const verifyToken = jwt.sign({
+				email: email
+			}, 'secretKey', { expiresIn: '1d' });
+
+			const value = mail.validation_mail(firstName, email, verifyToken)
+
+			// console.log(
+			// 	mail.validation_mail(firstName, email, verifyToken)
+			// );
+
+			console.log(value)
+
+			res.status(200).json({
+				message: "Email Sent!!!",
+				success: true
+			})
+		}
 	})
 
 router.put('/update/:id',
@@ -192,14 +235,38 @@ router.delete('/delete/:email',
 
 // user get
 router.get('/user/profile/:id', function (req, res) {
-    const uid = req.params.id
-    User.findOne({ _id: uid })
-        .then(function (data) {
-            res.status(200).json(data);
-        })
-        .catch(function (e) {
-            res.status(500).json({ message: e })
-        })
+	const uid = req.params.id
+	User.findOne({ _id: uid })
+		.then(function (data) {
+			res.status(200).json(data);
+		})
+		.catch(function (e) {
+			res.status(500).json({ message: e })
+		})
 })
+
+// get all data
+router.get('/getall',
+	function (req, res) {
+		User.find()
+			.then(function (data) {
+				res.status(200).json({
+					message: "all data ",
+					data: data
+				})
+			})
+	})
+
+// delete all user
+router.delete('/deleteall',
+	function (req, res) {
+		User.deleteMany()
+			.then(function (data) {
+				res.status(200).json({
+					message: "all data delete",
+					data: data
+				})
+			})
+	})
 
 module.exports = router;

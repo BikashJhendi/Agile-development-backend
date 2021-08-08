@@ -325,13 +325,17 @@
                                                             <div
                                                                 style="line-height: 160%; text-align: justify; word-wrap: break-word;">
                                                                 <p style="font-size: 14px; line-height: 160%;"><span
-                                                                        style="font-size: 22px; line-height: 35.2px;">Hi
-                                                                        {{first}}, </span></p>
+                                                                        style="font-size: 22px; line-height: 35.2px; text-transform: capitalize; ">Hi
+                                                                        {{firstName}}, </span></p>
                                                                 <p style="font-size: 14px; line-height: 160%;"><span
                                                                         style="font-size: 18px; line-height: 28.8px;">You're
                                                                         almost ready to get started. Please click on the
                                                                         button below to verify your email address and
-                                                                        enjoy the drop-shipping from us! </span></p>
+                                                                        enjoy the drop-shipping from us!
+                                                                        <br>
+                                                                        This link is only valid for 24 hours. After
+                                                                        then, it will expire.
+                                                                    </span></p>
                                                             </div>
 
                                                         </td>
@@ -349,7 +353,7 @@
 
                                                             <div align="center">
                                                                 <!--[if mso]><table width="100%" cellpadding="0" cellspacing="0" border="0" style="border-spacing: 0; border-collapse: collapse; mso-table-lspace:0pt; mso-table-rspace:0pt;font-family:'Cabin',sans-serif;"><tr><td style="font-family:'Cabin',sans-serif;" align="center"><v:roundrect xmlns:v="urn:schemas-microsoft-com:vml" xmlns:w="urn:schemas-microsoft-com:office:word" href="https://dhuwani.netlify.app/" style="height:46px; v-text-anchor:middle; width:234px;" arcsize="65%" stroke="f" fillcolor="#1c96c5"><w:anchorlock/><center style="color:#FFFFFF;font-family:'Cabin',sans-serif;"><![endif]-->
-                                                                <a href="http://localhost:3000/email/verify/{{verifyToken}}"
+                                                                <a href="{{FRONTEND_HOST}}/register/email/verify/{{verifyToken}}"
                                                                     target="_blank"
                                                                     style="box-sizing: border-box;display: inline-block;font-family:'Cabin',sans-serif;text-decoration: none;-webkit-text-size-adjust: none;text-align: center;color: #FFFFFF; background-color: #1c96c5; border-radius: 30px; -webkit-border-radius: 30px; -moz-border-radius: 30px; width:auto; max-width:100%; overflow-wrap: break-word; word-break: break-word; word-wrap:break-word; mso-border-alt: none;">
                                                                     <span

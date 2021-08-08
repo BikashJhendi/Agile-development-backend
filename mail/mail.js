@@ -4,7 +4,7 @@ const { google } = require('googleapis');
 const fs = require('fs'), path = require('path');
 const Handlebars = require('handlebars');
 
-const { CLIENT_ID, CLIENT_SECRET, REDIRECT_URI, REFRESH_TOKEN, USER_EMAIL } = require('./config');
+const { CLIENT_ID, CLIENT_SECRET, REDIRECT_URI, REFRESH_TOKEN, USER_EMAIL, FRONTEND_HOST } = require('./config');
 
 var template = fs.readFileSync(path.join(__dirname, '../views/mailTemplate/confirmEmail.hbs'), 'utf-8');
 var compileTemplate = Handlebars.compile(template);
@@ -33,7 +33,7 @@ function validation_mail(firstName, recipient_email, verifyToken) {
         from: `"Dhuwani" <${USER_EMAIL}>`,
         to: recipient_email,
         subject: 'Email Verification Mail',
-        html: compileTemplate({ firstName, verifyToken })
+        html: compileTemplate({ firstName, verifyToken, FRONTEND_HOST })
     };
 
     transporter.sendMail(mailOptions, function (err, data) {
@@ -45,6 +45,7 @@ function validation_mail(firstName, recipient_email, verifyToken) {
         }
         transporter.close()
     })
+
 }
 
 module.exports = {
