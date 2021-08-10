@@ -47,7 +47,7 @@ router.get('/mycart/showall', function (req, res) {
         })
 })
 
-router.delete('/delete/mycart', //auth.verifyUser, auth.verifyAdmin,
+router.delete('/remove/mycart', //auth.verifyUser, auth.verifyAdmin,
     function (req, res) {
         gadgetcart.deleteMany()
             .then(function (result) {
