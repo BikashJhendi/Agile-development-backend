@@ -139,7 +139,6 @@ router.post('/login/send/validation-mail',
 		const token = req.headers.authorization.split(" ")[1];
 		const decode = jwt.verify(token, "secretKey");
 
-		console.log(token);
 		if (token === "null") {
 			return res.status(400).json({
 				message: "Didn't find token."
@@ -155,16 +154,11 @@ router.post('/login/send/validation-mail',
 
 			mail.validation_mail(firstName, email, verifyToken)
 
-			// console.log(
-			// 	mail.validation_mail(firstName, email, verifyToken)
-			// );
+			res.status(200).json({
+				message: "Email Sent!!!",
+				success: true
+			})
 
-			// console.log(value)
-
-			// res.status(200).json({
-			// 	message: "Email Sent!!!",
-			// 	success: true
-			// })
 		}
 	})
 
