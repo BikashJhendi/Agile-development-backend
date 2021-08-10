@@ -153,30 +153,31 @@ router.post('/login/send/validation-mail',
 				email: email
 			}, 'secretKey', { expiresIn: '1d' });
 
-			const value = mail.validation_mail(firstName, email, verifyToken)
+			mail.validation_mail(firstName, email, verifyToken)
 
 			// console.log(
 			// 	mail.validation_mail(firstName, email, verifyToken)
 			// );
 
-			console.log(value)
+			// console.log(value)
 
-			res.status(200).json({
-				message: "Email Sent!!!",
-				success: true
-			})
+			// res.status(200).json({
+			// 	message: "Email Sent!!!",
+			// 	success: true
+			// })
 		}
 	})
 
-router.put('/update/:id',
+router.put('/user/update/:id',
 	uploadImg.single('img'),
 	function (req, res) {
 		const { id } = req.params;
+		const { firstname, lastname, email, phone } = req.body;
 
 		User.findOne({ _id: id })
 			.then(function (userData) {
 
-				return User.updateOne({ _id: id }, { img: req.file.filename })
+				return User.updateOne({ _id: id }, { firstname, lastname, email, phone, img: req.file.filename })
 					.then(function (result) {
 						res.status(200).json({ // 200 OK 
 							success: true,
