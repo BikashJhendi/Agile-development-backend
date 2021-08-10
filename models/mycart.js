@@ -12,13 +12,13 @@ const GadgetCart = mongoose.model('gadgetcart', {
         type: String,
     },
 
-    gadgetname:{
+    productname:{
         type:String
     },
 
-    gadgetprice:{
+    productprice:{
         type :String
-    },
+    }
 })
 
 module.exports = GadgetCart;
