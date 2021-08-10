@@ -1,15 +1,14 @@
 const express = require('express');
 const router = express.Router();
-const gadgetcart = require('../models/gadgetcart');
+const mycart = require('../models/mycart');
 const { check, validationResult } = require('express-validator')
-
 
 router.post('/gadgetcart/insert',
     function (req, res) {
      
-        const{userid, productid, quantity, gadgetname, gadgetprice}=req.body
+        const{userid, productid, quantity, productname, productprice}=req.body
 
-        const cart_id = new gadgetcart({ userid, productid, quantity, gadgetname, gadgetprice });
+        const cart_id = new mycart({ userid, productid, quantity, productname, productprice });
         cart_id.save()
             .then(function (result) {
                 res.status(201).json({ message: "cart Added" })
@@ -19,9 +18,24 @@ router.post('/gadgetcart/insert',
             });
     })
 
-router.get('/gadgetcart/one/:id', function (req, res) {
+    router.post('/cosmeticcart/insert',
+    function (req, res) {
+    
+        const{userid, productid, quantity, productname, productprice}=req.body;
+
+        const cart_id = new mycart({ userid, productid, quantity, productname, productprice });
+        cart_id.save()
+            .then(function (result) {
+                res.status(201).json({ message: "cart Added" })
+            })
+            .catch(function (err) {
+                res.status(500).json({ message: err })
+            });
+    })
+
+router.get('/mycart/one/:id', function (req, res) {
     const mycart = req.params.id
-    gadgetcart.find({ productid: mycart })
+    mycart.find({ productid: mycart })
         .then(function (data) {
             res.status(200).json({ data: data });
             
@@ -33,7 +47,7 @@ router.get('/gadgetcart/one/:id', function (req, res) {
 
 router.get('/mycart/showall', function (req, res) {
 
-    gadgetcart.find()
+    mycart.find()
         .then(function (mycart_data) {
             res.status(200).json({
                 success: true,
@@ -49,7 +63,7 @@ router.get('/mycart/showall', function (req, res) {
 
 router.delete('/remove/mycart', //auth.verifyUser, auth.verifyAdmin,
     function (req, res) {
-        gadgetcart.deleteMany()
+        mycart.deleteMany()
             .then(function (result) {
                 res.status(200).json({ message: "item removed" })
             })
@@ -61,7 +75,7 @@ router.delete('/remove/mycart', //auth.verifyUser, auth.verifyAdmin,
     router.delete("/delete/mycart/:id",function(req,res){
         const id = req.params.id;
     
-        gadgetcart.deleteOne({_id:id})
+        mycart.deleteOne({_id:id})
         .then(function(result){
             res.status(200).json({message : "item Removed",success:true})
         })

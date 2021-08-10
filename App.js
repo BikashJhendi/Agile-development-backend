@@ -14,8 +14,7 @@ const db = require('./Database/database.js');
 const userRoute = require('./routes/userRoute');
 const gadgetRoute = require('./routes/gadgetRoute');
 const cosmeticRoute = require('./routes/cosmeticRoute');
-const cosmeticCartRoute = require('./routes/gadgetCartRoute');
-const gadgetCartRoute = require('./routes/cosmeticCartRoute');
+const gadgetCartRoute = require('./routes/myCartRoute');
 
 // view engine set
 app.set("view engine", "hbs");
@@ -25,7 +24,6 @@ app.use(userRoute);
 app.use(gadgetRoute);
 app.use(cosmeticRoute);
 app.use(gadgetCartRoute);
-app.use(cosmeticCartRoute);
 
 
 //Images
