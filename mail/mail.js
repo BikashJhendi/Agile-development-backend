@@ -38,10 +38,19 @@ function validation_mail(firstName, recipient_email, verifyToken) {
 
     transporter.sendMail(mailOptions, function (err, data) {
         if (err) {
-            console.log('Error Occurs', err);
+            console.log(err)
+            // res.status(400).json({
+            //     message: err,
+            //     sucess: false
+            // })
+            // return err;
         }
         else {
             console.log('Email Sent!!!', data);
+            // res.status(200).json({
+            //     message: data,
+            //     sucess: true
+            // })
         }
         transporter.close()
     })

@@ -32,6 +32,8 @@ app.use(bodyparser.urlencoded({ extended: false }));
 
 
 //listen
-app.listen(90);
+app.listen(90, () => {
+    console.log("Server running...");
+});
 
 module.exports = app;
