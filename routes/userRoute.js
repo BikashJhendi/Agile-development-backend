@@ -162,7 +162,8 @@ router.post('/login/send/validation-mail',
 		}
 	})
 
-router.put('/user/update/:id',
+// user profile update
+router.put('/user/profile/update/:id',
 	uploadImg.single('img'),
 	function (req, res) {
 		const { id } = req.params;
@@ -170,21 +171,46 @@ router.put('/user/update/:id',
 
 		User.findOne({ _id: id })
 			.then(function (userData) {
+				if (userData == null) {
+					return res.status(403).json({ // 403 Forbidden
+						success: false,
+						message: "User Data. Not Found!!!"
+					})
+				}
 
-				return User.updateOne({ _id: id }, { firstname, lastname, email, phone, img: req.file.filename })
-					.then(function (result) {
-						res.status(200).json({ // 200 OK 
-							success: true,
-							message: "Account successfully updated."
+				if (!req.file) {
+					return User.updateOne({ _id: id }, { firstname, lastname, email, phone })
+						.then(function (result) {
+							res.status(200).json({ // 200 OK 
+								success: true,
+								message: "Account successfully updated."
+							})
 						})
-					})
-					.catch(function (err) {
-						res.status(500).json({ // 500 Internal Server Error
-							success: false,
-							message: "Unable to update account.",
-							error: err
-						});
-					})
+						.catch(function (err) {
+							res.status(500).json({ // 500 Internal Server Error
+								success: false,
+								message: "Unable to update account.",
+								error: err
+							});
+						})
+				}
+				else {
+					return User.updateOne({ _id: id }, { firstname, lastname, email, phone, img: req.file.filename })
+						.then(function (result) {
+							res.status(200).json({ // 200 OK 
+								success: true,
+								message: "Account successfully updated."
+							})
+						})
+						.catch(function (err) {
+							res.status(500).json({ // 500 Internal Server Error
+								success: false,
+								message: "Unable to update account.",
+								error: err
+							});
+						})
+				}
+
 			})
 	})
 
