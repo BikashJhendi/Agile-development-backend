@@ -239,6 +239,64 @@ router.get('/user/token/decode',
 		}
 	})
 
+// forget password
+router.put('/user/forgot',
+	function (req, res) {
+		const { email } = req.body;
+
+		User.findOne({ email: email })
+			.then(function (userData) {
+				if (!userData) {
+					return res.status(400).json({
+						message: "Email doesn't exist.",
+						success: false,
+						data: userData
+					})
+				}
+				else {
+					const { firstname } = userData;
+					// generate random password
+					randPass = Math.random().toString(32).toUpperCase().slice(-4) + Math.random().toString(32).toLowerCase().slice(-4)
+
+					bcrypt.hash(randPass, 10, function (err, hash) {
+						return User.updateOne({ email: email }, { password: hash, verified: true })
+							.then(function (data) {
+								if (!data) {
+									return res.status(400).json({
+										message: "Failed to reset Password.",
+										success: false,
+										data: data
+									})
+								}
+
+								mail.forgotPassword(firstname, randPass, email)
+
+								res.status(200).json({
+									message: "Password reset succesfully.",
+									success: true,
+									data: data
+								})
+							})
+							.catch(function (err) {
+								return res.status(400).json({
+									message: "Failed to reset Password.",
+									success: false,
+									error: err
+								})
+							})
+					})
+
+				}
+			})
+			.catch(function (err) {
+				res.status(500).json({
+					message: "Email doesn't exist.",
+					success: false,
+					error: err
+				})
+			})
+	})
+
 // delete
 router.delete('/delete/:email',
 	function (req, res) {
