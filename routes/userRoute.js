@@ -111,7 +111,7 @@ router.post('/user/login',
 					// creates token 
 					const token = jwt.sign({
 						userId: userdata._id, firstName: userdata.firstname, lastName: userdata.lastname,
-						email: userdata.email, img: userdata.img, userType: userdata.userType
+						email: userdata.email, phone: userdata.phone, img: userdata.img, userType: userdata.userType
 					}, 'secretKey');
 
 					res.status(200).json({
@@ -226,13 +226,14 @@ router.get('/user/token/decode',
 		}
 		else {
 			const decode = jwt.verify(token, "secretKey");
-			const { userId, firstName, lastName, email, img, userType } = decode;
+			const { userId, firstName, lastName, email, phone, img, userType } = decode;
 
 			res.status(200).json({
 				userId,
 				firstName,
 				lastName,
 				email,
+				phone,
 				img,
 				userType
 			})
