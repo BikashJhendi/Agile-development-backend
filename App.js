@@ -3,9 +3,9 @@ const cors = require('cors');
 require('dotenv').config();
 
 const app = express();
-
 const path = require('path');
 const bodyparser = require('body-parser')
+const port = process.env.PORT || 90;
 
 //getting database
 const db = require('./Database/database.js');
@@ -17,6 +17,10 @@ app.use((req, res, next) => {
     res.header('Access-Control-Allow-Origin', '*');
     next();
 });
+
+app.get("/", function (req, res) {
+    res.send("Working!!!");
+})
 
 //routes
 const userRoute = require('./routes/userRoute');
@@ -43,11 +47,10 @@ app.use(express.urlencoded({
     extended: false,
 }))
 
-const port = process.env.PORT || 90;
 
 //listen
 app.listen(port, () => {
-    console.log("Server running on PORT: " + port + " :)");
+    console.log(`Server running on PORT: ${port} :)`);
 });
 
 module.exports = app;
