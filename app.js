@@ -7,11 +7,12 @@ const path = require('path');
 const bodyparser = require('body-parser')
 const port = process.env.PORT || 90;
 
-//getting database
-const db = require('./Database/database.js');
 
 app.use(cors());
 app.use(express.json());
+
+//getting database
+const db = require('./database/database.js');
 
 app.use((req, res, next) => {
     res.header('Access-Control-Allow-Origin', '*');
@@ -31,13 +32,11 @@ const gadgetCartRoute = require('./routes/myCartRoute');
 // view engine set for hbs
 app.set("view engine", "hbs");
 
-
 //app.use
 app.use(userRoute);
 app.use(gadgetRoute);
 app.use(cosmeticRoute);
 app.use(gadgetCartRoute);
-
 
 //Images
 app.use(express.static(path.join(__dirname, "assets/image/")));
@@ -46,7 +45,6 @@ app.use(express.urlencoded({
     urlencoded: true,
     extended: false,
 }))
-
 
 //listen
 app.listen(port, () => {
