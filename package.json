@@ -2,9 +2,9 @@
   "name": "dropshipping_backend",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "app.js",
   "scripts": {
-    "start": "nodemon app.js",
+    "start": "node app.js",
     "test": "jest"
   },
   "author": "",
@@ -12,6 +12,7 @@
   "dependencies": {
     "bcryptjs": "^2.4.3",
     "cors": "^2.8.5",
+    "dotenv": "^10.0.0",
     "express": "^4.17.1",
     "express-validator": "^6.9.2",
     "googleapis": "^83.0.0",
@@ -26,5 +27,8 @@
   "devDependencies": {
     "jest": "^27.0.6",
     "supertest": "^6.1.3"
+  },
+  "engines": {
+    "node": "14.15.1"
   }
 }
