@@ -14,13 +14,8 @@ app.use(express.json());
 //getting database
 const db = require('./database/database.js');
 
-app.use((req, res, next) => {
-    res.header('Access-Control-Allow-Origin', '*');
-    next();
-});
-
 app.get("/", function (req, res) {
-    res.send("Working!!!");
+    res.send("API is Working!!!");
 })
 
 //routes
@@ -41,14 +36,14 @@ app.use(gadgetCartRoute);
 //Images
 app.use(express.static(path.join(__dirname, "assets/image/")));
 app.use(bodyparser.urlencoded({ extended: true }));
-app.use(express.urlencoded({
-    urlencoded: true,
-    extended: false,
-}))
+// app.use(express.urlencoded({
+//     urlencoded: true,
+//     extended: false,
+// }))
 
 //listen
 app.listen(port, () => {
-    console.log(`Server running on PORT: ${port} :)`);
+    console.log(`Server is running on PORT: ${port} :)`);
 });
 
 module.exports = app;
