@@ -35,7 +35,7 @@ app.use(gadgetCartRoute);
 
 //Images
 app.use(express.static(path.join(__dirname, "assets/image/")));
-app.use(bodyparser.urlencoded({ extended: true }));
+app.use(bodyparser.urlencoded({ extended: false }));
 // app.use(express.urlencoded({
 //     urlencoded: true,
 //     extended: false,
