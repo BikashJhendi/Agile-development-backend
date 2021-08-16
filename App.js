@@ -3,9 +3,6 @@ const cors = require('cors');
 require('dotenv').config();
 
 const app = express();
-app.use(cors());
-app.use(express.json());
-
 const PORT = process.env.PORT || 90;
 
 const path = require('path');
@@ -22,6 +19,9 @@ const gadgetCartRoute = require('./routes/myCartRoute');
 
 // view engine set for hbs
 app.set("view engine", "hbs");
+
+app.use(cors());
+app.use(express.json());
 
 //app.use
 app.use(userRoute);
