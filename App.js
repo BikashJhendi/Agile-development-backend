@@ -4,6 +4,8 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
+let PORT = process.env.PORT || 90;
+
 const path = require('path');
 const bodyparser = require('body-parser')
 
@@ -16,7 +18,7 @@ const gadgetRoute = require('./routes/gadgetRoute');
 const cosmeticRoute = require('./routes/cosmeticRoute');
 const gadgetCartRoute = require('./routes/myCartRoute');
 
-// view engine set
+// view engine set for hbs
 app.set("view engine", "hbs");
 
 //app.use
@@ -30,10 +32,9 @@ app.use(gadgetCartRoute);
 app.use(express.static(path.join(__dirname, "assets/image/")));
 app.use(bodyparser.urlencoded({ extended: false }));
 
-
 //listen
-app.listen(90, () => {
-    console.log("Server running...");
+app.listen(PORT, () => {
+    console.log("Server running on PORT: " + PORT + " :)");
 });
 
 module.exports = app;
