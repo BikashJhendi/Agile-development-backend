@@ -3,7 +3,6 @@ const cors = require('cors');
 require('dotenv').config();
 
 const app = express();
-const port = process.env.PORT || 90;
 
 const path = require('path');
 const bodyparser = require('body-parser')
@@ -33,11 +32,13 @@ app.use(gadgetCartRoute);
 
 //Images
 app.use(express.static(path.join(__dirname, "assets/image/")));
-app.use(bodyparser.urlencoded({ extended: false }));
+app.use(bodyparser.urlencoded({ extended: true }));
 app.use(express.urlencoded({
     urlencoded: true,
     extended: false,
 }))
+
+const port = process.env.PORT || 90;
 
 //listen
 app.listen(port, () => {
