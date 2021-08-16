@@ -2,7 +2,7 @@
   "name": "dropshipping_backend",
   "version": "1.0.0",
   "description": "",
-  "main": "App.js",
+  "main": "app.js",
   "scripts": {
     "start": "node app.js",
     "test": "jest"
