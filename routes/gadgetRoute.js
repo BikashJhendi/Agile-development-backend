@@ -150,5 +150,16 @@ router.get('/gadget/one/:id', function (req, res) {
         })
 })
 
+router.post('/gadget/add', function (req, res) {
+var gadget = [{gadgetname:gadgetname, gadgetprice:gadgetprice, gadgettype:gadgettype, gadgetdescription:gadgetdescription,
+     laptop:{laptopBrand:laptopBrand, laptopModel:laptopModel}, camera:{cameraType:cameraType, cameraResolution:sdifficulty}}]
+    User.updateOne({_id:id},{
+        $set : {gadget:gadget}
+    }).then(function(data){
+        res.status(200).json({message : "Language Information Updated",success:true})
+    }).catch(function(err){
+        res.status(500).json({message : err,success:false})
+    })
+})
 
 module.exports = router;

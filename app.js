@@ -23,6 +23,8 @@ const userRoute = require('./routes/userRoute');
 const gadgetRoute = require('./routes/gadgetRoute');
 const cosmeticRoute = require('./routes/cosmeticRoute');
 const gadgetCartRoute = require('./routes/myCartRoute');
+const questionRoute = require('./routes/questionRoute');
+const productReviewRoute = require('./routes/productReviewRoute');
 
 // view engine set for hbs
 app.set("view engine", "hbs");
@@ -32,6 +34,8 @@ app.use(userRoute);
 app.use(gadgetRoute);
 app.use(cosmeticRoute);
 app.use(gadgetCartRoute);
+app.use(questionRoute);
+app.use(productReviewRoute);
 
 //Images
 app.use(express.static(path.join(__dirname, "assets/image/")));

@@ -22,7 +22,7 @@ const Gadget = mongoose.model('gadget', {
 
 laptop:{
     laptopBrand: {
-        type: String
+        type: String,
     },
     laptopModel: {
         type: String
