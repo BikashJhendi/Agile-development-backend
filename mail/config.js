@@ -4,6 +4,6 @@ module.exports = {
     CLIENT_ID: '304854182637-oj1o6r5aqc9hanl5s96oagjith4vvu8i.apps.googleusercontent.com',
     CLIENT_SECRET: 'PRQ-tZFu0ik8Lh-CeTdzizFZ',
     REDIRECT_URI: 'https://developers.google.com/oauthplayground',
-    REFRESH_TOKEN: '1//04klgPESTI5wxCgYIARAAGAQSNwF-L9IrOjTCS0IglTBc2Pt9rQpTGD_AG8NcjPGX5NmWgMMfuMTt_ha8AkwCudNK0ZMu-3te_58',
+    REFRESH_TOKEN: '1//04lNiOKMHCWtkCgYIARAAGAQSNwF-L9IrfIV2LaSqu8m1KIdLKcW3zFCIlGL_zfxdt2-QYBQXLbmq5ohKaq_qbTi3kjOimwdpmwM',
     FRONTEND_HOST: 'https://dhuwani.netlify.app'
 }
