@@ -5,5 +5,5 @@ module.exports = {
     CLIENT_SECRET: 'PRQ-tZFu0ik8Lh-CeTdzizFZ',
     REDIRECT_URI: 'https://developers.google.com/oauthplayground',
     REFRESH_TOKEN: '1//04klgPESTI5wxCgYIARAAGAQSNwF-L9IrOjTCS0IglTBc2Pt9rQpTGD_AG8NcjPGX5NmWgMMfuMTt_ha8AkwCudNK0ZMu-3te_58',
-    FRONTEND_HOST: 'http://localhost:3000'
+    FRONTEND_HOST: 'https://dhuwani.netlify.app'
 }
