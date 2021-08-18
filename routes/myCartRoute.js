@@ -2,14 +2,15 @@ const express = require('express');
 const router = express.Router();
 const mycart = require('../models/mycart');
 const { check, validationResult } = require('express-validator')
-const jwt = require('jsonwebtoken')
+const jwt = require('jsonwebtoken');
+const GadgetCart = require('../models/mycart');
 
 router.post('/gadgetcart/insert',
     function (req, res) {
 
-        const { userid, productid, quantity, productname, productprice } = req.body
+        const { userid, productid, quantity, productname, productprice, producttype } = req.body
 
-        const cart_id = new mycart({ userid, productid, quantity, productname, productprice });
+        const cart_id = new mycart({ userid, productid, quantity, productname, productprice, producttype });
         cart_id.save()
             .then(function (result) {
                 res.status(201).json({ message: "cart Added" })
@@ -22,9 +23,9 @@ router.post('/gadgetcart/insert',
 router.post('/cosmeticcart/insert',
     function (req, res) {
 
-        const { userid, productid, quantity, productname, productprice } = req.body;
+        const { userid, productid, quantity, productname, productprice, producttype } = req.body;
 
-        const cart_id = new mycart({ userid, productid, quantity, productname, productprice });
+        const cart_id = new mycart({ userid, productid, quantity, productname, productprice, producttype });
         cart_id.save()
             .then(function (result) {
                 res.status(201).json({ message: "cart Added" })
@@ -68,7 +69,12 @@ router.get('/mycart/showall', function (req, res) {
 
 router.delete('/remove/mycart', //auth.verifyUser, auth.verifyAdmin,
     function (req, res) {
-        mycart.deleteMany()
+
+        const token = req.headers.authorization.split(' ')[1];
+        const decode = jwt.verify(token, "secretKey");
+        const deletedBy = decode.userId
+
+        mycart.deleteMany({ userid: deletedBy })
             .then(function (result) {
                 res.status(200).json({ message: "item removed" })
             })
@@ -78,6 +84,7 @@ router.delete('/remove/mycart', //auth.verifyUser, auth.verifyAdmin,
     });
 
 router.delete("/delete/mycart/:id", function (req, res) {
+
     const id = req.params.id;
 
     mycart.deleteOne({ _id: id })
@@ -87,8 +94,28 @@ router.delete("/delete/mycart/:id", function (req, res) {
         .catch(function (err) {
             res.status(400).json({ message: err })
         })
-
 });
+
+router.put('/quantity/update/:id',
+    function (req, res) {
+        const { id } = req.params;
+        const { quantity } = req.body;
+
+        GadgetCart.updateOne({ _id: id }, { quantity: quantity })
+            .then(function (result) {
+                res.status(200).json({ // 200 OK 
+                    success: true,
+                    message: "quantity updated."
+                })
+            })
+            .catch(function (err) {
+                res.status(500).json({ // 500 Internal Server Error
+                    success: false,
+                    message: "Unable to update quantity.",
+                    error: err
+                });
+            })
+    })
 
 
 module.exports = router;
