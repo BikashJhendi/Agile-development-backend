@@ -25,6 +25,7 @@ const cosmeticRoute = require('./routes/cosmeticRoute');
 const gadgetCartRoute = require('./routes/myCartRoute');
 const questionRoute = require('./routes/questionRoute');
 const productReviewRoute = require('./routes/productReviewRoute');
+const productRequest = require('./routes/productRequestRoute');
 
 // view engine set for hbs
 app.set("view engine", "hbs");
@@ -36,6 +37,7 @@ app.use(cosmeticRoute);
 app.use(gadgetCartRoute);
 app.use(questionRoute);
 app.use(productReviewRoute);
+app.use(productRequest);
 
 //Images
 app.use(express.static(path.join(__dirname, "assets/image/")));
