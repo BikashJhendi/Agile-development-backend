@@ -51,7 +51,7 @@ describe('User login testing', () => {
                 .send({ email: 'invalidEmail@123.com' })
                 .set('Accept', 'application/json')
                 .expect('Content-Type', /json/)
-                .expect(403, { message: 'email or password is incorrect' })
+                .expect(403, { message: 'email or password is incorrect', success:false })
                 .end(function (err, res) {
                     if (err) return done(err);
                     return done();

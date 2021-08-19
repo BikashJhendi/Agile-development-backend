@@ -15,7 +15,7 @@ afterAll(async () => {
     await mongoose.connection.close();
 });
 
-describe('User profile testing', () => {
+describe('User image upload testing', () => {
 
     test('responds with json', function (done) {
         request(app)
@@ -28,6 +28,9 @@ describe('User profile testing', () => {
                 return done();
             });
     });
+});
+
+describe('delete user', () => {
 
     test('responds with json', function (done) {
         request(app)
@@ -39,6 +42,9 @@ describe('User profile testing', () => {
                 return done();
             });
     });
+});
+
+describe('display user using id', () => {
 
     test('shows user using id', (done) => {
         request(app)
@@ -46,5 +52,20 @@ describe('User profile testing', () => {
             .set('Accept', 'application/charset=utf-8')
             .expect('Content-Type', /charset=utf-8/)
             .expect(200, done);
+    });
+});
+
+describe('update user information', () => {
+    test('responds with json',(done)=>{
+        const updateInfo = {firstname:'Rajesh', lastname:'kasula', email:'rk00@gmail.com'}
+       // const expectedResponse = {...users, ...updateInfo}
+        request(app)
+        .put('/user/profile/update/611e45b29fa24f2d589ff035')
+        .send(updateInfo)
+        .expect(200, done)
+        // .end((err,res)=>{
+        //     expect(res.body).toEqual(expectedResponse)
+        //     done();
+        // })
     })
 });
