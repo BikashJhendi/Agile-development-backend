@@ -266,6 +266,20 @@ router.get('/laptop/microsoft', function (req, res) {
             res.status(500).json({ message: e })
         })
 })
+router.get('/gadget/featured', function (req, res) {
+    const gf = "Featured";
+
+    gadget.find({ gadgetfeatured: gf })
+        .then(function (gadget_featured) {
+            res.status(200).json({
+                success: true,
+                data: gadget_featured
+            });
+        })
+        .catch(function (e) {
+            res.status(500).json({ message: e })
+        })
+})
 
 
 router.get('/gadget/one/:id', function (req, res) {
