@@ -139,6 +139,134 @@ router.get('/camera/five', function (req, res) {
             res.status(500).json({ message: e })
         })
 })
+// gadget filter
+router.get('/laptop/acer', function (req, res) {
+    const gm = "Acer";
+
+    gadget.find({ gadgetname: gm })
+        .then(function (gadget_name) {
+            res.status(200).json({
+                success: true,
+                data: gadget_name
+            });
+        })
+        .catch(function (e) {
+            res.status(500).json({ message: e })
+        })
+})
+router.get('/laptop/dell', function (req, res) {
+    const gd = "Dell";
+
+    gadget.find({ gadgetname: gd })
+        .then(function (gadget_name) {
+            res.status(200).json({
+                success: true,
+                data: gadget_name
+            });
+        })
+        .catch(function (e) {
+            res.status(500).json({ message: e })
+        })
+})
+router.get('/laptop/hp', function (req, res) {
+    const gh = "HP";
+
+    gadget.find({ gadgetname: gh })
+        .then(function (gadget_name) {
+            res.status(200).json({
+                success: true,
+                data: gadget_name
+            });
+        })
+        .catch(function (e) {
+            res.status(500).json({ message: e })
+        })
+})
+router.get('/laptop/lenovo', function (req, res) {
+    const gl = "Lenovo";
+
+    gadget.find({ gadgetname: gl })
+        .then(function (gadget_name) {
+            res.status(200).json({
+                success: true,
+                data: gadget_name
+            });
+        })
+        .catch(function (e) {
+            res.status(500).json({ message: e })
+        })
+})
+router.get('/laptop/razer', function (req, res) {
+    const gr = "Razer";
+
+    gadget.find({ gadgetname: gr })
+        .then(function (gadget_name) {
+            res.status(200).json({
+                success: true,
+                data: gadget_name
+            });
+        })
+        .catch(function (e) {
+            res.status(500).json({ message: e })
+        })
+})
+router.get('/laptop/msi', function (req, res) {
+    const gm = "MSI";
+
+    gadget.find({ gadgetname: gm })
+        .then(function (gadget_name) {
+            res.status(200).json({
+                success: true,
+                data: gadget_name
+            });
+        })
+        .catch(function (e) {
+            res.status(500).json({ message: e })
+        })
+})
+router.get('/laptop/arous', function (req, res) {
+    const ga = "Arous";
+
+    gadget.find({ gadgetname: ga })
+        .then(function (gadget_name) {
+            res.status(200).json({
+                success: true,
+                data: gadget_name
+            });
+        })
+        .catch(function (e) {
+            res.status(500).json({ message: e })
+        })
+})
+router.get('/laptop/apple', function (req, res) {
+    const ga = "Apple";
+
+    gadget.find({ gadgetname: ga })
+        .then(function (gadget_name) {
+            res.status(200).json({
+                success: true,
+                data: gadget_name
+            });
+        })
+        .catch(function (e) {
+            res.status(500).json({ message: e })
+        })
+})
+router.get('/laptop/microsoft', function (req, res) {
+    const gm = "Microsoft";
+
+    gadget.find({ gadgetname: ga })
+        .then(function (gadget_name) {
+            res.status(200).json({
+                success: true,
+                data: gadget_name
+            });
+        })
+        .catch(function (e) {
+            res.status(500).json({ message: e })
+        })
+})
+
 
 router.get('/gadget/one/:id', function (req, res) {
     const id = req.params.id;
