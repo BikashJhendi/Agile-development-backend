@@ -14,6 +14,7 @@ router.post('/gadget/insert',
         const gadgetname = req.body.gadgetname;
         const gadgetprice = req.body.gadgetprice;
         const gadgettype = req.body.gadgettype;
+        const gadgetfeatured = req.body.gadgetfeatured;
         const gadgetdescription = req.body.gadgetdescription;
 
         const laptopBrand = req.body.laptopBrand;
@@ -70,7 +71,7 @@ router.post('/gadget/insert',
 
 
         const gadget_data = new gadget({
-            gadgetname: gadgetname, gadgetprice: gadgetprice, gadgettype: gadgettype, gadgetdescription: gadgetdescription, gadgetimage: req.file.filename,
+            gadgetname: gadgetname, gadgetprice: gadgetprice, gadgettype: gadgettype, gadgetfeatured:gadgetfeatured, gadgetdescription: gadgetdescription, gadgetimage: req.file.filename,
             laptopBrand: laptopBrand, laptopModel: laptopModel, laptopDimension: laptopDimension, laptopWeight: laptopWeight,
             laptopSize: laptopSize, laptopResolution: laptopResolution, laptopProcessor: laptopProcessor, laptopBaseClock: laptopBaseClock,
             laptopSpeed: laptopSpeed, laptopRam: laptopRam, laptopGraphic: laptopGraphic, laptopDedicatedGraphicMemory: laptopDedicatedGraphicMemory,
