@@ -42,7 +42,7 @@ router.get('/cosmetic/showall', function (req, res) {
 })
 router.get('/cosmetic/five', function (req, res) {
 
-    cosmetic.find().limit(5)
+    cosmetic.find().limit(10)
         .then(function (cosmetic_five) {
             res.status(200).json({
                 success: true,

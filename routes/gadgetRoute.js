@@ -114,7 +114,7 @@ router.get('/gadget/showall', function (req, res) {
 router.get('/gadget/five', function (req, res) {
     const gt = "Laptop";
 
-    gadget.find({ gadgettype: gt }).limit(5)
+    gadget.find({ gadgettype: gt }).limit(10)
         .then(function (gadget_five) {
             res.status(200).json({
                 success: true,
@@ -128,7 +128,7 @@ router.get('/gadget/five', function (req, res) {
 router.get('/camera/five', function (req, res) {
     const gt = "Camera";
 
-    gadget.find({ gadgettype: gt }).limit(5)
+    gadget.find({ gadgettype: gt }).limit(10)
         .then(function (gadget_camera) {
             res.status(200).json({
                 success: true,
