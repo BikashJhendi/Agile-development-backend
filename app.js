@@ -23,6 +23,7 @@ const userRoute = require('./routes/userRoute');
 const gadgetRoute = require('./routes/gadgetRoute');
 const cosmeticRoute = require('./routes/cosmeticRoute');
 const adRoute = require('./routes/adRoute');
+const landingad = require('./routes/landingad');
 const gadgetCartRoute = require('./routes/myCartRoute');
 const questionRoute = require('./routes/questionRoute');
 const productReviewRoute = require('./routes/productReviewRoute');
@@ -40,6 +41,7 @@ app.use(questionRoute);
 app.use(productReviewRoute);
 app.use(productRequest);
 app.use(adRoute);
+app.use(landingad);
 
 //Images
 app.use(express.static(path.join(__dirname, "assets/image/")));
