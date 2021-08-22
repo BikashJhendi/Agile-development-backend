@@ -24,12 +24,6 @@ const User = mongoose.model('User', {
     img: {
         type: String,
     },
-    district: {
-        type: String,
-    },
-    tole: {
-        type: String,
-    },
     verified: {
         type: Boolean,
         default: false
@@ -42,6 +36,20 @@ const User = mongoose.model('User', {
     registeredDate: {
         type: Date,
         default: Date.now
+    },
+    addressBook: {
+        zone: {
+            type: String
+        },
+        district: {
+            type: String
+        },
+        address: {
+            type: String
+        },
+        tole: {
+            type: String
+        }
     }
 })
 
