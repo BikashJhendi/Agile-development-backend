@@ -207,10 +207,21 @@ router.put('/user/profile/update/:id',
 									addressBook: { zone, district, address, tole }
 								})
 									.then(function (result) {
-										res.status(200).json({ // 200 OK 
-											success: true,
-											message: "Account successfully updated."
-										})
+										User.findOne({ _id: id })
+											.then((result) => {
+												// creates token 
+												const token = jwt.sign({
+													userId: result._id, firstName: result.firstname, lastName: result.lastname,
+													email: result.email, phone: result.phone, addressBook: result.addressBook,
+													img: result.img, userType: result.userType
+												}, 'secretKey');
+
+												return res.status(200).json({ // 200 OK 
+													success: true,
+													message: "Account successfully updated.",
+													token: token
+												})
+											})
 									})
 									.catch(function (err) {
 										res.status(500).json({ // 500 Internal Server Error
@@ -229,10 +240,21 @@ router.put('/user/profile/update/:id',
 							addressBook: { zone, district, address, tole },
 						})
 							.then(function (result) {
-								res.status(200).json({ // 200 OK 
-									success: true,
-									message: "Account successfully updated."
-								})
+								User.findOne({ _id: id })
+									.then((result) => {
+										// creates token 
+										const token = jwt.sign({
+											userId: result._id, firstName: result.firstname, lastName: result.lastname,
+											email: result.email, phone: result.phone, addressBook: result.addressBook,
+											img: result.img, userType: result.userType
+										}, 'secretKey');
+
+										return res.status(200).json({ // 200 OK 
+											success: true,
+											message: "Account successfully updated.",
+											token: token
+										})
+									})
 							})
 							.catch(function (err) {
 								res.status(500).json({ // 500 Internal Server Error
@@ -271,10 +293,21 @@ router.put('/user/profile/update/:id',
 									img: req.file.filename
 								})
 									.then(function (result) {
-										return res.status(200).json({ // 200 OK
-											success: true,
-											message: "Account successfully updated."
-										})
+										User.findOne({ _id: id })
+											.then((result) => {
+												// creates token 
+												const token = jwt.sign({
+													userId: result._id, firstName: result.firstname, lastName: result.lastname,
+													email: result.email, phone: result.phone, addressBook: result.addressBook,
+													img: result.img, userType: result.userType
+												}, 'secretKey');
+
+												return res.status(200).json({ // 200 OK 
+													success: true,
+													message: "Account successfully updated.",
+													token: token
+												})
+											})
 									})
 									.catch(function (err) {
 										return res.status(500).json({ // 500 Internal Server Error
@@ -294,10 +327,21 @@ router.put('/user/profile/update/:id',
 							addressBook: { zone, district, address, tole },
 						})
 							.then(function (result) {
-								return res.status(200).json({ // 200 OK
-									success: true,
-									message: "Account successfully updated."
-								})
+								User.findOne({ _id: id })
+									.then((result) => {
+										// creates token 
+										const token = jwt.sign({
+											userId: result._id, firstName: result.firstname, lastName: result.lastname,
+											email: result.email, phone: result.phone, addressBook: result.addressBook,
+											img: result.img, userType: result.userType
+										}, 'secretKey');
+
+										return res.status(200).json({ // 200 OK 
+											success: true,
+											message: "Account successfully updated.",
+											token: token
+										})
+									})
 							})
 							.catch(function (err) {
 								return res.status(500).json({ // 500 Internal Server Error
