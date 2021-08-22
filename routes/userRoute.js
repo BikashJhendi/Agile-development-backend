@@ -111,7 +111,8 @@ router.post('/user/login',
 					// creates token 
 					const token = jwt.sign({
 						userId: userdata._id, firstName: userdata.firstname, lastName: userdata.lastname,
-						email: userdata.email, phone: userdata.phone, img: userdata.img, userType: userdata.userType
+						email: userdata.email, phone: userdata.phone, addressBook: userdata.addressBook,
+						img: userdata.img, userType: userdata.userType
 					}, 'secretKey');
 
 					res.status(200).json({
@@ -167,7 +168,8 @@ router.put('/user/profile/update/:id',
 	uploadImg.single('img'),
 	function (req, res) {
 		const { id } = req.params;
-		const { firstname, lastname, email, phone } = req.body;
+		const { firstname, lastname, email, password, currentPassword, phone,
+			zone, district, address, tole } = req.body;
 
 		User.findOne({ _id: id })
 			.then(function (userData) {
@@ -178,39 +180,142 @@ router.put('/user/profile/update/:id',
 					})
 				}
 
+				// if image is null
 				if (!req.file) {
-					return User.updateOne({ _id: id }, { firstname, lastname, email, phone })
-						.then(function (result) {
-							res.status(200).json({ // 200 OK 
-								success: true,
-								message: "Account successfully updated."
+					// if password isn't null 
+					if (password) {
+						return bcrypt.compare(currentPassword, userData.password, function (error, result) {
+							if (result == false || error) {
+								return res.status(403).json({ // 403 Forbidden
+									success: false,
+									message: "Invalid Current Password!!!",
+									err: error || result
+								})
+							}
+
+							bcrypt.hash(password, 10, function (err, hash) {
+								if (err) {
+									return res.status(500).json({ // 500 Internal Server Error
+										success: false,
+										message: "Failed to hash password.",
+										error: err
+									});
+								}
+
+								return User.updateOne({ _id: id }, {
+									firstname, lastname, email, phone, password: hash,
+									addressBook: { zone, district, address, tole }
+								})
+									.then(function (result) {
+										res.status(200).json({ // 200 OK 
+											success: true,
+											message: "Account successfully updated."
+										})
+									})
+									.catch(function (err) {
+										res.status(500).json({ // 500 Internal Server Error
+											success: false,
+											message: "Unable to update account.",
+											error: err
+										});
+									})
 							})
 						})
-						.catch(function (err) {
-							res.status(500).json({ // 500 Internal Server Error
-								success: false,
-								message: "Unable to update account.",
-								error: err
-							});
+					}
+					// if password is null
+					else {
+						return User.updateOne({ _id: id }, {
+							firstname, lastname, email, phone,
+							addressBook: { zone, district, address, tole },
 						})
+							.then(function (result) {
+								res.status(200).json({ // 200 OK 
+									success: true,
+									message: "Account successfully updated."
+								})
+							})
+							.catch(function (err) {
+								res.status(500).json({ // 500 Internal Server Error
+									success: false,
+									message: "Unable to update account.",
+									error: err
+								});
+							})
+					}
 				}
+				// if image isn't null
 				else {
-					return User.updateOne({ _id: id }, { firstname, lastname, email, phone, img: req.file.filename })
-						.then(function (result) {
-							res.status(200).json({ // 200 OK 
-								success: true,
-								message: "Account successfully updated."
+					// if password isn't null 
+					if (password) {
+						return bcrypt.compare(currentPassword, userData.password, function (error, result) {
+							if (result == false || error) {
+								return res.status(403).json({ // 403 Forbidden
+									success: false,
+									message: "Invalid Current Password!!!",
+									err: error || result
+								})
+							}
+
+							bcrypt.hash(password, 10, function (err, hash) {
+								if (err) {
+									return res.status(500).json({ // 500 Internal Server Error
+										success: false,
+										message: "Failed to hash password.",
+										error: err
+									});
+								}
+
+								return User.updateOne({ _id: id }, {
+									firstname, lastname, email, phone, password: hash,
+									addressBook: { zone, district, address, tole },
+									img: req.file.filename
+								})
+									.then(function (result) {
+										return res.status(200).json({ // 200 OK
+											success: true,
+											message: "Account successfully updated."
+										})
+									})
+									.catch(function (err) {
+										return res.status(500).json({ // 500 Internal Server Error
+											success: false,
+											message: "Unable to update account.",
+											error: err
+										});
+									})
 							})
 						})
-						.catch(function (err) {
-							res.status(500).json({ // 500 Internal Server Error
-								success: false,
-								message: "Unable to update account.",
-								error: err
-							});
+					}
+					// if password is null
+					else {
+						return User.updateOne({ _id: id }, {
+							firstname, lastname, email, phone,
+							img: req.file.filename,
+							addressBook: { zone, district, address, tole },
 						})
+							.then(function (result) {
+								return res.status(200).json({ // 200 OK
+									success: true,
+									message: "Account successfully updated."
+								})
+							})
+							.catch(function (err) {
+								return res.status(500).json({ // 500 Internal Server Error
+									success: false,
+									message: "Unable to update account.",
+									error: err
+								});
+							})
+					}
 				}
 
+			})
+			.catch((err) => {
+				return res.status(500).json({ // 500 Internal Server Error
+					success: false,
+					message: "Unable to update account.",
+					error: err
+				});
 			})
 	})
 
@@ -226,7 +331,7 @@ router.get('/user/token/decode',
 		}
 		else {
 			const decode = jwt.verify(token, "secretKey");
-			const { userId, firstName, lastName, email, phone, img, userType } = decode;
+			const { userId, firstName, lastName, email, phone, img, userType, addressBook } = decode;
 
 			res.status(200).json({
 				userId,
@@ -235,7 +340,8 @@ router.get('/user/token/decode',
 				email,
 				phone,
 				img,
-				userType
+				userType,
+				addressBook
 			})
 		}
 	})
