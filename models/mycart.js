@@ -6,7 +6,6 @@ const GadgetCart = mongoose.model('mycart', {
     productid: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'users',  
-        unique:true     
     },
     quantity:{
         type: String,
