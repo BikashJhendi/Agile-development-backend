@@ -11,6 +11,7 @@ router.post('/gadget/insert',
         const errors = validationResult(req);
         console.log(errors.array())
 
+        
         const gadgetname = req.body.gadgetname;
         const gadgetprice = req.body.gadgetprice;
         const gadgettype = req.body.gadgettype;
@@ -72,12 +73,14 @@ router.post('/gadget/insert',
 
         const gadget_data = new gadget({
             gadgetname: gadgetname, gadgetprice: gadgetprice, gadgettype: gadgettype, gadgetfeatured:gadgetfeatured, gadgetdescription: gadgetdescription, gadgetimage: req.file.filename,
+            laptop:{
             laptopBrand: laptopBrand, laptopModel: laptopModel, laptopDimension: laptopDimension, laptopWeight: laptopWeight,
             laptopSize: laptopSize, laptopResolution: laptopResolution, laptopProcessor: laptopProcessor, laptopBaseClock: laptopBaseClock,
             laptopSpeed: laptopSpeed, laptopRam: laptopRam, laptopGraphic: laptopGraphic, laptopDedicatedGraphicMemory: laptopDedicatedGraphicMemory,
             laptopDedicatedGraphic: laptopDedicatedGraphic, laptopHarddisk: laptopHarddisk, laptopSSD: laptopSSD, laptopNoOfUSBPorts: laptopNoOfUSBPorts,
             laptopUSBPorts: laptopUSBPorts, laptopHDMIPorts: laptopHDMIPorts, laptopMultiCardSlot: laptopMultiCardSlot, laptopHeadphone: laptopHeadphone,
-            laptopJack: laptopJack,
+            laptopJack: laptopJack},
+            camera:{
             cameraType: cameraType, cameraResolution: cameraResolution, cameraSalesPackage: cameraSalesPackage, cameraDimensions: cameraDimensions,
             cameraWeight: cameraWeight, cameraLensType: cameraLensType, cameraLensFocalLength: cameraLensFocalLength, cameraSensorType: cameraSensorType,
             cameraSensorFormat: cameraSensorFormat, cameraSensorSize: cameraSensorSize, cameraScreenSize: cameraScreenSize, cameraDisplayType: cameraDisplayType,
@@ -86,7 +89,7 @@ router.post('/gadget/insert',
             cameraVideoResolution: cameraVideoResolution, cameraVideoResolutionDetails: cameraVideoResolutionDetails, cameraBatteryType: cameraBatteryType,
             cameraBatteryCapacity: cameraBatteryCapacity, cameraNoOfShots: cameraNoOfShots, cameraMicrophone: cameraMicrophone, cameraTripodSocket: cameraTripodSocket,
             cameraHeadphoneJack: cameraHeadphoneJack, cameraUSBConnectivity: cameraUSBConnectivity, cameraPictBridgeSupport: cameraPictBridgeSupport
-
+            }
         });
         gadget_data.save()
             .then(function (result) {

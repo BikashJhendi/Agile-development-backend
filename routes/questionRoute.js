@@ -1,17 +1,17 @@
 const express = require('express');
 const router = express.Router();
+const jwt = require('jsonwebtoken');
 const question = require('../models/questions');
 
 router.post('/question/ask', function (req, res) {
 
-    const productId = req.body.productId;
-    const firstName = req.body.firstName;
-    const lastName = req.body.lastName;
-    const askQuestion = req.body.askQuestion;
-    const answer = req.body.answer;
+    const token = req.headers.authorization.split(" ")[1];
+    const decode = jwt.verify(token, "secretKey");
+    const { firstName, lastName } = decode;
 
+    const { productId,  askQuestion, answer } = req.body;
 
-    const question_data = new question({ productId: productId, askQuestion: askQuestion, answer: answer, firstName:firstName, lastName:lastName });
+    const question_data = new question({ productId, firstName, lastName, askQuestion, answer });
 
     question_data.save()
         .then(function (result) {

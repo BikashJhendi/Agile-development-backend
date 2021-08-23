@@ -1,15 +1,16 @@
 const express = require('express');
+const reviewupload = require('../middleware/review');
 const router = express.Router();
 const productReview = require('../models/productReview');
 
-router.post('/product/review', function (req, res) {
+router.post('/product/review', reviewupload.single('reviewImage'), function (req, res) {
 
     const productId = req.body.productId;
     const review = req.body.review;
-    const reviewReply = req.body.reviewReply;
+    const rating = req.body.rating;
     
 
-    const review_data = new productReview({ productId: productId, review: review, reviewReply: reviewReply });
+    const review_data = new productReview({ productId: productId, review: review,  rating: rating,  reviewImage:req.file.filename });
 
     review_data.save()
         .then(function (result) {
