@@ -10,15 +10,16 @@ const productReview = mongoose.model('review', {
     reviewReply: {
         type: String,
     },
-    image: {
+    reviewImage: {
         type: String,
+    },
+    rating: {
+       type: String,
     },
     questionDate: {
         type: Date,
         default: Date.now
-    }
-
-      
+    }   
 })
 
 module.exports = productReview;
