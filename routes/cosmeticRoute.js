@@ -14,10 +14,12 @@ router.post('/cosmetic/insert',
         const cosmeticname = req.body.cosmeticname;
         const cosmeticprice = req.body.cosmeticprice;
         const cosmetictype = req.body.cosmetictype;
+        const cosmeticgender = req.body.cosmeticgender;
+        const cosmeticmodel = req.body.cosmeticmodel;
         const cosmeticdescription = req.body.cosmeticdescription;
 
 
-        const cosmetic_data = new cosmetic({ cosmeticname: cosmeticname, cosmeticprice: cosmeticprice, cosmetictype: cosmetictype, cosmeticdescription: cosmeticdescription, cosmeticimage: req.file.filename });
+        const cosmetic_data = new cosmetic({ cosmeticname: cosmeticname, cosmeticprice: cosmeticprice, cosmetictype: cosmetictype, cosmeticgender: cosmeticgender, cosmeticmodel: cosmeticmodel, cosmeticdescription: cosmeticdescription, cosmeticimage: req.file.filename });
         cosmetic_data.save()
             .then(function (result) {
                 res.status(201).json({ message: "cosmetic Added" })
@@ -53,7 +55,34 @@ router.get('/cosmetic/five', function (req, res) {
             res.status(500).json({ message: e })
         })
 })
+router.get('/cosmetic/men', function (req, res) {
+    const cm = "Men";
 
+    cosmetic.find({ cosmeticgender: cm })
+        .then(function (cosmetic_gender) {
+            res.status(200).json({
+                success: true,
+                data: cosmetic_gender
+            });
+        })
+        .catch(function (e) {
+            res.status(500).json({ message: e })
+        })
+})
+router.get('/cosmetic/women', function (req, res) {
+    const cm = "Women";
+
+    cosmetic.find({ cosmeticgender: cm })
+        .then(function (cosmetic_gender) {
+            res.status(200).json({
+                success: true,
+                data: cosmetic_gender
+            });
+        })
+        .catch(function (e) {
+            res.status(500).json({ message: e })
+        })
+})
 
 router.get('/cosmetic/one/:id', function (req, res) {
     const id = req.params.id;
