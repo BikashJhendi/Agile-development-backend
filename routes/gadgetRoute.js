@@ -41,6 +41,7 @@ router.post('/gadget/insert',
         const laptopJack = req.body.laptopJack;
 
         const cameraType = req.body.cameraType;
+        const cameraModel = req.body.cameraModel;
         const cameraResolution = req.body.cameraResolution;
         const cameraSalesPackage = req.body.cameraSalesPackage;
         const cameraDimensions = req.body.cameraDimensions;
@@ -81,7 +82,7 @@ router.post('/gadget/insert',
             laptopUSBPorts: laptopUSBPorts, laptopHDMIPorts: laptopHDMIPorts, laptopMultiCardSlot: laptopMultiCardSlot, laptopHeadphone: laptopHeadphone,
             laptopJack: laptopJack},
             camera:{
-            cameraType: cameraType, cameraResolution: cameraResolution, cameraSalesPackage: cameraSalesPackage, cameraDimensions: cameraDimensions,
+            cameraType: cameraType, cameraModel: cameraModel, cameraResolution: cameraResolution, cameraSalesPackage: cameraSalesPackage, cameraDimensions: cameraDimensions,
             cameraWeight: cameraWeight, cameraLensType: cameraLensType, cameraLensFocalLength: cameraLensFocalLength, cameraSensorType: cameraSensorType,
             cameraSensorFormat: cameraSensorFormat, cameraSensorSize: cameraSensorSize, cameraScreenSize: cameraScreenSize, cameraDisplayType: cameraDisplayType,
             cameraDisplayResolution: cameraDisplayResolution, cameraMemoryCardType: cameraMemoryCardType, cameraConnectivity: cameraConnectivity, cameraVideoFormats: cameraVideoFormats,

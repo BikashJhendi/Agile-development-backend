@@ -97,6 +97,9 @@ camera:{
     cameraType: {
         type: String
     },
+    cameraModel: {
+        type: String
+    },
     cameraResolution: {
         type: String
     },
@@ -139,9 +142,9 @@ camera:{
     cameraConnectivity: {
         type: String
     },
-    cameraConnectivity: {
-        type: String
-    },
+    // cameraConnectivity: {
+    //     type: String
+    // },
     cameraHDRSupport: {
         type: String
     },

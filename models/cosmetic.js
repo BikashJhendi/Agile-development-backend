@@ -8,10 +8,19 @@ const Cosmetic = mongoose.model('cosmetic', {
         type: String,
         required: true
     },
-    cosmetictype:{
+    cosmeticgender:{
         type: String,
         required: true,
         enum : ['Men','Women'],
+    },
+    cosmeticmodel:{
+        type: String,
+        required: true,
+    },
+    cosmetictype:{
+        type: String,
+        required: true,
+        enum :['Perfume','Nailpolish','Lotion']
     },
     cosmeticdescription: [String],
     cosmeticimage:{
