@@ -519,5 +519,153 @@ router.delete('/deleteall',
 
 
 // ====================================== ADMIN Route Sections ======================================
+// to get all user details.
+router.get('/admin/user/details',
+	function (req, res) {
+
+		User.find({})
+			.then((data) => {
+				return res.status(200).json({
+					message: "Retrieve user data",
+					data: data,
+					success: true
+				})
+			})
+			.catch((err) => {
+				return res.status(400).json({
+					message: "Failed to retrieve user data",
+					err: err,
+					success: false
+				})
+			})
+	})
+
+// add new user
+router.post('/admin/user/add',
+	uploadImg.single('img'),
+	function (req, res) {
+
+		const { firstname, lastname, email, password, phone, userType,
+			zone, district, address, tole
+		} = req.body;
+
+
+		if (!req.file) {
+			User.findOne({ email: email })
+				.then((data) => {
+					if (!data) {
+						console.log(data)
+						return bcrypt.hash(password, 10, function (err, hash) {
+							const userdata = new User({
+								firstname, lastname, email, password: hash, phone, userType, verified: true,
+								addressBook: { zone, district, address, tole }
+							});
+							userdata.save()
+								.then(function (result) {
+									// success insert
+									return res.status(201).json({
+										message: "User added successfully.",
+										success: true
+									});
+								})
+								.catch(function (err) {
+									return res.status(400).json({
+										message: err,
+										success: false
+									})
+								})
+						})
+					}
+
+					return res.status(400).json({
+						message: "Email address already exists.",
+						success: false
+					});
+
+				})
+		}
+		else {
+			const img = req.file.filename;
+
+			User.findOne({ email: email })
+				.then((data) => {
+					if (!data) {
+						return bcrypt.hash(password, 10, function (err, hash) {
+							const userdata = new User({
+								firstname, lastname, email, password: hash, phone, userType, verified: true, img,
+								addressBook: { zone, district, address, tole }
+							});
+							userdata.save()
+								.then(function (result) {
+									// success insert
+									return res.status(201).json({
+										message: "User added successfully.",
+										success: true
+									});
+								})
+								.catch(function (err) {
+									return res.status(400).json({
+										message: err,
+										success: false
+									})
+								})
+						})
+					}
+
+					return res.status(400).json({
+						message: "Email address already exists.",
+						success: false
+					});
+
+				})
+		}
+	})
+
+// update user account
+router.put('/admin/user/update/:id',
+	function (req, res) {
+		const { id } = req.params;
+		const { userType, verified, accountStatus } = req.body;
+
+		User.updateOne({ _id: id }, {
+			userType, verified, accountStatus
+		})
+			.then((data) => {
+				return res.status(201).json({
+					message: "User account updated successfully.",
+					success: true
+				});
+			})
+			.catch(function (err) {
+				return res.status(400).json({
+					message: err,
+					success: false
+				})
+			})
+
+	})
+
+// to delete user account
+router.delete('/admin/user/delete/:id',
+	function (req, res) {
+		const { id } = req.params;
+
+		User.deleteOne({ _id: id })
+			.then(function (data) {
+				return res.status(200).json({
+					message: "User account deleted.",
+					success: true,
+					data: data
+				})
+			})
+			.catch(function (err) {
+				return res.status(400).json({
+					message: "Failed to delete user account.",
+					success: false,
+					err: err
+				})
+			})
+	})
+
 
 module.exports = router;
