@@ -50,6 +50,11 @@ const User = mongoose.model('User', {
         tole: {
             type: String
         }
+    },
+    accountStatus: {
+        type: String,
+        enum: ['Active', 'Banned', 'Suspended'],
+        default: 'Active'
     }
 })
 
