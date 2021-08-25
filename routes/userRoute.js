@@ -100,6 +100,24 @@ router.post('/user/login',
 						success: false
 					})
 				}
+
+				const accStatus = userdata.accountStatus;
+
+				if (accStatus == "Banned" || accStatus == "Suspended") {
+					if (accStatus == "Banned") {
+						return res.status(401).json({
+							message: "Your account is banned permanently.",
+							success: false
+						})
+					}
+					else if (accStatus == "Suspended") {
+						return res.status(401).json({
+							message: "Your account is temporarily banned.",
+							success: false
+						})
+					}
+				}
+
 				bcrypt.compare(password, userdata.password, function (err, result) {
 					if (result === false) {
 						return res.status(403).json({
@@ -498,5 +516,8 @@ router.delete('/deleteall',
 				})
 			})
 	})
+
+
+// ====================================== ADMIN Route Sections ======================================
 
 module.exports = router;
