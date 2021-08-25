@@ -3,7 +3,7 @@ const router = express.Router();
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const User = require('../models/users.js');
-const uploadImg = require('../middleware/userImg.js');
+const uploadImg = require('../middleware/ImageController/userImg.js');
 const mail = require('../mail/mail.js')
 
 
