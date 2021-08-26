@@ -20,10 +20,14 @@ const Gadget = mongoose.model('gadget', {
         enum:['Featured', 'NotFeatured']
     },
     
-    gadgetimage: {
-        type: String,
-        // required: true
-    },
+    gadgetImages: [
+        {
+            imageName: {
+                type: String
+            },
+            
+        }
+    ],
 
 laptop:{
     laptopBrand: {
