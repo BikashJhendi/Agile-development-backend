@@ -23,10 +23,14 @@ const Cosmetic = mongoose.model('cosmetic', {
         enum :['Perfume','Nailpolish','Lotion']
     },
     cosmeticdescription: [String],
-    cosmeticimage:{
-        type: String,
-        // required: true
-    }
+    cosmeticImages: [
+        {
+            imageName: {
+                type: String
+            },
+            
+        }
+    ],
 
 })
 

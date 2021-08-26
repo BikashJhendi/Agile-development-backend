@@ -3,13 +3,35 @@ const router = express.Router();
 const cosmetic = require('../models/cosmetic');
 const cosmeticUploads = require('../middleware/cosmetic');
 const { check, validationResult } = require('express-validator');
-// const auth = require('../middleware/auth');
+const uploadCosmeticImg = require('../middleware/cosmetic.js');
+const multer = require('multer');
 // const fileupload = require('../middleware/fileupload.js');
 
+const maxImage = 5;
+var upload = uploadCosmeticImg.array('cosmeticImages', maxImage)
+
 router.post('/cosmetic/insert',
-    cosmeticUploads.single('cosmeticimage'), function (req, res) {
-        const errors = validationResult(req);
-        console.log(errors.array())
+    function (req, res) {
+        upload(req, res, function (err) {
+            if (err instanceof multer.MulterError) {
+                // A Multer error occurred when uploading.
+                return res.status(400).json({
+                    message: "A Multer error occurred when uploading",
+                    success: false,
+                    err: err
+                })
+            } else if (err) {
+                // An unknown error occurred when uploading.
+                return res.status(400).json({
+                    message: "An unknown error occurred when uploading",
+                    success: false,
+                    err: err
+                })
+                
+            }
+            const errors = validationResult(req);
+            console.log(errors.array())
+
 
         const cosmeticname = req.body.cosmeticname;
         const cosmeticprice = req.body.cosmeticprice;
@@ -19,14 +41,38 @@ router.post('/cosmetic/insert',
         const cosmeticdescription = req.body.cosmeticdescription;
 
 
-        const cosmetic_data = new cosmetic({ cosmeticname: cosmeticname, cosmeticprice: cosmeticprice, cosmetictype: cosmetictype, cosmeticgender: cosmeticgender, cosmeticmodel: cosmeticmodel, cosmeticdescription: cosmeticdescription, cosmeticimage: req.file.filename });
-        cosmetic_data.save()
-            .then(function (result) {
-                res.status(201).json({ message: "cosmetic Added" })
-            })
-            .catch(function (err) {
-                res.status(500).json({ message: err })
-            });
+            if (!req.files || req.files.length == 0) {
+                return res.status(400).json({
+                    message: "Require at least one image.",
+                    success: false
+                })
+            }
+            else {
+
+                // creating array to store image filename
+                const arrayOfImg = new Array();
+
+                // requesting the length of files and adding it into the array of list.
+                for (i = 0; i < req.files.length; i++) {
+                    // adding image filename to the array. [hero, car, bike, ...]
+                    arrayOfImg.push({ imageName: req.files[i].filename })
+                }
+                const cosmetic_data = new cosmetic({
+                    cosmeticname: cosmeticname, cosmeticprice: cosmeticprice, cosmetictype: cosmetictype,
+                    cosmeticdescription: cosmeticdescription, cosmeticImages: arrayOfImg,
+
+                });
+                cosmetic_data.save()
+                    .then(function (result) {
+                        res.status(201).json({ message: "cosmetic Added" })
+                    })
+                    .catch(function (err) {
+                        res.status(500).json({ message: err })
+                    });
+            }
+
+        })
+
     })
 
 router.get('/cosmetic/showall', function (req, res) {
