@@ -22,6 +22,11 @@ const Cosmetic = mongoose.model('cosmetic', {
         required: true,
         enum :['Perfume','Nailpolish','Lotion']
     },
+    featured:{
+        type: String,
+        enum:['Featured', 'NotFeatured'],
+        default: "NotFeatured"
+    },
     cosmeticdescription: [String],
     cosmeticImages: [
         {

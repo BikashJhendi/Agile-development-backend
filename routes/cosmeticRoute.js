@@ -39,6 +39,7 @@ router.post('/cosmetic/insert',
         const cosmeticgender = req.body.cosmeticgender;
         const cosmeticmodel = req.body.cosmeticmodel;
         const cosmeticdescription = req.body.cosmeticdescription;
+        const featured = req.body.featured;
 
 
             if (!req.files || req.files.length == 0) {
@@ -58,7 +59,7 @@ router.post('/cosmetic/insert',
                     arrayOfImg.push({ imageName: req.files[i].filename })
                 }
                 const cosmetic_data = new cosmetic({
-                    cosmeticname: cosmeticname, cosmeticprice: cosmeticprice, cosmetictype: cosmetictype,
+                    cosmeticname: cosmeticname, cosmeticprice: cosmeticprice,featured: featured, cosmetictype: cosmetictype,cosmeticgender: cosmeticgender,cosmeticmodel: cosmeticmodel,
                     cosmeticdescription: cosmeticdescription, cosmeticImages: arrayOfImg,
 
                 });

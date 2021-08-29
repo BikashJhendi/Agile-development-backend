@@ -37,7 +37,7 @@ router.post('/gadget/insert',
             const gadgetname = req.body.gadgetname;
             const gadgetprice = req.body.gadgetprice;
             const gadgettype = req.body.gadgettype;
-            const gadgetfeatured = req.body.gadgetfeatured;
+            const featured = req.body.featured;
             const gadgetdescription = req.body.gadgetdescription;
 
 
@@ -110,7 +110,7 @@ router.post('/gadget/insert',
                     arrayOfImg.push({ imageName: req.files[i].filename })
                 }
                 const gadget_data = new gadget({
-                    gadgetname: gadgetname, gadgetprice: gadgetprice, gadgettype: gadgettype, gadgetfeatured: gadgetfeatured, gadgetdescription: gadgetdescription,
+                    gadgetname: gadgetname, gadgetprice: gadgetprice, gadgettype: gadgettype, featured: featured, gadgetdescription: gadgetdescription,
                     gadgetImages: arrayOfImg,
                     laptop: {
                         laptopBrand: laptopBrand, laptopModel: laptopModel, laptopDimension: laptopDimension, laptopWeight: laptopWeight,
@@ -161,7 +161,7 @@ router.get('/gadget/showall', function (req, res) {
 router.get('/gadget/five', function (req, res) {
     const gt = "Laptop";
 
-    gadget.find({ gadgettype: gt }).limit(10)
+    gadget.find({ gadgettype: gt, gadgetfeatured:"NotFeatured"}).limit(10)
         .then(function (gadget_five) {
             res.status(200).json({
                 success: true,
@@ -316,11 +316,11 @@ router.get('/laptop/microsoft', function (req, res) {
 router.get('/gadget/featured', function (req, res) {
     const gf = "Featured";
 
-    gadget.find({ gadgetfeatured: gf })
-        .then(function (gadget_featured) {
+    gadget.find({ featured: gf })
+        .then(function (p_featured) {
             res.status(200).json({
                 success: true,
-                data: gadget_featured
+                data: p_featured
             });
         })
         .catch(function (e) {

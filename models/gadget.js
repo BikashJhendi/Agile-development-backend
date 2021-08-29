@@ -15,9 +15,10 @@ const Gadget = mongoose.model('gadget', {
     },
     gadgetdescription: [String],
 
-    gadgetfeatured:{
+    featured:{
         type: String,
-        enum:['Featured', 'NotFeatured']
+        enum:['Featured', 'NotFeatured'],
+        default: "NotFeatured"
     },
     
     gadgetImages: [
