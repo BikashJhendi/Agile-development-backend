@@ -131,6 +131,142 @@ router.get('/cosmetic/women', function (req, res) {
         })
 })
 
+// cosmetic filter
+router.get('/cosmetic/price/high', function (req, res) {
+
+    cosmetic.find().sort({cosmeticprice: -1})
+        .then(function (cosmetic_price) {
+            res.status(200).json({
+                success: true,
+                data: cosmetic_price
+            });
+        })
+        .catch(function (e) {
+            res.status(500).json({ message: e })
+        })
+})
+router.get('/cosmetic/price/low', function (req, res) {
+
+    cosmetic.find().sort({cosmeticprice: 1})
+        .then(function (cosmetic_price) {
+            res.status(200).json({
+                success: true,
+                data: cosmetic_price
+            });
+        })
+        .catch(function (e) {
+            res.status(500).json({ message: e })
+        })
+})
+router.get('/cosmetic/men/low', function (req, res) {
+
+    cosmetic.find({cosmeticgender: "Men"}).sort({cosmeticprice: 1})
+        .then(function (cosmetic_price) {
+            res.status(200).json({
+                success: true,
+                data: cosmetic_price
+            });
+        })
+        .catch(function (e) {
+            res.status(500).json({ message: e })
+        })
+})
+router.get('/cosmetic/men/high', function (req, res) {
+
+    cosmetic.find({cosmeticgender: "Men"}).sort({cosmeticprice: -1})
+        .then(function (cosmetic_price) {
+            res.status(200).json({
+                success: true,
+                data: cosmetic_price
+            });
+        })
+        .catch(function (e) {
+            res.status(500).json({ message: e })
+        })
+})
+router.get('/cosmetic/women/high', function (req, res) {
+
+    cosmetic.find({cosmeticgender: "Women"}).sort({cosmeticprice: -1})
+        .then(function (cosmetic_price) {
+            res.status(200).json({
+                success: true,
+                data: cosmetic_price
+            });
+        })
+        .catch(function (e) {
+            res.status(500).json({ message: e })
+        })
+})
+router.get('/cosmetic/women/low', function (req, res) {
+
+    cosmetic.find({cosmeticgender: "Women"}).sort({cosmeticprice: 1})
+        .then(function (cosmetic_price) {
+            res.status(200).json({
+                success: true,
+                data: cosmetic_price
+            });
+        })
+        .catch(function (e) {
+            res.status(500).json({ message: e })
+        })
+})
+router.get('/cosmetic/creed', function (req, res) {
+    const gc = "Creed";
+
+    cosmetic.find({ cosmeticname: gc })
+        .then(function (cosmetic_name) {
+            res.status(200).json({
+                success: true,
+                data: cosmetic_name
+            });
+        })
+        .catch(function (e) {
+            res.status(500).json({ message: e })
+        })
+})
+router.get('/cosmetic/hugo', function (req, res) {
+    const ch = "Hugo Boss";
+
+    cosmetic.find({ cosmeticname: ch})
+        .then(function (cosmetic_name) {
+            res.status(200).json({
+                success: true,
+                data: cosmetic_name
+            });
+        })
+        .catch(function (e) {
+            res.status(500).json({ message: e })
+        })
+})
+router.get('/cosmetic/victoria', function (req, res) {
+    const cv = "Victoria Secret";
+
+    cosmetic.find({ cosmeticname: cv})
+        .then(function (cosmetic_name) {
+            res.status(200).json({
+                success: true,
+                data: cosmetic_name
+            });
+        })
+        .catch(function (e) {
+            res.status(500).json({ message: e })
+        })
+})
+router.get('/cosmetic/dior', function (req, res) {
+    const cd = "Dior";
+
+    cosmetic.find({ cosmeticname: cd})
+        .then(function (cosmetic_name) {
+            res.status(200).json({
+                success: true,
+                data: cosmetic_name
+            });
+        })
+        .catch(function (e) {
+            res.status(500).json({ message: e })
+        })
+})
+
 router.get('/cosmetic/one/:id', function (req, res) {
     const id = req.params.id;
     cosmetic.find({ _id: id })
