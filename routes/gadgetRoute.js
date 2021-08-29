@@ -161,7 +161,7 @@ router.get('/gadget/showall', function (req, res) {
 router.get('/gadget/five', function (req, res) {
     const gt = "Laptop";
 
-    gadget.find({ gadgettype: gt, gadgetfeatured:"NotFeatured"}).limit(10)
+    gadget.find({ gadgettype: gt, featured: "NotFeatured"}).limit(10)
         .then(function (gadget_five) {
             res.status(200).json({
                 success: true,
@@ -329,6 +329,58 @@ router.get('/gadget/price/high', function (req, res) {
 router.get('/gadget/price/low', function (req, res) {
 
     gadget.find().sort({gadgetprice: 1})
+        .then(function (gadget_price) {
+            res.status(200).json({
+                success: true,
+                data: gadget_price
+            });
+        })
+        .catch(function (e) {
+            res.status(500).json({ message: e })
+        })
+})
+router.get('/gadget/laptop/low', function (req, res) {
+
+    gadget.find({gadgettype: "Laptop"}).sort({gadgetprice: 1})
+        .then(function (gadget_price) {
+            res.status(200).json({
+                success: true,
+                data: gadget_price
+            });
+        })
+        .catch(function (e) {
+            res.status(500).json({ message: e })
+        })
+})
+router.get('/gadget/laptop/high', function (req, res) {
+
+    gadget.find({gadgettype: "Laptop"}).sort({gadgetprice: -1})
+        .then(function (gadget_price) {
+            res.status(200).json({
+                success: true,
+                data: gadget_price
+            });
+        })
+        .catch(function (e) {
+            res.status(500).json({ message: e })
+        })
+})
+router.get('/gadget/camera/low', function (req, res) {
+
+    gadget.find({gadgettype: "Camera"}).sort({gadgetprice: 1})
+        .then(function (gadget_price) {
+            res.status(200).json({
+                success: true,
+                data: gadget_price
+            });
+        })
+        .catch(function (e) {
+            res.status(500).json({ message: e })
+        })
+})
+router.get('/gadget/camera/high', function (req, res) {
+
+    gadget.find({gadgettype: "Camera"}).sort({gadgetprice: -1})
         .then(function (gadget_price) {
             res.status(200).json({
                 success: true,
