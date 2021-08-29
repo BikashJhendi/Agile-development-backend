@@ -5,25 +5,25 @@ const GadgetCart = mongoose.model('mycart', {
     },
     productid: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'users',  
+        ref: 'users',
     },
-    quantity:{
+    quantity: {
         type: String,
     },
 
-    productname:{
-        type:String
+    productname: {
+        type: String
     },
 
-    productprice:{
-        type :String
+    productprice: {
+        type: String
     },
 
-    productimage:{
-        type:String
+    productimage: {
+        type: String
     },
-    producttype:{
-        type:String
+    producttype: {
+        type: String
     }
 })
 
