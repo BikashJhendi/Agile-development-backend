@@ -313,6 +313,32 @@ router.get('/laptop/microsoft', function (req, res) {
             res.status(500).json({ message: e })
         })
 })
+router.get('/gadget/price/high', function (req, res) {
+
+    gadget.find().sort({gadgetprice: -1})
+        .then(function (gadget_price) {
+            res.status(200).json({
+                success: true,
+                data: gadget_price
+            });
+        })
+        .catch(function (e) {
+            res.status(500).json({ message: e })
+        })
+})
+router.get('/gadget/price/low', function (req, res) {
+
+    gadget.find().sort({gadgetprice: 1})
+        .then(function (gadget_price) {
+            res.status(200).json({
+                success: true,
+                data: gadget_price
+            });
+        })
+        .catch(function (e) {
+            res.status(500).json({ message: e })
+        })
+})
 router.get('/gadget/featured', function (req, res) {
     const gf = "Featured";
 
