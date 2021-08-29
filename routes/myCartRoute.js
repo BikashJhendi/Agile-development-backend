@@ -4,6 +4,7 @@ const mycart = require('../models/mycart');
 const { check, validationResult } = require('express-validator')
 const jwt = require('jsonwebtoken');
 const GadgetCart = require('../models/mycart');
+const mycheckout = require('../models/mycheckout');
 
 // router.post('/gadgetcart/insert',
 //     function (req, res) {
@@ -248,4 +249,97 @@ router.put('/quantity/update/:id',
             })
     })
 
+// router.post('/mytotalamount/insert',
+//     function (req, res) {
+
+//         const { userid, productid, itemcount, totalamount, totalamounttax } = req.body;
+
+//         mytotalamount.find({ userid })
+//             .then(function (data) {
+//                 if (data.length == 0) {
+//                     const amount = new mytotalamount({ userid, productid, itemcount, totalamount, totalamounttax });
+
+//                     return amount.save()
+//                         .then(function (result) {
+//                             res.status(201).json({
+//                                 message: "saved!",
+//                                 success: true
+//                             })
+//                         })
+//                         .catch(function (err) {
+//                             res.status(500).json({
+//                                 message: err,
+//                                 success: false
+//                             })
+//                         });
+//                 }
+//                 else {
+//                     const amount = new mytotalamount({ userid, productid, itemcount, totalamount, totalamounttax });
+
+//                     return amount.save()
+//                         .then(function (result) {
+//                             res.status(201).json({
+//                                 message: "saved!",
+//                                 success: true
+//                             })
+//                         })
+//                         .catch(function (err) {
+//                             res.status(500).json({
+//                                 message: err,
+//                                 success: false
+//                             })
+//                         });
+//                 }
+//             })
+//             .catch(function (err) {
+//                 res.status(404).json({ // 500 internal server error
+//                     success: false,
+//                     message: "User Not Found",
+//                     error: err
+//                 });
+//             })
+//     })
+
+router.post('/mycheckout/insert',
+    function (req, res) {
+        const { userid, itemcount, totalamount, totalamounttax, paymentmethod, status, productname } = req.body
+        const { billingfirstname, billinglastname, billingphone, billingemail, billingaddress,
+            billingzip, billingdistrict, billingprovince } = req.body
+
+        console.log(req.body)
+        const checkout = new mycheckout({
+            userid, paymentmethod, status,
+            productinfo: {
+                itemcount, totalamount, totalamounttax, myproduct: [{ productname }]
+            },
+            billingaddress: {
+                billingfirstname, billinglastname, billingphone, billingemail, billingaddress,
+                billingzip, billingdistrict, billingprovince
+            }
+        });
+        checkout.save()
+            .then(function (result) {
+                res.status(201).json({ message: "cart Added" })
+            })
+            .catch(function (err) {
+                res.status(500).json({ message: err })
+            });
+    })
+
+router.get('/mycheckout/showall', function (req, res) {
+    // const token = req.headers.authorization.split(' ')[1];
+    // const decode = jwt.verify(token, "secretKey");
+    // const addedBy = decode.userId
+    mycheckout.find()
+        .then(function (total) {
+            res.status(200).json({
+                success: true,
+                data: total,
+            });
+            // console.log(mycart_data.length)
+        })
+        .catch(function (e) {
+            res.status(500).json({ message: e })
+        })
+})
 module.exports = router;
