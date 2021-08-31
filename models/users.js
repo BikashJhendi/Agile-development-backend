@@ -38,7 +38,7 @@ const User = mongoose.model('User', {
         default: Date.now
     },
     addressBook: {
-        zone: {
+        province: {
             type: String
         },
         district: {
@@ -48,6 +48,9 @@ const User = mongoose.model('User', {
             type: String
         },
         tole: {
+            type: String
+        },
+        zipCode: {
             type: String
         }
     },

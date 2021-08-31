@@ -187,7 +187,7 @@ router.put('/user/profile/update/:id',
 	function (req, res) {
 		const { id } = req.params;
 		const { firstname, lastname, email, password, currentPassword, phone,
-			zone, district, address, tole } = req.body;
+			province, district, address, tole, zipCode } = req.body;
 
 		User.findOne({ _id: id })
 			.then(function (userData) {
@@ -222,7 +222,7 @@ router.put('/user/profile/update/:id',
 
 								return User.updateOne({ _id: id }, {
 									firstname, lastname, email, phone, password: hash,
-									addressBook: { zone, district, address, tole }
+									addressBook: { province, district, address, tole, zipCode }
 								})
 									.then(function (result) {
 										User.findOne({ _id: id })
@@ -255,7 +255,7 @@ router.put('/user/profile/update/:id',
 					else {
 						return User.updateOne({ _id: id }, {
 							firstname, lastname, email, phone,
-							addressBook: { zone, district, address, tole },
+							addressBook: { province, district, address, tole, zipCode },
 						})
 							.then(function (result) {
 								User.findOne({ _id: id })
@@ -307,7 +307,7 @@ router.put('/user/profile/update/:id',
 
 								return User.updateOne({ _id: id }, {
 									firstname, lastname, email, phone, password: hash,
-									addressBook: { zone, district, address, tole },
+									addressBook: { province, district, address, tole, zipCode },
 									img: req.file.filename
 								})
 									.then(function (result) {
@@ -342,7 +342,7 @@ router.put('/user/profile/update/:id',
 						return User.updateOne({ _id: id }, {
 							firstname, lastname, email, phone,
 							img: req.file.filename,
-							addressBook: { zone, district, address, tole },
+							addressBook: { province, district, address, tole, zipCode },
 						})
 							.then(function (result) {
 								User.findOne({ _id: id })
@@ -546,7 +546,7 @@ router.post('/admin/user/add',
 	function (req, res) {
 
 		const { firstname, lastname, email, password, phone, userType,
-			zone, district, address, tole
+			province, district, address, tole, zipCode
 		} = req.body;
 
 
@@ -558,7 +558,7 @@ router.post('/admin/user/add',
 						return bcrypt.hash(password, 10, function (err, hash) {
 							const userdata = new User({
 								firstname, lastname, email, password: hash, phone, userType, verified: true,
-								addressBook: { zone, district, address, tole }
+								addressBook: { province, district, address, tole, zipCode }
 							});
 							userdata.save()
 								.then(function (result) {
@@ -593,7 +593,7 @@ router.post('/admin/user/add',
 						return bcrypt.hash(password, 10, function (err, hash) {
 							const userdata = new User({
 								firstname, lastname, email, password: hash, phone, userType, verified: true, img,
-								addressBook: { zone, district, address, tole }
+								addressBook: { province, district, address, tole, zipCode }
 							});
 							userdata.save()
 								.then(function (result) {
