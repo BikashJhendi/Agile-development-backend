@@ -7,12 +7,14 @@ const productReview = mongoose.model('review', {
     review: {
         type: String,     
     },
-    reviewReply: {
-        type: String,
-    },
-    reviewImage: {
-        type: String,
-    },
+    reviewImages: [
+        {
+            imageName: {
+                type: String
+            },
+            
+        }
+    ],
     rating: {
        type: String,
     },

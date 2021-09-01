@@ -35,7 +35,7 @@ const Cosmetic = mongoose.model('cosmetic', {
             },
             
         }
-    ],
+    ]
 
 })
 

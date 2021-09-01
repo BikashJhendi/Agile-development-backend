@@ -29,11 +29,12 @@ const Gadget = mongoose.model('gadget', {
             
         }
     ],
-
-laptop:{
-    laptopBrand: {
+    brandName: {
         type: String,
     },
+
+laptop:{
+    
     laptopModel: {
         type: String
     },

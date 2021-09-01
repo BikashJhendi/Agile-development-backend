@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const AD = require('../models/gadgetAD');
-const adUploads = require('../middleware/gadget');
+const adUploads = require('../middleware/ImageController/gadget');
 const { check, validationResult } = require('express-validator');
 const { request } = require('express');
 
