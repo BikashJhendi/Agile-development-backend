@@ -302,15 +302,15 @@ router.put('/quantity/update/:id',
 
 router.post('/mycheckout/insert',
     function (req, res) {
-        const { userid, itemcount, totalamount, totalamounttax, paymentmethod, status, productname } = req.body
+        const { userid, itemcount, totalamount, totalamounttax, paymentmethod, status, myproduct } = req.body
         const { billingfirstname, billinglastname, billingphone, billingemail, billingaddress,
             billingzip, billingdistrict, billingprovince } = req.body
 
-        console.log(req.body)
+        // console.log(req.body)
         const checkout = new mycheckout({
             userid, paymentmethod, status,
             productinfo: {
-                itemcount, totalamount, totalamounttax, myproduct: [{ productname }]
+                itemcount, totalamount, totalamounttax, myproduct
             },
             billingaddress: {
                 billingfirstname, billinglastname, billingphone, billingemail, billingaddress,
@@ -319,7 +319,7 @@ router.post('/mycheckout/insert',
         });
         checkout.save()
             .then(function (result) {
-                res.status(201).json({ message: "cart Added" })
+                res.status(201).json({ message: "successful" })
             })
             .catch(function (err) {
                 res.status(500).json({ message: err })
