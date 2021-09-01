@@ -37,7 +37,7 @@ router.post('/gadget/insert',
             const gadgetname = req.body.gadgetname;
             const gadgetprice = req.body.gadgetprice;
             const gadgettype = req.body.gadgettype;
-            const gadgetfeatured = req.body.gadgetfeatured;
+            const featured = req.body.featured;
             const gadgetdescription = req.body.gadgetdescription;
             const brandName = req.body.brandName;
 
@@ -110,7 +110,7 @@ router.post('/gadget/insert',
                     arrayOfImg.push({ imageName: req.files[i].filename })
                 }
                 const gadget_data = new gadget({
-                    gadgetname: gadgetname, gadgetprice: gadgetprice, gadgettype: gadgettype, gadgetfeatured: gadgetfeatured, gadgetdescription: gadgetdescription, brandName:brandName,
+                    gadgetname: gadgetname, gadgetprice: gadgetprice, gadgettype: gadgettype, featured: featured, gadgetdescription: gadgetdescription, brandName:brandName,
                     gadgetImages: arrayOfImg, 
 
                     laptop: {
