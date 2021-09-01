@@ -33,7 +33,7 @@ const mycheckout = mongoose.model('mycheckout', {
         },
 
     },
-
+    
     billingaddress: {
         billingfirstname: {
             type: String
