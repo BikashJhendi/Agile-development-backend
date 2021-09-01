@@ -8,13 +8,17 @@ const mycheckout = mongoose.model('mycheckout', {
     },
     status: {
         type: String,
-        enum: ['pending', 'delivered', 'canceled'],
+        enum: ['pending', 'shipped', 'delivered'],
         default: 'pending'
     },
     productinfo: {
         myproduct: [{
             productname: {
                 type: String
+            },
+            productid: {
+                type: mongoose.Schema.Types.ObjectId,
+                ref: 'users',
             }
         }],
         itemcount: {
