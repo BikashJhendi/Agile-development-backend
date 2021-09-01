@@ -1,9 +1,9 @@
 const express = require('express');
 const router = express.Router();
 const cosmetic = require('../models/cosmetic');
-const cosmeticUploads = require('../middleware/cosmetic');
+const cosmeticUploads = require('../middleware/ImageController/cosmetic');
 const { check, validationResult } = require('express-validator');
-const uploadCosmeticImg = require('../middleware/cosmetic.js');
+const uploadCosmeticImg = require('../middleware/ImageController/cosmetic');
 const multer = require('multer');
 // const fileupload = require('../middleware/fileupload.js');
 
@@ -27,10 +27,11 @@ router.post('/cosmetic/insert',
                     success: false,
                     err: err
                 })
-                
+
             }
             const errors = validationResult(req);
             console.log(errors.array())
+
 
 
         const cosmeticname = req.body.cosmeticname;

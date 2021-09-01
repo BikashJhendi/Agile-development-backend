@@ -1,9 +1,9 @@
 const express = require('express');
 const router = express.Router();
 const gadget = require('../models/gadget');
-const gadgetUploads = require('../middleware/gadget');
+const gadgetUploads = require('../middleware/ImageController/gadget');
 const { check, validationResult } = require('express-validator');
-const uploadGadgetImg = require('../middleware/gadget.js');
+const uploadGadgetImg = require('../middleware/ImageController/gadget.js');
 const multer = require('multer');
 // const auth = require('../middleware/auth');
 
@@ -37,11 +37,11 @@ router.post('/gadget/insert',
             const gadgetname = req.body.gadgetname;
             const gadgetprice = req.body.gadgetprice;
             const gadgettype = req.body.gadgettype;
-            const featured = req.body.featured;
+            const gadgetfeatured = req.body.gadgetfeatured;
             const gadgetdescription = req.body.gadgetdescription;
+            const brandName = req.body.brandName;
 
 
-            const laptopBrand = req.body.laptopBrand;
             const laptopModel = req.body.laptopModel;
             const laptopDimension = req.body.laptopDimension;
             const laptopWeight = req.body.laptopWeight;
@@ -110,10 +110,11 @@ router.post('/gadget/insert',
                     arrayOfImg.push({ imageName: req.files[i].filename })
                 }
                 const gadget_data = new gadget({
-                    gadgetname: gadgetname, gadgetprice: gadgetprice, gadgettype: gadgettype, featured: featured, gadgetdescription: gadgetdescription,
-                    gadgetImages: arrayOfImg,
+                    gadgetname: gadgetname, gadgetprice: gadgetprice, gadgettype: gadgettype, gadgetfeatured: gadgetfeatured, gadgetdescription: gadgetdescription, brandName:brandName,
+                    gadgetImages: arrayOfImg, 
+
                     laptop: {
-                        laptopBrand: laptopBrand, laptopModel: laptopModel, laptopDimension: laptopDimension, laptopWeight: laptopWeight,
+                        laptopModel: laptopModel, laptopDimension: laptopDimension, laptopWeight: laptopWeight,
                         laptopSize: laptopSize, laptopResolution: laptopResolution, laptopProcessor: laptopProcessor, laptopBaseClock: laptopBaseClock,
                         laptopSpeed: laptopSpeed, laptopRam: laptopRam, laptopGraphic: laptopGraphic, laptopDedicatedGraphicMemory: laptopDedicatedGraphicMemory,
                         laptopDedicatedGraphic: laptopDedicatedGraphic, laptopHarddisk: laptopHarddisk, laptopSSD: laptopSSD, laptopNoOfUSBPorts: laptopNoOfUSBPorts,
