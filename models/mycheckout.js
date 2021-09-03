@@ -19,6 +19,9 @@ const mycheckout = mongoose.model('mycheckout', {
             productid: {
                 type: mongoose.Schema.Types.ObjectId,
                 ref: 'users',
+            },
+            productquantity: {
+                type: String
             }
         }],
         itemcount: {
@@ -59,6 +62,11 @@ const mycheckout = mongoose.model('mycheckout', {
         billingprovince: {
             type: String
         }
+    },
+
+    checkoutDate: {
+        type: Date,
+        default: Date.now
     }
 
 })
