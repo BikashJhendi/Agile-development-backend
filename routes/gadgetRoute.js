@@ -110,8 +110,8 @@ router.post('/gadget/insert',
                     arrayOfImg.push({ imageName: req.files[i].filename })
                 }
                 const gadget_data = new gadget({
-                    gadgetname: gadgetname, gadgetprice: gadgetprice, gadgettype: gadgettype, featured: featured, gadgetdescription: gadgetdescription, brandName:brandName,
-                    gadgetImages: arrayOfImg, 
+                    gadgetname: gadgetname, gadgetprice: gadgetprice, gadgettype: gadgettype, featured: featured, gadgetdescription: gadgetdescription, brandName: brandName,
+                    gadgetImages: arrayOfImg,
 
                     laptop: {
                         laptopModel: laptopModel, laptopDimension: laptopDimension, laptopWeight: laptopWeight,
@@ -162,7 +162,22 @@ router.get('/gadget/showall', function (req, res) {
 router.get('/gadget/five', function (req, res) {
     const gt = "Laptop";
 
-    gadget.find({ gadgettype: gt, featured: "NotFeatured"}).limit(10)
+    gadget.find({ gadgettype: gt, featured: "NotFeatured" }).limit(10)
+        .then(function (gadget_five) {
+            res.status(200).json({
+                success: true,
+                data: gadget_five
+            });
+        })
+        .catch(function (e) {
+            res.status(500).json({ message: e })
+        })
+})
+//gadget Filter
+router.get('/gadget/laptop', function (req, res) {
+    const gt = "Laptop";
+
+    gadget.find({ gadgettype: gt })
         .then(function (gadget_five) {
             res.status(200).json({
                 success: true,
@@ -187,15 +202,43 @@ router.get('/camera/five', function (req, res) {
             res.status(500).json({ message: e })
         })
 })
-// gadget filter
+router.get('/gadget/camera', function (req, res) {
+    const gt = "Camera";
+
+    gadget.find({ gadgettype: gt })
+        .then(function (gadget_camera) {
+            res.status(200).json({
+                success: true,
+                data: gadget_camera
+            });
+        })
+        .catch(function (e) {
+            res.status(500).json({ message: e })
+        })
+})
+// laptop filter
 router.get('/laptop/acer', function (req, res) {
     const gm = "Acer";
 
-    gadget.find({ gadgetname: gm })
-        .then(function (gadget_name) {
+    gadget.find({ brandName: gm })
+        .then(function (brand_name) {
             res.status(200).json({
                 success: true,
-                data: gadget_name
+                data: brand_name
+            });
+        })
+        .catch(function (e) {
+            res.status(500).json({ message: e })
+        })
+})
+router.get('/laptop/asus', function (req, res) {
+    const gas = "Asus";
+
+    gadget.find({ brandName: gas })
+        .then(function (brand_name) {
+            res.status(200).json({
+                success: true,
+                data: brand_name
             });
         })
         .catch(function (e) {
@@ -205,11 +248,11 @@ router.get('/laptop/acer', function (req, res) {
 router.get('/laptop/dell', function (req, res) {
     const gd = "Dell";
 
-    gadget.find({ gadgetname: gd })
-        .then(function (gadget_name) {
+    gadget.find({ brandName: gd })
+        .then(function (brand_name) {
             res.status(200).json({
                 success: true,
-                data: gadget_name
+                data: brand_name
             });
         })
         .catch(function (e) {
@@ -219,11 +262,11 @@ router.get('/laptop/dell', function (req, res) {
 router.get('/laptop/hp', function (req, res) {
     const gh = "HP";
 
-    gadget.find({ gadgetname: gh })
-        .then(function (gadget_name) {
+    gadget.find({ brandName: gh })
+        .then(function (brand_name) {
             res.status(200).json({
                 success: true,
-                data: gadget_name
+                data: brand_name
             });
         })
         .catch(function (e) {
@@ -233,11 +276,11 @@ router.get('/laptop/hp', function (req, res) {
 router.get('/laptop/lenovo', function (req, res) {
     const gl = "Lenovo";
 
-    gadget.find({ gadgetname: gl })
-        .then(function (gadget_name) {
+    gadget.find({ brandName: gl })
+        .then(function (brand_name) {
             res.status(200).json({
                 success: true,
-                data: gadget_name
+                data: brand_name
             });
         })
         .catch(function (e) {
@@ -247,11 +290,11 @@ router.get('/laptop/lenovo', function (req, res) {
 router.get('/laptop/razer', function (req, res) {
     const gr = "Razer";
 
-    gadget.find({ gadgetname: gr })
-        .then(function (gadget_name) {
+    gadget.find({ brandName: gr })
+        .then(function (brand_name) {
             res.status(200).json({
                 success: true,
-                data: gadget_name
+                data: brand_name
             });
         })
         .catch(function (e) {
@@ -261,11 +304,11 @@ router.get('/laptop/razer', function (req, res) {
 router.get('/laptop/msi', function (req, res) {
     const gm = "MSI";
 
-    gadget.find({ gadgetname: gm })
-        .then(function (gadget_name) {
+    gadget.find({ brandName: gm })
+        .then(function (brand_name) {
             res.status(200).json({
                 success: true,
-                data: gadget_name
+                data: brand_name
             });
         })
         .catch(function (e) {
@@ -273,13 +316,13 @@ router.get('/laptop/msi', function (req, res) {
         })
 })
 router.get('/laptop/arous', function (req, res) {
-    const ga = "Arous";
+    const gar = "Arous";
 
-    gadget.find({ gadgetname: ga })
-        .then(function (gadget_name) {
+    gadget.find({ brandName: gar })
+        .then(function (brand_name) {
             res.status(200).json({
                 success: true,
-                data: gadget_name
+                data: brand_name
             });
         })
         .catch(function (e) {
@@ -289,11 +332,11 @@ router.get('/laptop/arous', function (req, res) {
 router.get('/laptop/apple', function (req, res) {
     const ga = "Apple";
 
-    gadget.find({ gadgetname: ga })
-        .then(function (gadget_name) {
+    gadget.find({ brandName: ga })
+        .then(function (brand_name) {
             res.status(200).json({
                 success: true,
-                data: gadget_name
+                data: brand_name
             });
         })
         .catch(function (e) {
@@ -301,22 +344,23 @@ router.get('/laptop/apple', function (req, res) {
         })
 })
 router.get('/laptop/microsoft', function (req, res) {
-    const gm = "Microsoft";
+    const gmi = "Microsoft";
 
-    gadget.find({ gadgetname: ga })
-        .then(function (gadget_name) {
+    gadget.find({ brandName: gmi })
+        .then(function (brand_name) {
             res.status(200).json({
                 success: true,
-                data: gadget_name
+                data: brand_name
             });
         })
         .catch(function (e) {
             res.status(500).json({ message: e })
         })
 })
+//price filter
 router.get('/gadget/price/high', function (req, res) {
 
-    gadget.find().sort({gadgetprice: -1})
+    gadget.find().sort({ gadgetprice: -1 })
         .then(function (gadget_price) {
             res.status(200).json({
                 success: true,
@@ -329,7 +373,7 @@ router.get('/gadget/price/high', function (req, res) {
 })
 router.get('/gadget/price/low', function (req, res) {
 
-    gadget.find().sort({gadgetprice: 1})
+    gadget.find().sort({ gadgetprice: 1 })
         .then(function (gadget_price) {
             res.status(200).json({
                 success: true,
@@ -342,7 +386,7 @@ router.get('/gadget/price/low', function (req, res) {
 })
 router.get('/gadget/laptop/low', function (req, res) {
 
-    gadget.find({gadgettype: "Laptop"}).sort({gadgetprice: 1})
+    gadget.find({ gadgettype: "Laptop" }).sort({ gadgetprice: 1 })
         .then(function (gadget_price) {
             res.status(200).json({
                 success: true,
@@ -355,7 +399,7 @@ router.get('/gadget/laptop/low', function (req, res) {
 })
 router.get('/gadget/laptop/high', function (req, res) {
 
-    gadget.find({gadgettype: "Laptop"}).sort({gadgetprice: -1})
+    gadget.find({ gadgettype: "Laptop" }).sort({ gadgetprice: -1 })
         .then(function (gadget_price) {
             res.status(200).json({
                 success: true,
@@ -368,7 +412,7 @@ router.get('/gadget/laptop/high', function (req, res) {
 })
 router.get('/gadget/camera/low', function (req, res) {
 
-    gadget.find({gadgettype: "Camera"}).sort({gadgetprice: 1})
+    gadget.find({ gadgettype: "Camera" }).sort({ gadgetprice: 1 })
         .then(function (gadget_price) {
             res.status(200).json({
                 success: true,
@@ -381,7 +425,7 @@ router.get('/gadget/camera/low', function (req, res) {
 })
 router.get('/gadget/camera/high', function (req, res) {
 
-    gadget.find({gadgettype: "Camera"}).sort({gadgetprice: -1})
+    gadget.find({ gadgettype: "Camera" }).sort({ gadgetprice: -1 })
         .then(function (gadget_price) {
             res.status(200).json({
                 success: true,
