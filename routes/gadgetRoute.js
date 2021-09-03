@@ -218,9 +218,9 @@ router.get('/gadget/camera', function (req, res) {
 })
 // laptop filter
 router.get('/laptop/acer', function (req, res) {
-    const gm = "Acer";
+    const acer = "Acer";
 
-    gadget.find({ brandName: gm })
+    gadget.find({ brandName: acer })
         .then(function (brand_name) {
             res.status(200).json({
                 success: true,
@@ -232,9 +232,9 @@ router.get('/laptop/acer', function (req, res) {
         })
 })
 router.get('/laptop/asus', function (req, res) {
-    const gas = "Asus";
+    const asus = "Asus";
 
-    gadget.find({ brandName: gas })
+    gadget.find({ brandName: asus })
         .then(function (brand_name) {
             res.status(200).json({
                 success: true,
@@ -246,9 +246,9 @@ router.get('/laptop/asus', function (req, res) {
         })
 })
 router.get('/laptop/dell', function (req, res) {
-    const gd = "Dell";
+    const dell = "Dell";
 
-    gadget.find({ brandName: gd })
+    gadget.find({ brandName: dell })
         .then(function (brand_name) {
             res.status(200).json({
                 success: true,
@@ -260,9 +260,9 @@ router.get('/laptop/dell', function (req, res) {
         })
 })
 router.get('/laptop/hp', function (req, res) {
-    const gh = "HP";
+    const hp = "HP";
 
-    gadget.find({ brandName: gh })
+    gadget.find({ brandName: hp })
         .then(function (brand_name) {
             res.status(200).json({
                 success: true,
@@ -274,9 +274,9 @@ router.get('/laptop/hp', function (req, res) {
         })
 })
 router.get('/laptop/lenovo', function (req, res) {
-    const gl = "Lenovo";
+    const lenovo = "Lenovo";
 
-    gadget.find({ brandName: gl })
+    gadget.find({ brandName: lenovo })
         .then(function (brand_name) {
             res.status(200).json({
                 success: true,
@@ -288,9 +288,9 @@ router.get('/laptop/lenovo', function (req, res) {
         })
 })
 router.get('/laptop/razer', function (req, res) {
-    const gr = "Razer";
+    const razer = "Razer";
 
-    gadget.find({ brandName: gr })
+    gadget.find({ brandName: razer })
         .then(function (brand_name) {
             res.status(200).json({
                 success: true,
@@ -302,9 +302,9 @@ router.get('/laptop/razer', function (req, res) {
         })
 })
 router.get('/laptop/msi', function (req, res) {
-    const gm = "MSI";
+    const msi = "MSI";
 
-    gadget.find({ brandName: gm })
+    gadget.find({ brandName: msi })
         .then(function (brand_name) {
             res.status(200).json({
                 success: true,
@@ -316,9 +316,9 @@ router.get('/laptop/msi', function (req, res) {
         })
 })
 router.get('/laptop/arous', function (req, res) {
-    const gar = "Arous";
+    const aorus = "Arous";
 
-    gadget.find({ brandName: gar })
+    gadget.find({ brandName: aorus })
         .then(function (brand_name) {
             res.status(200).json({
                 success: true,
@@ -330,9 +330,9 @@ router.get('/laptop/arous', function (req, res) {
         })
 })
 router.get('/laptop/apple', function (req, res) {
-    const ga = "Apple";
+    const apple = "Apple";
 
-    gadget.find({ brandName: ga })
+    gadget.find({ brandName: apple })
         .then(function (brand_name) {
             res.status(200).json({
                 success: true,
@@ -344,9 +344,9 @@ router.get('/laptop/apple', function (req, res) {
         })
 })
 router.get('/laptop/microsoft', function (req, res) {
-    const gmi = "Microsoft";
+    const microsoft = "Microsoft";
 
-    gadget.find({ brandName: gmi })
+    gadget.find({ brandName: microsoft })
         .then(function (brand_name) {
             res.status(200).json({
                 success: true,
