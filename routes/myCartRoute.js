@@ -6,36 +6,6 @@ const jwt = require('jsonwebtoken');
 const GadgetCart = require('../models/mycart');
 const mycheckout = require('../models/mycheckout');
 
-// router.post('/gadgetcart/insert',
-//     function (req, res) {
-
-//         const { userid, productid, quantity, productname, productprice, producttype } = req.body
-
-//         const cart_id = new mycart({ userid, productid, quantity, productname, productprice, producttype });
-//         cart_id.save()
-//             .then(function (result) {
-//                 res.status(201).json({ message: "cart Added" })
-//             })
-//             .catch(function (err) {
-//                 res.status(500).json({ message: err })
-//             });
-//     })
-
-// router.post('/cosmeticcart/insert',
-//     function (req, res) {
-
-//         const { userid, productid, quantity, productname, productprice, producttype } = req.body;
-
-//         const cart_id = new mycart({ userid, productid, quantity, productname, productprice, producttype });
-//         cart_id.save()
-//             .then(function (result) {
-//                 res.status(201).json({ message: "cart Added" })
-//             })
-//             .catch(function (err) {
-//                 res.status(500).json({ message: err })
-//             });
-//     })
-
 router.post('/mycart/insert',
     function (req, res) {
 
@@ -162,72 +132,6 @@ router.delete("/delete/mycart/:id", function (req, res) {
         })
 });
 
-// router.put('/quantity/update/:id',
-//     function (req, res) {
-//         const { userid, quantity } = req.body;
-//         const id = req.body;
-//         console.log(quantity)
-//         console.log(id)
-
-//         GadgetCart.find({ userid })
-//             .then(function (data) {
-//                 if (data.length == 0) {
-//                     return GadgetCart.updateOne({ quantity })
-//                         .catch(function (err) {
-//                             res.status(500).json({ // 500 Internal Server Error
-//                                 success: false,
-//                                 message: "Unable to update quantity.",
-//                                 error: err
-//                             });
-//                         })
-//                 }
-
-//                 var updateCart = data.find(item => {
-//                     if (item.productid == id) {
-//                         return item.userid
-//                     }
-//                 })
-
-//                 if (updateCart) {
-//                     return GadgetCart.updateOne({ quantity })
-//                         .then(function (result) {
-//                             res.status(200).json({ // 200 OK 
-//                                 success: true,
-//                                 message: "quantity updated."
-//                             })
-//                         })
-//                 }
-
-//                 else {
-//                     return GadgetCart.updateOne({ quantity })
-//                         .then(function (result) {
-//                             res.status(200).json({ // 200 OK 
-//                                 success: true,
-//                                 message: "quantity updated."
-//                             })
-//                         })
-//                         .catch(function (err) {
-//                             res.status(500).json({ // 500 Internal Server Error
-//                                 success: false,
-//                                 message: "Unable to update quantity.",
-//                                 error: err
-//                             });
-//                         })
-//                 }
-
-//             })
-//             .catch(function (err) {
-//                 res.status(404).json({ // 500 internal server error
-//                     success: false,
-//                     message: "User Not Found",
-//                     error: err
-//                 });
-//             })
-
-//         
-
-//     });
-
 router.put('/quantity/update/:id',
     function (req, res) {
         const { id } = req.params;
@@ -249,66 +153,16 @@ router.put('/quantity/update/:id',
             })
     })
 
-// router.post('/mytotalamount/insert',
-//     function (req, res) {
-
-//         const { userid, productid, itemcount, totalamount, totalamounttax } = req.body;
-
-//         mytotalamount.find({ userid })
-//             .then(function (data) {
-//                 if (data.length == 0) {
-//                     const amount = new mytotalamount({ userid, productid, itemcount, totalamount, totalamounttax });
-
-//                     return amount.save()
-//                         .then(function (result) {
-//                             res.status(201).json({
-//                                 message: "saved!",
-//                                 success: true
-//                             })
-//                         })
-//                         .catch(function (err) {
-//                             res.status(500).json({
-//                                 message: err,
-//                                 success: false
-//                             })
-//                         });
-//                 }
-//                 else {
-//                     const amount = new mytotalamount({ userid, productid, itemcount, totalamount, totalamounttax });
-
-//                     return amount.save()
-//                         .then(function (result) {
-//                             res.status(201).json({
-//                                 message: "saved!",
-//                                 success: true
-//                             })
-//                         })
-//                         .catch(function (err) {
-//                             res.status(500).json({
-//                                 message: err,
-//                                 success: false
-//                             })
-//                         });
-//                 }
-//             })
-//             .catch(function (err) {
-//                 res.status(404).json({ // 500 internal server error
-//                     success: false,
-//                     message: "User Not Found",
-//                     error: err
-//                 });
-//             })
-//     })
 
 router.post('/mycheckout/insert',
     function (req, res) {
-        const { userid, itemcount, totalamount, totalamounttax, paymentmethod, status, myproduct } = req.body
+        const { userid, itemcount, totalamount, totalamounttax, paymentmethod, status, myproduct, token } = req.body
         const { billingfirstname, billinglastname, billingphone, billingemail, billingaddress,
             billingzip, billingdistrict, billingprovince } = req.body
 
         // console.log(req.body)
         const checkout = new mycheckout({
-            userid, paymentmethod, status,
+            userid, paymentmethod, status, token,
             productinfo: {
                 itemcount, totalamount, totalamounttax, myproduct
             },
@@ -319,7 +173,7 @@ router.post('/mycheckout/insert',
         });
         checkout.save()
             .then(function (result) {
-                res.status(201).json({ message: "successful" })
+                res.status(201).json({ message: "successfull" })
             })
             .catch(function (err) {
                 res.status(500).json({ message: err })
