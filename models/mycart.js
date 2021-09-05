@@ -9,7 +9,7 @@ const GadgetCart = mongoose.model('mycart', {
         ref: 'users',
     },
     quantity: {
-        type: String,
+        type: Number,
     },
 
     productname: {
@@ -17,7 +17,7 @@ const GadgetCart = mongoose.model('mycart', {
     },
 
     productprice: {
-        type: String
+        type: Number
     },
 
     productimage: {

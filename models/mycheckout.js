@@ -3,38 +3,40 @@ const mycheckout = mongoose.model('mycheckout', {
     userid: {
         type: mongoose.Schema.Types.ObjectId,
     },
-    
-    productinfo: {
-        myproduct: [{
-            productname: {
-                type: String
-            },
-            productid: {
-                type: mongoose.Schema.Types.ObjectId,
-                ref: 'users',
-            },
-            productquantity: {
-                type: String
-            },
-            paymentmethod: {
-                type: String,
-            },
-            status: {
-                type: String,
-                enum: ['pending', 'shipped', 'delivered'],
-                default: 'pending'
-            },
 
-        }],
+    productinfo: {
+        myproduct: [
+            {
+                productname: {
+                    type: String
+                },
+                productid: {
+                    type: mongoose.Schema.Types.ObjectId,
+                    ref: 'users',
+                },
+                productquantity: {
+                    type: Number
+                },
+                paymentmethod: {
+                    type: String,
+                },
+                status: {
+                    type: String,
+                    enum: ['Pending', 'Shipped', 'Delivered', 'Cancelled'],
+                    default: 'Pending'
+                },
+
+            }
+        ],
         itemcount: {
-            type: String,
+            type: Number,
         },
         totalamount: {
-            type: String
+            type: Number
         },
 
         totalamounttax: {
-            type: String
+            type: Number
         },
 
     },

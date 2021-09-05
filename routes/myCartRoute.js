@@ -196,4 +196,94 @@ router.get('/mycheckout/myorder', function (req, res) {
 })
 
 
+// total revenue of company (only delivered amount)
+
+// router.get('/admin/total/revenue',
+//     function (req, res) {
+//         mycheckout.aggregate([
+//             {
+//                 $match: {
+//                     "productinfo.myproduct.status": "Delivered"
+//                 }
+//             },
+//             {
+//                 $group: {
+//                     _id: null,
+//                     total_revenue: { $sum: "$productinfo.totalamounttax" },
+//                     totalItemSold: { $sum: "$productinfo.myproduct.productquantity" }
+//                 }
+//             }
+//         ])
+//             .then(function (result) {
+//                 res.status(200).json({
+//                     success: true,
+//                     data: result,
+//                 });
+//             })
+//             .catch(function (e) {
+//                 res.status(500).json({ message: e })
+//             })
+//     })
+
+// ====================OR====================
+router.get('/admin/total/revenue',
+    function (req, res) {
+        mycheckout.aggregate([
+            { $match: {} },
+            { $unwind: "$productinfo" },
+            { $project: { _id: null, totalAmount: "$productinfo.totalamounttax", myProducts: "$productinfo.myproduct" } },
+
+            { $unwind: "$myProducts" },
+            { $project: { _id: null, totalAmount: "$totalAmount", myProducts: "$myProducts" } },
+            { $match: { "myProducts.status": "Delivered" } },
+
+            {
+                $group: {
+                    _id: null,
+                    totalRevenue: { $sum: "$totalAmount" },
+                    totalItemSold: { $sum: "$myProducts.productquantity" }
+                }
+            }
+        ])
+            .then(function (result) {
+                res.status(200).json({
+                    success: true,
+                    data: result,
+                });
+            })
+            .catch(function (e) {
+                res.status(500).json({ message: e })
+            })
+    })
+
+// total order left
+router.get('/admin/order/left',
+    function (req, res) {
+        mycheckout.aggregate([
+            {
+                $match: {
+                    $or: [
+                        { "productinfo.myproduct.status": "Pending" },
+                        { "productinfo.myproduct.status": "Shipped" }
+                    ]
+                }
+            },
+            {
+                $group: {
+                    _id: null,
+                    totalOrder: { $sum: "$productinfo.itemcount" }
+                }
+            }
+        ])
+            .then(function (result) {
+                res.status(200).json({
+                    success: true,
+                    data: result,
+                });
+            })
+            .catch(function (e) {
+                res.status(500).json({ message: e })
+            })
+    })
+
 module.exports = router;
