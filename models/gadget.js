@@ -33,7 +33,65 @@ const Gadget = mongoose.model('gadget', {
         type: String,
     },
 
-    laptop: {
+laptop:{
+    
+    laptopModel: {
+        type: String
+    },
+    laptopDimension: {
+        type: String
+    },
+    laptopWeight: {
+        type: String
+    },
+    laptopSize: {
+        type: String
+    },
+    laptopResolution: {
+        type: String
+    },
+    laptopProcessor: {
+        type: String
+    },
+    laptopBaseClock: {
+        type: String
+    },
+    laptopRam: {
+        type: String
+    },
+    laptopGraphic: {
+        type: String
+    },
+    laptopDedicatedGraphicMemory: {
+        type: String
+    },
+    laptopDedicatedGraphic: {
+        type: String
+    },
+    laptopHarddisk: {
+        type: String
+    },
+    laptopSSD: {
+        type: String
+    },
+    laptopNoOfUSBPorts: {
+        type: String
+    },
+    laptopUSBPorts: {
+        type: String
+    },
+    laptopHDMIPorts: {
+        type: String
+    },
+    laptopMultiCardSlot: {
+        type: String
+    },
+    laptopHeadphone: {
+        type: String
+    },
+    laptopJack: {
+        type: String
+    },
 
         laptopModel: {
             type: String
