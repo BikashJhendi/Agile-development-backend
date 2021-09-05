@@ -36,7 +36,7 @@ router.post('/product/review', function (req, res) {
 
         const { productId, review, rating } = req.body;
 
-        if (!req.files || req.files.length == 0) {
+        if (!req.files) {
             return res.status(400).json({
                 message: "Require at least one image.",
                 success: false

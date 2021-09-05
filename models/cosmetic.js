@@ -35,7 +35,10 @@ const Cosmetic = mongoose.model('cosmetic', {
             },
 
         }
-    ]
+    ],
+    brandName:{
+        type: String
+    }
 
 })
 

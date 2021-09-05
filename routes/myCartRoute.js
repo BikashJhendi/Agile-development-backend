@@ -164,7 +164,7 @@ router.post('/mycheckout/insert',
         const checkout = new mycheckout({
             userid, paymentmethod, status, token,
             productinfo: {
-                itemcount, totalamount, totalamounttax, myproduct
+                itemcount, totalamount, totalamounttax, myproduct,
             },
             billingaddress: {
                 billingfirstname, billinglastname, billingphone, billingemail, billingaddress,
@@ -180,20 +180,21 @@ router.post('/mycheckout/insert',
             });
     })
 
-router.get('/mycheckout/showall', function (req, res) {
-    // const token = req.headers.authorization.split(' ')[1];
-    // const decode = jwt.verify(token, "secretKey");
-    // const addedBy = decode.userId
+router.get('/mycheckout/myorder', function (req, res) {
+    const token = req.headers.authorization.split(' ')[1];
+    const decode = jwt.verify(token, "secretKey");
+    const addedBy = decode.userId
     mycheckout.find()
-        .then(function (total) {
+        .then(function (result) {
             res.status(200).json({
                 success: true,
-                data: total,
+                data: result,
             });
-            // console.log(mycart_data.length)
         })
         .catch(function (e) {
             res.status(500).json({ message: e })
         })
 })
+
+
 module.exports = router;

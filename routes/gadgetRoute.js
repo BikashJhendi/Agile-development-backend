@@ -49,7 +49,6 @@ router.post('/gadget/insert',
             const laptopResolution = req.body.laptopResolution;
             const laptopProcessor = req.body.laptopProcessor;
             const laptopBaseClock = req.body.laptopBaseClock;
-            const laptopSpeed = req.body.laptopSpeed;
             const laptopRam = req.body.laptopRam;
             const laptopGraphic = req.body.laptopGraphic;
             const laptopDedicatedGraphicMemory = req.body.laptopDedicatedGraphicMemory;
@@ -116,7 +115,7 @@ router.post('/gadget/insert',
                     laptop: {
                         laptopModel: laptopModel, laptopDimension: laptopDimension, laptopWeight: laptopWeight,
                         laptopSize: laptopSize, laptopResolution: laptopResolution, laptopProcessor: laptopProcessor, laptopBaseClock: laptopBaseClock,
-                        laptopSpeed: laptopSpeed, laptopRam: laptopRam, laptopGraphic: laptopGraphic, laptopDedicatedGraphicMemory: laptopDedicatedGraphicMemory,
+                        laptopRam: laptopRam, laptopGraphic: laptopGraphic, laptopDedicatedGraphicMemory: laptopDedicatedGraphicMemory,
                         laptopDedicatedGraphic: laptopDedicatedGraphic, laptopHarddisk: laptopHarddisk, laptopSSD: laptopSSD, laptopNoOfUSBPorts: laptopNoOfUSBPorts,
                         laptopUSBPorts: laptopUSBPorts, laptopHDMIPorts: laptopHDMIPorts, laptopMultiCardSlot: laptopMultiCardSlot, laptopHeadphone: laptopHeadphone,
                         laptopJack: laptopJack

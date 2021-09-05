@@ -4,6 +4,12 @@ const productReview = mongoose.model('review', {
     productId:{
         type: String
     },
+    firstName:{
+        type: String
+    },
+    lastName:{
+        type: String
+    },
     review: {
         type: String,     
     },
@@ -19,8 +25,8 @@ const productReview = mongoose.model('review', {
        type: String,
     },
     questionDate: {
-        type: Date,
-        default: Date.now
+        type: Number,
+        default: Date.now,
     }   
 })
 
