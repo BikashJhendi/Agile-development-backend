@@ -450,6 +450,52 @@ router.get('/gadget/featured', function (req, res) {
         })
 })
 
+//camera filter
+router.get('/camera/sony', function (req, res) {
+    const sony = "Sony";
+
+    gadget.find({ brandName: sony })
+        .then(function (brand_name) {
+            res.status(200).json({
+                success: true,
+                data: brand_name
+            });
+        })
+        .catch(function (e) {
+            res.status(500).json({ message: e })
+        })
+})
+router.get('/camera/nikon', function (req, res) {
+    const nikon = "Nikon";
+
+    gadget.find({ brandName: nikon })
+        .then(function (brand_name) {
+            res.status(200).json({
+                success: true,
+                data: brand_name
+            });
+        })
+        .catch(function (e) {
+            res.status(500).json({ message: e })
+        })
+})
+router.get('/camera/canon', function (req, res) {
+    const canon = "Canon";
+
+    gadget.find({ brandName: canon })
+        .then(function (brand_name) {
+            res.status(200).json({
+                success: true,
+                data: brand_name
+            });
+        })
+        .catch(function (e) {
+            res.status(500).json({ message: e })
+        })
+})
+
+
+
 
 router.get('/gadget/one/:id', function (req, res) {
     const id = req.params.id;
