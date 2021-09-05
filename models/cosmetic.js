@@ -5,7 +5,7 @@ const Cosmetic = mongoose.model('cosmetic', {
         required: true
     },
     cosmeticprice: {
-        type: String,
+        type: Number,
         required: true
     },
     cosmeticgender: {
@@ -36,7 +36,7 @@ const Cosmetic = mongoose.model('cosmetic', {
 
         }
     ],
-    brandName:{
+    brandName: {
         type: String
     }
 
