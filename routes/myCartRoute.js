@@ -9,12 +9,11 @@ const mycheckout = require('../models/mycheckout');
 router.post('/mycart/insert',
     function (req, res) {
 
-        const { userid, productid, quantity, productname, productprice, producttype } = req.body;
-
+        const { userid, productid, quantity, productname, productprice, producttype, productimage } = req.body;
         mycart.find({ userid })
             .then(function (data) {
                 if (data.length == 0) {
-                    const cart_id = new mycart({ userid, productid, quantity, productname, productprice, producttype });
+                    const cart_id = new mycart({ userid, productid, quantity, productname, productprice, producttype, productimage });
 
                     return cart_id.save()
                         .then(function (result) {
@@ -44,7 +43,7 @@ router.post('/mycart/insert',
                     })
                 }
                 else {
-                    const cart_id = new mycart({ userid, productid, quantity, productname, productprice, producttype });
+                    const cart_id = new mycart({ userid, productid, quantity, productname, productprice, producttype, productimage });
 
                     return cart_id.save()
                         .then(function (result) {
