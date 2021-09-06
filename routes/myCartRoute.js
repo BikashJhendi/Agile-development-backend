@@ -182,8 +182,8 @@ router.post('/mycheckout/insert',
 router.get('/mycheckout/myorder', function (req, res) {
     const token = req.headers.authorization.split(' ')[1];
     const decode = jwt.verify(token, "secretKey");
-    const addedBy = decode.userId
-    mycheckout.find()
+    const userid = decode.userId;
+    mycheckout.find({ userid })
         .then(function (result) {
             res.status(200).json({
                 success: true,
@@ -261,6 +261,7 @@ router.get('/admin/order/left',
     function (req, res) {
         mycheckout.aggregate([
             {
+
                 $match: {
                     $or: [
                         { "productinfo.myproduct.status": "Pending" },
@@ -276,6 +277,57 @@ router.get('/admin/order/left',
             }
         ])
             .then(function (result) {
+                res.status(200).json({
+                    success: true,
+                    data: result,
+                });
+            })
+            .catch(function (e) {
+                res.status(500).json({ message: e })
+            })
+    })
+
+// order left details
+router.get('/admin/order/left/details',
+    function (req, res) {
+        mycheckout.aggregate([
+            { $unwind: "$productinfo" },
+            {
+                $project: {
+                    _id: 1,
+                    userid: "$userid",
+                    totalAmountTax: "$productinfo.totalamounttax",
+                    totalAmount: "$productinfo.totalamount",
+                    totalProduct: { $size: "$productinfo.myproduct" },
+                    status: "$productinfo.myproduct.status",
+                    paymentMethod: "$productinfo.myproduct.paymentmethod",
+                    checkoutDate: { "$dateToString": { "format": "%Y-%m-%d", "date": "$checkoutDate" } }
+                }
+            },
+            {
+                $project: {
+                    _id: 1,
+                    userid: "$userid",
+                    totalAmount: "$totalAmount",
+                    totalAmountTax: "$totalAmountTax",
+                    totalProduct: "$totalProduct",
+                    status: { $arrayElemAt: ["$status", 0] },
+                    paymentMethod: { $arrayElemAt: ["$paymentMethod", 0] },
+                    checkoutDate: "$checkoutDate"
+                }
+            },
+            // {
+
+            //     $match: {
+            //         $or: [
+            //             { "status": "Pending" },
+            //             { "status": "Shipped" }
+            //         ]
+            //     }
+            // },
+        ]).sort({ checkoutDate: -1 })
+            .then(function (result) {
+                // console.log(result[0].status[0])
                 res.status(200).json({
                     success: true,
                     data: result,
