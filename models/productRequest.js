@@ -21,6 +21,11 @@ const ProductRequest = mongoose.model('ProductRequest', {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User',
     },
+    status: {
+        type: String,
+        enum: ['Pending', 'Approved', 'Disapproved'],
+        default: "Pending"
+    },
     requestedDate: {
         type: Date,
         default: Date.now

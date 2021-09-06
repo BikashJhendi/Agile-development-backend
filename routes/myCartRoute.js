@@ -5,6 +5,8 @@ const { check, validationResult } = require('express-validator')
 const jwt = require('jsonwebtoken');
 const GadgetCart = require('../models/mycart');
 const mycheckout = require('../models/mycheckout');
+const mongoose = require('mongoose');
+const ObjectId = mongoose.Types.ObjectId;
 
 router.post('/mycart/insert',
     function (req, res) {
@@ -182,8 +184,8 @@ router.post('/mycheckout/insert',
 router.get('/mycheckout/myorder', function (req, res) {
     const token = req.headers.authorization.split(' ')[1];
     const decode = jwt.verify(token, "secretKey");
-    const addedBy = decode.userId
-    mycheckout.find()
+    const userid = decode.userId;
+    mycheckout.find({ userid })
         .then(function (result) {
             res.status(200).json({
                 success: true,
@@ -261,6 +263,7 @@ router.get('/admin/order/left',
     function (req, res) {
         mycheckout.aggregate([
             {
+
                 $match: {
                     $or: [
                         { "productinfo.myproduct.status": "Pending" },
@@ -286,4 +289,135 @@ router.get('/admin/order/left',
             })
     })
 
+// order left details
+router.get('/admin/order/left/details',
+    function (req, res) {
+        mycheckout.aggregate([
+            { $unwind: "$productinfo" },
+            {
+                $project: {
+                    _id: 1,
+                    userid: "$userid",
+                    totalAmountTax: "$productinfo.totalamounttax",
+                    totalAmount: "$productinfo.totalamount",
+                    totalProduct: { $size: "$productinfo.myproduct" },
+                    status: "$productinfo.myproduct.status",
+                    paymentMethod: "$productinfo.myproduct.paymentmethod",
+                    checkoutDate: { "$dateToString": { "format": "%Y-%m-%d", "date": "$checkoutDate" } }
+                }
+            },
+            {
+                $project: {
+                    _id: 1,
+                    userid: "$userid",
+                    totalAmount: "$totalAmount",
+                    totalAmountTax: "$totalAmountTax",
+                    totalProduct: "$totalProduct",
+                    status: { $arrayElemAt: ["$status", 0] },
+                    paymentMethod: { $arrayElemAt: ["$paymentMethod", 0] },
+                    checkoutDate: "$checkoutDate"
+                }
+            },
+            // {
+
+            //     $match: {
+            //         $or: [
+            //             { "status": "Pending" },
+            //             { "status": "Shipped" }
+            //         ]
+            //     }
+            // },
+        ]).sort({ checkoutDate: -1 })
+            .then(function (result) {
+                // console.log(result[0].status[0])
+                res.status(200).json({
+                    success: true,
+                    data: result,
+                });
+            })
+            .catch(function (e) {
+                res.status(500).json({ message: e })
+            })
+    })
+
+
+router.get('/admin/order/one/:id',
+    function (req, res) {
+        const { id } = req.params;
+        mycheckout.aggregate([
+            { $match: { "_id": ObjectId(id) } },
+            {
+                $lookup: {
+                    from: "users",
+                    localField: "userid",    // field in the ProductRequest collection
+                    foreignField: "_id",  // field in the users collection
+                    as: "userInfo"
+                }
+            },
+            { $unwind: "$productinfo" },
+            {
+                $project: {
+                    _id: 1,
+                    userid: "$userid",
+                    totalAmountTax: "$productinfo.totalamounttax",
+                    totalAmount: "$productinfo.totalamount",
+                    itemcount: "$productinfo.itemcount",
+                    checkoutDate: { "$dateToString": { "format": "%Y-%m-%d", "date": "$checkoutDate" } },
+                    myproduct: "$productinfo.myproduct",
+                    billingaddress: 1,
+                    userInfo: { $arrayElemAt: ["$userInfo", 0] },
+                }
+            },
+            {
+                $project: {
+                    _id: 1,
+                    userid: "$userid",
+                    firstname: "$userInfo.firstname",
+                    lastname: "$userInfo.lastname",
+                    email: "$userInfo.email",
+                    phone: "$userInfo.phone",
+                    totalamounttax: "$totalAmountTax",
+                    totalamount: "$totalAmount",
+                    itemcount: "$itemcount",
+                    checkoutDate: "$checkoutDate",
+                    myproduct: "$myproduct",
+                    billingaddress: "$billingaddress"
+                }
+            },
+        ])
+            .then(function (result) {
+                res.status(200).json({
+                    success: true,
+                    data: result,
+                });
+            })
+            .catch(function (e) {
+                res.status(500).json({ message: e })
+            })
+    })
+
+// update nested order status
+router.put('/admin/order/edit/:id',
+    function (req, res) {
+        const { id } = req.params;
+        const { status } = req.body;
+
+        mycheckout.updateOne({ "productinfo.myproduct._id": id },
+            { $set: { "productinfo.myproduct.$.status": status } },
+        )
+            .then((data) => {
+                return res.status(201).json({
+                    message: "Product Details Changed.",
+                    success: true,
+                    data: data
+                });
+            })
+            .catch(function (err) {
+                return res.status(400).json({
+                    message: err,
+                    success: false
+                })
+            })
+
+    })
 module.exports = router;
