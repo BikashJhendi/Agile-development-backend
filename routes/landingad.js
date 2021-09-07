@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const landad = require('../models/landingAD');
-const landingUploads = require('../middleware/landingAD');
+const landingUploads = require('../middleware/ImageController/landingAD');
 const { check, validationResult } = require('express-validator');
 const { request } = require('express');
 
@@ -22,19 +22,56 @@ router.post('/landing/insert',
             });
     });
 
-    router.get('/landing/show', function (req, res) {
+router.get('/landing/show', function (req, res) {
 
-        landad.find().limit(5)
-            .then(function (landing_data) {
-                res.status(200).json({
+    landad.find().limit(5)
+        .then(function (landing_data) {
+            res.status(200).json({
+                success: true,
+                data: landing_data
+            });
+        })
+        .catch(function (e) {
+            res.status(500).json({ message: e })
+        })
+})
+
+router.get('/landing/show/all', function (req, res) {
+
+    landad.find()
+        .then(function (landing_data) {
+            res.status(200).json({
+                success: true,
+                data: landing_data
+            });
+        })
+        .catch(function (e) {
+            res.status(500).json({ message: e })
+        })
+})
+
+// to delete user account
+router.delete('/admin/ad/delete/:id',
+    function (req, res) {
+        const { id } = req.params;
+
+        landad.deleteOne({ _id: id })
+            .then(function (data) {
+                return res.status(200).json({
+                    message: "User account deleted.",
                     success: true,
-                    data: landing_data
-                });
+                    data: data
+                })
             })
-            .catch(function (e) {
-                res.status(500).json({ message: e })
+            .catch(function (err) {
+                return res.status(400).json({
+                    message: "Failed to delete user account.",
+                    success: false,
+                    err: err
+                })
             })
     })
+
 
 module.exports = router;
 

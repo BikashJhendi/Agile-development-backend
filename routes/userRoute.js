@@ -624,6 +624,26 @@ router.post('/admin/user/add',
 		}
 	})
 
+// get one user
+router.get('/admin/user/profile/:id',
+	function (req, res) {
+		const { id } = req.params;
+		User.findOne({ _id: id })
+			.then(function (data) {
+				res.status(200).json({
+					data: data,
+					message: "Retrieve Success.",
+					success: true
+				});
+			})
+			.catch(function (e) {
+				res.status(500).json({
+					message: e,
+					success: false
+				})
+			})
+	})
+
 // update user account
 router.put('/admin/user/update/:id',
 	function (req, res) {
@@ -670,5 +690,24 @@ router.delete('/admin/user/delete/:id',
 			})
 	})
 
+// total user register
+router.get('/admin/total/user',
+	function (req, res) {
+		User.find()
+			.then((data) => {
+				return res.status(200).json({
+					message: "Success.",
+					success: true,
+					totalUser: data.length
+				})
+			})
+			.catch(function (err) {
+				return res.status(400).json({
+					message: "Failed!!!",
+					success: false,
+					err: err
+				})
+			})
+	})
 
 module.exports = router;

@@ -5,26 +5,26 @@ const Cosmetic = mongoose.model('cosmetic', {
         required: true
     },
     cosmeticprice: {
-        type: String,
+        type: Number,
         required: true
     },
-    cosmeticgender:{
+    cosmeticgender: {
         type: String,
         required: true,
-        enum : ['Men','Women'],
+        enum: ['Men', 'Women'],
     },
-    cosmeticmodel:{
+    cosmeticmodel: {
         type: String,
         required: true,
     },
-    cosmetictype:{
+    cosmetictype: {
         type: String,
         required: true,
-        enum :['Perfume','Nailpolish','Lotion']
+        enum: ['Perfume', 'Nailpolish', 'Lotion']
     },
-    featured:{
+    featured: {
         type: String,
-        enum:['Featured', 'NotFeatured'],
+        enum: ['Featured', 'NotFeatured'],
         default: "NotFeatured"
     },
     cosmeticdescription: [String],
@@ -33,9 +33,12 @@ const Cosmetic = mongoose.model('cosmetic', {
             imageName: {
                 type: String
             },
-            
+
         }
     ],
+    brandName: {
+        type: String
+    }
 
 })
 

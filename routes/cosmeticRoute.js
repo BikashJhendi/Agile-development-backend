@@ -1,9 +1,9 @@
 const express = require('express');
 const router = express.Router();
 const cosmetic = require('../models/cosmetic');
-const cosmeticUploads = require('../middleware/cosmetic');
+const cosmeticUploads = require('../middleware/ImageController/cosmetic');
 const { check, validationResult } = require('express-validator');
-const uploadCosmeticImg = require('../middleware/cosmetic.js');
+const uploadCosmeticImg = require('../middleware/ImageController/cosmetic');
 const multer = require('multer');
 // const fileupload = require('../middleware/fileupload.js');
 
@@ -27,10 +27,11 @@ router.post('/cosmetic/insert',
                     success: false,
                     err: err
                 })
-                
+
             }
             const errors = validationResult(req);
             console.log(errors.array())
+
 
 
         const cosmeticname = req.body.cosmeticname;
@@ -40,6 +41,7 @@ router.post('/cosmetic/insert',
         const cosmeticmodel = req.body.cosmeticmodel;
         const cosmeticdescription = req.body.cosmeticdescription;
         const featured = req.body.featured;
+        const brandName = req.body.brandName;
 
 
             if (!req.files || req.files.length == 0) {
@@ -60,7 +62,7 @@ router.post('/cosmetic/insert',
                 }
                 const cosmetic_data = new cosmetic({
                     cosmeticname: cosmeticname, cosmeticprice: cosmeticprice,featured: featured, cosmetictype: cosmetictype,cosmeticgender: cosmeticgender,cosmeticmodel: cosmeticmodel,
-                    cosmeticdescription: cosmeticdescription, cosmeticImages: arrayOfImg,
+                    cosmeticdescription: cosmeticdescription,brandName: brandName, cosmeticImages: arrayOfImg,
 
                 });
                 cosmetic_data.save()
@@ -211,13 +213,13 @@ router.get('/cosmetic/women/low', function (req, res) {
         })
 })
 router.get('/cosmetic/creed', function (req, res) {
-    const gc = "Creed";
+    const creed = "Creed";
 
-    cosmetic.find({ cosmeticname: gc })
-        .then(function (cosmetic_name) {
+    cosmetic.find({ brandName: creed })
+        .then(function (brand_name) {
             res.status(200).json({
                 success: true,
-                data: cosmetic_name
+                data: brand_name
             });
         })
         .catch(function (e) {
@@ -225,13 +227,13 @@ router.get('/cosmetic/creed', function (req, res) {
         })
 })
 router.get('/cosmetic/hugo', function (req, res) {
-    const ch = "Hugo Boss";
+    const hugo = "Hugo Boss";
 
-    cosmetic.find({ cosmeticname: ch})
-        .then(function (cosmetic_name) {
+    cosmetic.find({ brandName: hugo})
+        .then(function (brand_name) {
             res.status(200).json({
                 success: true,
-                data: cosmetic_name
+                data: brand_name
             });
         })
         .catch(function (e) {
@@ -239,13 +241,13 @@ router.get('/cosmetic/hugo', function (req, res) {
         })
 })
 router.get('/cosmetic/victoria', function (req, res) {
-    const cv = "Victoria Secret";
+    const victoria = "Victoria Secret";
 
-    cosmetic.find({ cosmeticname: cv})
-        .then(function (cosmetic_name) {
+    cosmetic.find({ brandName: victoria})
+        .then(function (brand_name) {
             res.status(200).json({
                 success: true,
-                data: cosmetic_name
+                data: brand_name
             });
         })
         .catch(function (e) {
@@ -253,13 +255,56 @@ router.get('/cosmetic/victoria', function (req, res) {
         })
 })
 router.get('/cosmetic/dior', function (req, res) {
-    const cd = "Dior";
+    const dior = "Dior";
 
-    cosmetic.find({ cosmeticname: cd})
-        .then(function (cosmetic_name) {
+    cosmetic.find({ brandName: dior})
+        .then(function (brand_name) {
             res.status(200).json({
                 success: true,
-                data: cosmetic_name
+                data: brand_name
+            });
+        })
+        .catch(function (e) {
+            res.status(500).json({ message: e })
+        })
+})
+//cosmetic type filter
+router.get('/cosmetic/perfume', function (req, res) {
+    const perfume = "Perfume";
+
+    cosmetic.find({ cosmetictype: perfume})
+        .then(function (cosmetic_type) {
+            res.status(200).json({
+                success: true,
+                data: cosmetic_type
+            });
+        })
+        .catch(function (e) {
+            res.status(500).json({ message: e })
+        })
+})
+router.get('/cosmetic/nailpolish', function (req, res) {
+    const nailpolish = "Nailpolish";
+
+    cosmetic.find({ cosmetictype: nailpolish})
+        .then(function (cosmetic_type) {
+            res.status(200).json({
+                success: true,
+                data: cosmetic_type
+            });
+        })
+        .catch(function (e) {
+            res.status(500).json({ message: e })
+        })
+})
+router.get('/cosmetic/lotion', function (req, res) {
+    const lotion = "Lotion";
+
+    cosmetic.find({ cosmetictype: lotion})
+        .then(function (cosmetic_type) {
+            res.status(200).json({
+                success: true,
+                data: cosmetic_type
             });
         })
         .catch(function (e) {

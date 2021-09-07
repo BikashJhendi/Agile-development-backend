@@ -2,13 +2,14 @@ const mongoose = require('mongoose')
 const GadgetCart = mongoose.model('mycart', {
     userid: {
         type: mongoose.Schema.Types.ObjectId,
+        required: true
     },
     productid: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'users',
     },
     quantity: {
-        type: String,
+        type: Number,
     },
 
     productname: {
@@ -16,7 +17,7 @@ const GadgetCart = mongoose.model('mycart', {
     },
 
     productprice: {
-        type: String
+        type: Number
     },
 
     productimage: {
