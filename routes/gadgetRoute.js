@@ -331,7 +331,7 @@ router.get('/laptop/arous', function (req, res) {
 router.get('/laptop/apple', function (req, res) {
     const apple = "Apple";
 
-    gadget.find({ brandName: apple })
+    gadget.find({ brandName: Apple })
         .then(function (brand_name) {
             res.status(200).json({
                 success: true,
@@ -483,6 +483,20 @@ router.get('/camera/canon', function (req, res) {
     const canon = "Canon";
 
     gadget.find({ brandName: canon })
+        .then(function (brand_name) {
+            res.status(200).json({
+                success: true,
+                data: brand_name
+            });
+        })
+        .catch(function (e) {
+            res.status(500).json({ message: e })
+        })
+})
+router.get('/camera/gopro', function (req, res) {
+    const gopro = "GoPro";
+
+    gadget.find({ brandName: gopro })
         .then(function (brand_name) {
             res.status(200).json({
                 success: true,
