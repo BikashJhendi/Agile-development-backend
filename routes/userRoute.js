@@ -187,7 +187,9 @@ router.put('/user/profile/update/:id',
 	function (req, res) {
 		const { id } = req.params;
 		const { firstname, lastname, email, password, currentPassword, phone,
+
 			province, district, address, tole, zipCode } = req.body;
+
 
 		User.findOne({ _id: id })
 			.then(function (userData) {
@@ -223,6 +225,7 @@ router.put('/user/profile/update/:id',
 								return User.updateOne({ _id: id }, {
 									firstname, lastname, email, phone, password: hash,
 									addressBook: { province, district, address, tole, zipCode }
+
 								})
 									.then(function (result) {
 										User.findOne({ _id: id })
