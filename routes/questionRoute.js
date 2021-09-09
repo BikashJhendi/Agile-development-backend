@@ -9,7 +9,7 @@ router.post('/question/ask', function (req, res) {
     const decode = jwt.verify(token, "secretKey");
     const { firstName, lastName } = decode;
 
-    const { productId,  askQuestion, answer } = req.body;
+    const { productId, askQuestion, answer } = req.body;
 
     const question_data = new question({ productId, firstName, lastName, askQuestion, answer });
 
@@ -20,7 +20,8 @@ router.post('/question/ask', function (req, res) {
         .catch(function (err) {
             res.status(500).json({
                 success: false,
-                message: err })
+                message: err
+            })
         });
 })
 
@@ -36,11 +37,34 @@ router.get('/productone/question/:productId', function (req, res) {
             })
         })
         .catch(function (e) {
-           
+
             res.status(500).json({
                 success: false,
-                message: e })
+                message: e
+            })
         });
 })
+
+router.put('/question/answer/update/:id',
+    function (req, res) {
+        const productId = req.params.productId
+        const { answer } = req.body;
+
+        question.updateOne({ productId: productId }, {
+            answer
+        })
+            .then((data) => {
+                return res.status(201).json({
+                    message: "answer updated successfully.",
+                    success: true
+                });
+            })
+            .catch(function (err) {
+                return res.status(400).json({
+                    message: err,
+                    success: false
+                })
+            })
+    })
 
 module.exports = router;

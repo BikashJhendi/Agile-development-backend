@@ -2,13 +2,12 @@ const mongoose = require('mongoose')
 
 const productReview = mongoose.model('review', {
     productId:{
-        type: String
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Product',
     },
-    firstName:{
-        type: String
-    },
-    lastName:{
-        type: String
+    userId:{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User',
     },
     review: {
         type: String,     
@@ -25,7 +24,7 @@ const productReview = mongoose.model('review', {
        type: String,
     },
     questionDate: {
-        type: Number,
+        type: Date,
         default: Date.now,
     }   
 })

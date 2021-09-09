@@ -14,6 +14,9 @@ const mycheckout = mongoose.model('mycheckout', {
                     type: mongoose.Schema.Types.ObjectId,
                     ref: 'users',
                 },
+                productimage:{
+                    type: String
+                },
                 productquantity: {
                     type: Number
                 },
