@@ -1,27 +1,27 @@
 const mongoose = require('mongoose')
 
 const Question = mongoose.model('question', {
-    productId:{
+    productId: {
         type: String
     },
-    firstName:{
+    firstName: {
         type: String
     },
-    lastName:{
+    lastName: {
         type: String
     },
     askQuestion: {
-        type: String,     
+        type: String,
     },
     answer: {
-        type: String,
+        type: String
     },
     questionDate: {
         type: Date,
         default: Date.now
     }
 
-      
+
 })
 
 module.exports = Question;
