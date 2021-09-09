@@ -21,14 +21,6 @@ describe('User login testing', () => {
         return users.findOne({ _id: Object('60f7e98547ed341dac29ec60') })
     });
 
-    //  it('user logins using valid email address',()=>{
-    //     return users.findById('60ed73f0ec08c60210d1e95a')
-    //     .then((u)=>{
-    //         expect('Bikash@123.com').toEqual(u.email);
-    //         expect('1234').toEqual(u.password);
-    //     })
-    //  })
-
     describe('user login successfully with valid email address', function () {
         it('responds with json', function (done) {
             request(app)
@@ -51,7 +43,7 @@ describe('User login testing', () => {
                 .send({ email: 'invalidEmail@123.com' })
                 .set('Accept', 'application/json')
                 .expect('Content-Type', /json/)
-                .expect(403, { message: 'email or password is incorrect', success:false })
+                .expect(403, { message: 'email or password is incorrect', success: false })
                 .end(function (err, res) {
                     if (err) return done(err);
                     return done();

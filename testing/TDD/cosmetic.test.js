@@ -19,8 +19,11 @@ describe('Cosmetic product testing', () => {
     it('insert new cosmetic product', function (done) {
         request(app)
             .post('/cosmetic/insert')
-            .field({ cosmeticname: 'Watch', cosmeticprice: '20,000', cosmetictype: 'Men', cosmeticdescription: 'Millinium' })
-            .attach('cosmeticimage', 'assets/image/cosmetic/1626617500015Screenshot (61).png')
+            .field({
+                cosmeticname: 'Watch', cosmeticprice: '20,000', cosmetictype: 'Perfume', cosmeticdescription: 'Millinium',
+                cosmeticgender: 'Men', cosmeticmodel: 'scent'
+            })
+            .attach('cosmeticImages', 'assets/image/cosmetic/1629993345326bonfire.jpg')
             .set('Accept', 'application/json')
             .expect('Content-Type', /charset=utf-8/)
             .expect(201)
@@ -33,10 +36,10 @@ describe('Cosmetic product testing', () => {
     test('fails to insert if required field is not filled in', (done) => {
         request(app)
             .post('/cosmetic/insert')
-            .send({ cosmeticname: 'watch', cosmeticprice: '', cosmetictype: '', cosmeticdescription: 'watch', cosmeticimage: 'watch' })
+            .send({ cosmeticname: 'watch', cosmeticprice: '', cosmetictype: '', cosmeticdescription: 'watch', cosmeticImages: 'watch' })
             .set('Accept', 'application/json')
             .expect('Content-Type', /charset=utf-8/)
-            .expect(500)
+            .expect(400)
             .end(function (err, res) {
                 if (err) return done(err);
                 return done();
@@ -53,7 +56,7 @@ describe('Cosmetic product testing', () => {
 
     test('shows one product using its id', (done) => {
         request(app)
-            .get('/cosmetic/one/60f82476e54e5c240cc04795')
+            .get('/cosmetic/one/6134b5d89486fe4aaca8a739')
             .set('Accept', 'application/json')
             .expect('Content-Type', /charset=utf-8/)
             .expect(200, done);

@@ -18,23 +18,6 @@ afterAll(async () => {
 describe('User registration testing', () => {
     //the code below is for insert testing
 
-    //  it('Add new user with its details', () => {
-    //     const user = {
-    //         'firstname':'Bikash',
-    //         'lastname':'Kasula',
-    //         'phone':'0000000000',
-    //         'district':'Bhaktapur',
-    //         'tole':'bkt',
-    //         'email': 'bikash@123.com',
-    //         'password': '1234',
-    //         };
-
-    //     return users.create(user)
-    //     // .then((pro_ret) => {
-    //     //     expect(pro_ret.email).toEqual('bikash@123.com');
-    //     //  });
-    //  });
-
     describe('Register new user with valid informations', function () {
         it('responds with json', function (done) {
             request(app)
