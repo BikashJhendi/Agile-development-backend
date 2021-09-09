@@ -47,10 +47,10 @@ router.get('/productone/question/:productId', function (req, res) {
 
 router.put('/question/answer/update/:id',
     function (req, res) {
-        const productId = req.params.productId
+        const productId = req.params.id
         const { answer } = req.body;
 
-        question.updateOne({ productId: productId }, {
+        question.updateOne({ _id: productId }, {
             answer
         })
             .then((data) => {
