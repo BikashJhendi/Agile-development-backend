@@ -72,6 +72,27 @@ router.delete('/admin/ad/delete/:id',
             })
     })
 
+router.delete('/admin/ad/delete/all',
+    function (req, res) {
+
+        landad.deleteMany()
+            .then(function (data) {
+                return res.status(200).json({
+                    message: "User account deleted.",
+                    success: true,
+                    data: data
+                })
+            })
+            .catch(function (err) {
+                return res.status(400).json({
+                    message: "Failed to delete user account.",
+                    success: false,
+                    err: err
+                })
+            })
+    })
+
+
 
 module.exports = router;
 
