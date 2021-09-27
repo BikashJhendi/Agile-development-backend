@@ -72,7 +72,7 @@ router.delete('/admin/ad/delete/:id',
             })
     })
 
-router.delete('/admin/ad/delete/all',
+router.delete('/admin/ad/all/delete',
     function (req, res) {
 
         landad.deleteMany()
