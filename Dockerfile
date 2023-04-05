@@ -1,8 +1,8 @@
 # Set the base image
-FROM node:14
+FROM node:18
 
 # Set the working directory
-WORKDIR ./app
+WORKDIR /app
 
 # Copy the package.json and package-lock.json files into the container
 COPY package*.json ./
